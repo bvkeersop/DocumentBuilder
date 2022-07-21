@@ -1,0 +1,22 @@
+﻿using NDocument.Domain.Enumerations;
+
+namespace NDocument.Domain.Options
+{
+    public class MarkdownTableOptions
+    {
+        /// <summary>
+        /// The formatting which to render the table with
+        /// </summary>
+        public Formatting Formatting { get; set; } = Formatting.AlignColumns;
+
+        /// <summary>
+        /// Wheter the column names should be bold or not
+        /// </summary>
+        public bool BoldColumnNames { get; set; } = false;
+
+        /// <summary>
+        /// What the default aligment is
+        /// </summary>
+        public Alignment DefaultAligment { get; set; } = Alignment.None;
+    }
+}

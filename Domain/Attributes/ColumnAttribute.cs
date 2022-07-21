@@ -1,0 +1,20 @@
+﻿using NDocument.Domain.Enumerations;
+
+namespace NDocument.Domain.Attributes
+{
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ColumnAttribute : Attribute
+    {
+        public string? Name { get; init; }
+
+        public int Order { get; init; }
+        public Alignment Alignment { get; init; }
+
+        public ColumnAttribute(string? name = null, Alignment alignment = Alignment.Default, int order = int.MaxValue)
+        {
+            Name = name;
+            Alignment = alignment;
+            Order = order;
+        }
+    }
+}
