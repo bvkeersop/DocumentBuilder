@@ -12,7 +12,7 @@ namespace NDocument.Domain.Model
 
         public override ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options)
         {
-            return CreateMarkdownList(MarkdownIndicators.UnorderedList, options);
+            return CreateMarkdownList(MarkdownIndicators.UnorderedListItem, options);
         }
 
         public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel)
