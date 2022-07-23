@@ -11,7 +11,7 @@ namespace NDocument.Domain.Test.Unit.Builders
     public class HtmlDocumentBuilderTests : BuilderTestBase
     {
         [TestMethod]
-        public async Task Build_CreatesMarkdownDocument()
+        public async Task Build_CreatesHtmlDocument()
         {
             // Arrange
             var options = new HtmlDocumentOptions()
@@ -31,15 +31,15 @@ namespace NDocument.Domain.Test.Unit.Builders
                 .WithParagraph(_paragraph)
                 .WithUnorderedList(_unorderedList)
                 .WithOrderedList(_orderedList)
-                .WithTable(_productTableRowsWithHeaders);
+                .WithTable(_productTableRowsWithoutHeaders);
 
             // Act
             await htmlDocumentBuilder.WriteToOutputStreamAsync(outputStream);
 
             // Assert
-            var expectedMarkdownDocument = GetExpectedHtmlDocument(options);
-            var markdownDocument = StreamHelper.GetStreamContents(outputStream);
-            markdownDocument.Should().Be(expectedMarkdownDocument);
+            var expectedHtmlDocument = GetExpectedHtmlDocument(options);
+            var htmlDocument = StreamHelper.GetStreamContents(outputStream);
+            htmlDocument.Should().Be(expectedHtmlDocument);
         }
 
         private string GetExpectedHtmlDocument(HtmlDocumentOptions options)
@@ -48,29 +48,27 @@ namespace NDocument.Domain.Test.Unit.Builders
             var indentationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize);
 
             return
-                $"<h1>{_header1}</h1>" + newLineProvider.GetNewLine() +
-                newLineProvider.GetNewLine() +
-                $"<h2>{_header2}</h2>" + newLineProvider.GetNewLine() +
-                newLineProvider.GetNewLine() +
-                $"<h3>{_header3}</h3>" + newLineProvider.GetNewLine() +
-                newLineProvider.GetNewLine() +
-                $"<h4>{_header4}</h4>" + newLineProvider.GetNewLine() +
-                newLineProvider.GetNewLine() +
-                $"<p>{_paragraph}</p>" + newLineProvider.GetNewLine() +
-                newLineProvider.GetNewLine() +
-                "<ul>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                $"<li>{_unorderedList.ElementAt(0)}</li>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                $"<li>{_unorderedList.ElementAt(1)}</li>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                $"<li>{_unorderedList.ElementAt(2)}</li>" + newLineProvider.GetNewLine() +
-                "</ul>" + newLineProvider.GetNewLine() +
-                newLineProvider.GetNewLine() +
-                "<ol>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                $"<li>{_orderedList.ElementAt(0)}</li>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                $"<li>{_orderedList.ElementAt(1)}</li>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                $"<li>{_orderedList.ElementAt(2)}</li>" + newLineProvider.GetNewLine() +
-                "</ol>" + newLineProvider.GetNewLine() +
-                newLineProvider.GetNewLine() +
-                ExampleProductHtmlTableBuilder.BuildExpectedProductTable(options);
+                "<!DOCTYPE html>" + GetNewLine(newLineProvider) +
+                "<html>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 1) +
+                    "<body>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        $"<h1>{_header1}</h1>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        $"<h2>{_header2}</h2>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        $"<h3>{_header3}</h3>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        $"<h4>{_header4}</h4>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        $"<p>{_paragraph}</p>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<ul>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 3) +
+                            $"<li>{_unorderedList.ElementAt(0)}</li>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 3) +
+                            $"<li>{_unorderedList.ElementAt(1)}</li>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 3) +
+                            $"<li>{_unorderedList.ElementAt(2)}</li>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "</ul>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<ol>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 3) +
+                            $"<li>{_orderedList.ElementAt(0)}</li>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 3) +
+                            $"<li>{_orderedList.ElementAt(1)}</li>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 3) +
+                            $"<li>{_orderedList.ElementAt(2)}</li>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "</ol>" + GetNewLine(newLineProvider) +
+                        ExampleProductHtmlTableBuilder.BuildExpectedProductTable(options, 2) + GetIndentation(indentationProvider, 1) +
+                    "</body>" + GetNewLine(newLineProvider) +
+                "</html>" + GetNewLine(newLineProvider);
         }
     }
 }

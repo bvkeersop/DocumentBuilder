@@ -1,43 +1,51 @@
 ﻿using NDocument.Domain.Options;
 using NDocument.Domain.Factories;
+using NDocument.Domain.Utilities;
 
 namespace NDocument.Domain.Test.Unit.TestHelpers
 {
     internal class ExampleProductHtmlTableBuilder
     {
 
-        public static string BuildExpectedProductTable(HtmlDocumentOptions options)
+        public static string BuildExpectedProductTable(HtmlDocumentOptions options, int baseIndentation)
         {
             var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
-            var indentationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize);
+            var indentationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize, baseIndentation);
 
             return
-                "<table>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                "<tr>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<th>ProductId</th>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<th>Amount</th>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<th>Price</th>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<th>Description</th>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                "</tr>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                "<tr>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<td>1</td>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<td>1</td>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<td>1,11</td>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<td>Description 1</td>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                "</tr>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                "<tr>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<td>2</td>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<td>2</td>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<td>2,22</td>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<td>Description 2</td>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                "</tr>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                "<tr>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<td>3</td>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<td>3</td>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<td>3,33</td>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(2) +
-                "<td>Very long description with most characters</td>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(1) +
-                "</tr>" + newLineProvider.GetNewLine() + indentationProvider.GetIndentation(0) +
-                "</table>";
+                indentationProvider.GetIndentation(0) +
+                "<table>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 1) +
+                    "<tr>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<th>Id</th>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<th>Amount</th>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<th>Price</th>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<th>Description</th>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 1) +
+                    "</tr>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 1) +
+                    "<tr>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<td>1</td>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<td>1</td>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<td>1,11</td>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<td>Description 1</td>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 1) +
+                    "</tr>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 1) +
+                    "<tr>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<td>2</td>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<td>2</td>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<td>2,22</td>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<td>Description 2</td>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 1) +
+                    "</tr>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 1) +
+                    "<tr>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<td>3</td>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<td>3</td>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        "<td>3,33</td>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                    "<td>Very long description with most characters</td>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 1) +
+                    "</tr>" + GetNewLineAndIndentation(newLineProvider, indentationProvider) +
+                "</table>" + newLineProvider.GetNewLine();
+        }
+
+        private static string GetNewLineAndIndentation(INewLineProvider newLineProvider, IIndentationProvider indentationProvider, int level = 0)
+        {
+            var indenation = newLineProvider.GetNewLine() + indentationProvider.GetIndentation(level);
+            return indenation;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using NDocument.Domain.Options;
+﻿using NDocument.Domain.Extensions;
+using NDocument.Domain.Options;
 
 namespace NDocument.Domain.Model
 {
@@ -17,10 +18,10 @@ namespace NDocument.Domain.Model
             return ConvertToMarkdown(markdown, options);
         }
 
-        protected ValueTask<string> CreateHtmlHeader(string headerIndicator, HtmlDocumentOptions options)
+        protected ValueTask<string> CreateHtmlHeader(string headerIndicator, HtmlDocumentOptions options, int indentationLevel)
         {
-            var html = $"<{headerIndicator}>{Value}</{headerIndicator}>";
-            return ConvertToHtml(html, options);
+            var html = $"{headerIndicator.ToHtmlStartTag()}{Value}{headerIndicator.ToHtmlEndTag()}";
+            return ConvertToHtml(html, options, indentationLevel);
         }
     }
 }

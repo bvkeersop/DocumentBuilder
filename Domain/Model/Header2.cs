@@ -16,9 +16,9 @@ namespace NDocument.Domain.Model
             return CreateMarkdownHeader(_markdownHeader2Indicator, options);
         }
 
-        public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options)
+        public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel)
         {
-            return CreateHtmlHeader(_htmlHeader2Indicator, options);
+            return CreateHtmlHeader(_htmlHeader2Indicator, options, indentationLevel);
         }
     }
 }

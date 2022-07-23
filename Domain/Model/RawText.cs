@@ -16,9 +16,9 @@ namespace NDocument.Domain.Model
             return ConvertToMarkdown(Value, options);
         }
 
-        public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options)
+        public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel)
         {
-            return ConvertToHtml(Value, options);
+            return ConvertToHtml(Value, options, indentationLevel);
         }
     }
 }

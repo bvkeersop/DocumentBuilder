@@ -21,17 +21,20 @@ namespace NDocument.Domain.Builders
 
         public async Task WriteToOutputStreamAsync(Stream outputStream)
         {
-            using var streamWriter = new StreamWriter(outputStream, leaveOpen: true);
+            var streamWriter = new StreamWriter(outputStream, leaveOpen: true);
+            using var markdownStreamWriter = new MarkdownStreamWriter(streamWriter, _newLineProvider);
 
             for (var i = 0; i < MarkdownConvertables.Count(); i++)
             {
                 var markdown = await MarkdownConvertables.ElementAt(i).ToMarkdownAsync(_options);
-                await streamWriter.WriteAsync(markdown).ConfigureAwait(false);
 
                 if (i < MarkdownConvertables.Count() - 1)
                 {
-                    await streamWriter.WriteAsync(_newLineProvider.GetNewLine()).ConfigureAwait(false);
+                    await markdownStreamWriter.WriteLineAsync(markdown).ConfigureAwait(false);
+                    continue;
                 }
+
+                await markdownStreamWriter.WriteAsync(markdown).ConfigureAwait(false);
             }
 
             await streamWriter.FlushAsync().ConfigureAwait(false);

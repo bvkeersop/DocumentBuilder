@@ -8,5 +8,15 @@
                 .Remove(index, 1)
                 .Insert(index, replacementCharacter.ToString());
         }
+
+        public static string ToHtmlStartTag(this string indicator)
+        {
+            return $"<{indicator}>";
+        }
+
+        public static string ToHtmlEndTag(this string indicator)
+        {
+            return $"</{indicator}>";
+        }
     }
 }

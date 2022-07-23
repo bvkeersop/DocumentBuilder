@@ -1,16 +1,13 @@
-﻿using FluentAssertions;
+﻿using NDocument.Domain.Constants;
 using NDocument.Domain.Enumerations;
-using NDocument.Domain.Factories;
 using NDocument.Domain.Model;
-using NDocument.Domain.Options;
 
 namespace NDocument.Domain.Test.Unit.Model
 {
     [TestClass]
-    public class Header2Tests : TestBase
+    public class Header2Tests : HeaderTestBase
     {
         private Header2 _header2;
-        private const string _value = "Header2";
 
         [TestInitialize]
         public void TestInitialize()
@@ -22,44 +19,26 @@ namespace NDocument.Domain.Test.Unit.Model
         [DataRow(LineEndings.Environment)]
         [DataRow(LineEndings.Windows)]
         [DataRow(LineEndings.Linux)]
-        public async Task ToMarkdown_ReturnsMarkdownHeader2(LineEndings lineEndings)
+        public async Task ToMarkdown_ReturnsMarkdownHeader1(LineEndings lineEndings)
         {
-            // Arrange
-            var newLineProvider = NewLineProviderFactory.Create(lineEndings);
-
-            _markdownDocumentOptions = new MarkdownDocumentOptions
-            {
-                LineEndings = lineEndings
-            };
-
-            // Act
-            var markdownHeader2 = await _header2.ToMarkdownAsync(_markdownDocumentOptions);
-
-            // Assert
-            var expectedMarkdownHeader2 = $"## {_value}" + newLineProvider.GetNewLine();
-            markdownHeader2.Should().Be(expectedMarkdownHeader2);
+            // Act & Assert
+            await AssertToMarkdownReturnsCorrectMarkdownHeader(_header2, MarkdownIndicators.Header2, lineEndings);
         }
 
         [DataTestMethod]
-        [DataRow(LineEndings.Environment)]
-        [DataRow(LineEndings.Windows)]
-        [DataRow(LineEndings.Linux)]
-        public async Task ToHtml_ReturnsHtmlHeader2(LineEndings lineEndings)
+        [DataRow(LineEndings.Environment, IndentationType.Spaces, 2, 0)]
+        [DataRow(LineEndings.Environment, IndentationType.Spaces, 2, 1)]
+        [DataRow(LineEndings.Environment, IndentationType.Spaces, 4, 2)]
+        [DataRow(LineEndings.Windows, IndentationType.Spaces, 2, 0)]
+        [DataRow(LineEndings.Linux, IndentationType.Spaces, 2, 0)]
+        public async Task ToHtml_ReturnsHtmlHeader1(
+            LineEndings lineEndings,
+            IndentationType indentationType,
+            int indentationSize,
+            int indentationLevel)
         {
-            // Arrange
-            var newLineProvider = NewLineProviderFactory.Create(lineEndings);
-
-            _htmlDocumentOptions = new HtmlDocumentOptions
-            {
-                LineEndings = lineEndings
-            };
-
-            // Act
-            var htmlHeader2 = await _header2.ToHtmlAsync(_htmlDocumentOptions);
-
-            // Assert
-            var expectedHtmlHeader2 = $"<h2>{_value}</h2>" + newLineProvider.GetNewLine();
-            htmlHeader2.Should().Be(expectedHtmlHeader2);
+            // Act & Assert
+            await AssertToHtmlReturnsCorrectHtmlHeader(_header2, HtmlIndicators.Header2, lineEndings, indentationType, indentationSize, indentationLevel);
         }
     }
 }

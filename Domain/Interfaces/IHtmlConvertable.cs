@@ -4,6 +4,6 @@ namespace NDocument.Domain.Interfaces
 {
     public interface IHtmlConvertable
     {
-        ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options);
+        ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel);
     }
 }

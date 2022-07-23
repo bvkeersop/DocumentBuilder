@@ -16,9 +16,9 @@ namespace NDocument.Domain.Model
             OrderedColumnAttributes = ReflectionHelper<T>.GetOrderedColumnAttributes(tableRows);
         }
 
-        public override async ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options)
+        public override async ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel)
         {
-            return await CreateHtmlTableAsync(options).ConfigureAwait(false);
+            return await CreateHtmlTableAsync(options, indentationLevel).ConfigureAwait(false);
         }
 
         public override async ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options)
@@ -31,9 +31,9 @@ namespace NDocument.Domain.Model
             await CreateMarkdownTableAsync(outputStream, options).ConfigureAwait(false);
         }
 
-        public async Task WriteAsHtmlToStreamAsync(Stream outputStream, HtmlDocumentOptions options)
+        public async Task WriteAsHtmlToStreamAsync(Stream outputStream, HtmlDocumentOptions options, int indentationLevel)
         {
-            await CreateHtmlTableAsync(outputStream, options).ConfigureAwait(false);
+            await CreateHtmlTableAsync(outputStream, options, indentationLevel).ConfigureAwait(false);
         }
 
         private int GetLongestCellSizeForColumn(int columnIndex, bool isBold)

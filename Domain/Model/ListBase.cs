@@ -1,4 +1,6 @@
-﻿using NDocument.Domain.Factories;
+﻿using NDocument.Domain.Constants;
+using NDocument.Domain.Extensions;
+using NDocument.Domain.Factories;
 using NDocument.Domain.Options;
 using System.Text;
 
@@ -7,7 +9,6 @@ namespace NDocument.Domain.Model
     public abstract class ListBase<TValue> : GenericElement
     {
         public IEnumerable<TValue> Value { get; }
-        public const string _listItemIndicator = "li";
 
         public ListBase(IEnumerable<TValue> value)
         {
@@ -29,35 +30,36 @@ namespace NDocument.Domain.Model
             return new ValueTask<string>(list); // Already has a new line
         }
 
-        protected async ValueTask<string> CreateHtmlListAsync(string listIndicator, HtmlDocumentOptions options)
+        protected async ValueTask<string> CreateHtmlListAsync(string listIndicator, HtmlDocumentOptions options, int indentationLevel)
         {
+            var indentationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize, indentationLevel);
             var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.Append($"<{listIndicator}>");
+            stringBuilder.Append(indentationProvider.GetIndentation(0));
+            stringBuilder.Append(listIndicator.ToHtmlStartTag());
             stringBuilder.Append(newLineProvider.GetNewLine());
 
             foreach (var item in Value)
             {
-                var listItem = await CreateHtmlListItem(item, options);
+                var listItem = await CreateHtmlListItem(item, options, indentationLevel + 1);
                 stringBuilder.Append(listItem);
             }
 
-            stringBuilder.Append($"</{listIndicator}>");
-            var list = stringBuilder.ToString();
-            return await ConvertToHtml(list, options);
+            stringBuilder.Append(indentationProvider.GetIndentation(0));
+            stringBuilder.Append(listIndicator.ToHtmlEndTag());
+            stringBuilder.Append(newLineProvider.GetNewLine());
+            return stringBuilder.ToString();
         }
 
-        private static ValueTask<string> CreateHtmlListItem(TValue? item, HtmlDocumentOptions options)
+        private static ValueTask<string> CreateHtmlListItem(TValue? item, HtmlDocumentOptions options, int indentationLevel)
         {
-            var indentationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize);
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append(indentationProvider.GetIndentation(1));
-            stringBuilder.Append($"<{_listItemIndicator}>");
+            stringBuilder.Append(HtmlIndicators.ListItem.ToHtmlStartTag());;
             stringBuilder.Append(item);
-            stringBuilder.Append($"</{_listItemIndicator}>");
+            stringBuilder.Append(HtmlIndicators.ListItem.ToHtmlEndTag());
             var listItem = stringBuilder.ToString();
-            return ConvertToHtml(listItem, options);
+            return ConvertToHtml(listItem, options, indentationLevel);
         }
     }
 }

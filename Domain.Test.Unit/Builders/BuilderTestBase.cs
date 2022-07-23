@@ -1,9 +1,10 @@
-﻿using NDocument.Domain.Test.Unit.TestHelpers;
+﻿using NDocument.Domain.Test.Unit.Model;
+using NDocument.Domain.Test.Unit.TestHelpers;
 
 namespace NDocument.Domain.Test.Unit.Builders
 {
     [TestClass]
-    public abstract class BuilderTestBase
+    public abstract class BuilderTestBase : TestBase
     {
         protected const string _header1 = "Header1";
         protected const string _header2 = "Header2";

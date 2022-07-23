@@ -34,31 +34,32 @@ namespace NDocument.Domain.Model
             }
 
             var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
-            using var streamWriter = new StreamWriter(outputStream, leaveOpen: true);
-            await CreateMarkdownTableHeaderAsync(streamWriter, newLineProvider, options).ConfigureAwait(false);
-            await CreateMarkdownTableDividerAsync(streamWriter, newLineProvider, options).ConfigureAwait(false);
-            await CreateMarkdownTableRowsAsync(streamWriter, newLineProvider, options).ConfigureAwait(false);
-            streamWriter.Flush();
+            var streamWriter = new StreamWriter(outputStream, leaveOpen: true);
+            using var markdownStreamWriter = new MarkdownStreamWriter(streamWriter, newLineProvider);
+            await CreateMarkdownTableHeaderAsync(markdownStreamWriter, newLineProvider, options).ConfigureAwait(false);
+            await CreateMarkdownTableDividerAsync(markdownStreamWriter, newLineProvider, options).ConfigureAwait(false);
+            await CreateMarkdownTableRowsAsync(markdownStreamWriter, newLineProvider, options).ConfigureAwait(false);
+            await markdownStreamWriter.FlushAsync().ConfigureAwait(false);
         }
 
-        private async Task CreateMarkdownTableHeaderAsync(StreamWriter streamWriter, INewLineProvider newLineProvider, MarkdownDocumentOptions options)
+        private async Task CreateMarkdownTableHeaderAsync(MarkdownStreamWriter markdownStreamWriter, INewLineProvider newLineProvider, MarkdownDocumentOptions options)
         {
-            await streamWriter.WriteAsync(_columnDivider).ConfigureAwait(false);
+            await markdownStreamWriter.WriteAsync(_columnDivider).ConfigureAwait(false);
             var numberOfColumns = TableValues.NumberOfColumns;
 
             for (var i = 0; i < numberOfColumns; i++)
             {
                 var columnName = GetColumnName(i, options.MarkdownTableOptions.BoldColumnNames);
                 var amountOfWhiteSpace = DetermineAmountOfWhiteSpace(columnName, i, options);
-                await CreateMarkdownTableCellAsync(streamWriter, columnName, amountOfWhiteSpace);
+                await CreateMarkdownTableCellAsync(markdownStreamWriter, columnName, amountOfWhiteSpace);
             }
 
-            await streamWriter.WriteAsync(newLineProvider.GetNewLine());
+            await markdownStreamWriter.WriteNewLine();
         }
 
-        private async Task CreateMarkdownTableDividerAsync(StreamWriter streamWriter, INewLineProvider newLineProvider, MarkdownDocumentOptions options)
+        private async Task CreateMarkdownTableDividerAsync(MarkdownStreamWriter markdownStreamWriter, INewLineProvider newLineProvider, MarkdownDocumentOptions options)
         {
-            await streamWriter.WriteAsync(_columnDivider).ConfigureAwait(false);
+            await markdownStreamWriter.WriteAsync(_columnDivider).ConfigureAwait(false);
             var numberOfColumns = TableValues.NumberOfColumns;
 
             for (var i = 0; i < numberOfColumns; i++)
@@ -68,10 +69,10 @@ namespace NDocument.Domain.Model
                 var divider = new string(_rowDivider, numberOfDividerCellCharacters);
                 var alignment = GetAlignment(columnAttribute, options);
                 var alignedDivider = AddAlignment(divider, alignment);
-                await CreateMarkdownTableCellAsync(streamWriter, alignedDivider, 0, whiteSpaceCharacter: _rowDivider);
+                await CreateMarkdownTableCellAsync(markdownStreamWriter, alignedDivider, 0, whiteSpaceCharacter: _rowDivider);
             }
 
-            await streamWriter.WriteAsync(newLineProvider.GetNewLine());
+            await markdownStreamWriter.WriteNewLine();
         }
 
         private int GetNumberOfCharactersForDividerCell(int columnIndex, MarkdownDocumentOptions options)
@@ -98,8 +99,7 @@ namespace NDocument.Domain.Model
         {
             if (alignment == Alignment.Left)
             {
-                var t = cellDividerValue.ReplaceAt(0, _alignmentChar);
-                return t;
+                return cellDividerValue.ReplaceAt(0, _alignmentChar);
             }
 
             if (alignment == Alignment.Right)
@@ -116,30 +116,30 @@ namespace NDocument.Domain.Model
             return cellDividerValue;
         }
 
-        private async Task CreateMarkdownTableRowsAsync(StreamWriter streamWriter, INewLineProvider newLineProvider, MarkdownDocumentOptions options)
+        private async Task CreateMarkdownTableRowsAsync(MarkdownStreamWriter markdownStreamWriter, INewLineProvider newLineProvider, MarkdownDocumentOptions options)
         {
             var numberOfRows = TableValues.NumberOfRows;
 
             for (var i = 0; i < numberOfRows; i++)
             {
                 var currentRow = TableValues.GetRow(i);
-                await CreateMarkdownTableRowAsync(streamWriter, currentRow, options);
-                await streamWriter.WriteAsync(newLineProvider.GetNewLine());
+                await CreateMarkdownTableRowAsync(markdownStreamWriter, currentRow, options);
+                await markdownStreamWriter.WriteNewLine();
             }
         }
 
-        private async Task CreateMarkdownTableRowAsync(StreamWriter streamWriter, string[] tableRow, MarkdownDocumentOptions options)
+        private async Task CreateMarkdownTableRowAsync(MarkdownStreamWriter markdownStreamWriter, string[] tableRow, MarkdownDocumentOptions options)
         {
-            await streamWriter.WriteAsync(_columnDivider);
+            await markdownStreamWriter.WriteAsync(_columnDivider).ConfigureAwait(false);
             for (var i = 0; i < tableRow.Length; i++)
             {
                 var cellValue = tableRow[i];
                 var amountOfWhiteSpace = DetermineAmountOfWhiteSpace(cellValue, i, options);
-                await CreateMarkdownTableCellAsync(streamWriter, cellValue, amountOfWhiteSpace);
+                await CreateMarkdownTableCellAsync(markdownStreamWriter, cellValue, amountOfWhiteSpace);
             }
         }
 
-        private static async Task CreateMarkdownTableCellAsync(StreamWriter streamWriter, string cellValue, int amountOfWhiteSpace, char whiteSpaceCharacter = ' ')
+        private static async Task CreateMarkdownTableCellAsync(MarkdownStreamWriter markdownStreamWriter, string cellValue, int amountOfWhiteSpace, char whiteSpaceCharacter = ' ')
         {
             var whiteSpace = CreateRequiredWhiteSpace(amountOfWhiteSpace, whiteSpaceCharacter);
             var stringBuilder = new StringBuilder();
@@ -149,7 +149,7 @@ namespace NDocument.Domain.Model
                 .Append(whiteSpace)
                 .Append(_whiteSpace)
                 .Append(_columnDivider);
-            await streamWriter.WriteAsync(stringBuilder);
+            await markdownStreamWriter.WriteAsync(stringBuilder.ToString());
         }
 
         private static string CreateRequiredWhiteSpace(int amountOfWhiteSpace, char whiteSpaceCharacter)

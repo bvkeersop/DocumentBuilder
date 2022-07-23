@@ -8,7 +8,7 @@ using NDocument.Domain.Test.Unit.TestHelpers;
 namespace NDocument.Domain.Test.Unit.Model
 {
     [TestClass]
-    public partial class TableMarkdownTests : TableTestBase
+    public class TableMarkdownTests : TableTestBase
     {
         private Table<ProductTableRowWithoutHeaders> _tableWithoutHeaderAttributes;
 

@@ -25,7 +25,7 @@ namespace NDocument.Domain.Builders
             return type switch
             {
                 DocumentType.Markdown => async (GenericElement element) => await element.ToMarkdownAsync(_options.ToMarkdownDocumentOptions()),
-                DocumentType.Html => async (GenericElement element) => await element.ToHtmlAsync(_options.ToHtmlDocumentOptions()),
+                DocumentType.Html => async (GenericElement element) => await element.ToHtmlAsync(_options.ToHtmlDocumentOptions(), 2),
                 _ => throw new NotSupportedException($"{type} is currently not supported")
             };
         }

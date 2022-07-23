@@ -1,70 +1,70 @@
-﻿using Domain.Enumerations;
-using Domain.Model;
-using Domain.Options;
-using FluentAssertions;
-using Markdown.Test.Unit.Builders;
-using NTable.Markdown.Options;
-using Test.Helpers;
+﻿using FluentAssertions;
+using NDocument.Domain.Enumerations;
+using NDocument.Domain.Model;
+using NDocument.Domain.Options;
+using NDocument.Domain.Test.Unit.TestHelpers;
 
-namespace Domain.Test.Unit.Model
+namespace NDocument.Domain.Test.Unit.Model
 {
     [TestClass]
-    public partial class TableHtmlTests : TestBase
+    public class TableHtmlTests : TableTestBase
     {
-        private Table<ProductTableRowWithHeaders> _table;
+        private Table<ProductTableRowWithoutHeaders> _tableWithoutHeaderAttributes;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _table = new Table<ProductTableRowWithHeaders>(_productTableRowsWithHeaders);
+            _tableWithoutHeaderAttributes = new Table<ProductTableRowWithoutHeaders>(_productTableRowsWithoutHeaders);
         }
 
         [DataTestMethod]
-        [DataRow(LineEndings.Environment, Formatting.AlignColumns, false)]
-        public async Task CreateTable_CreatesFormattedTable(LineEndings LineEndings, Formatting formatting, bool boldColumnNames)
+        [DataRow(LineEndings.Environment, IndentationType.Spaces, 2, 0)]
+        [DataRow(LineEndings.Linux, IndentationType.Spaces, 2, 0)]
+        [DataRow(LineEndings.Windows, IndentationType.Spaces, 2, 0)]
+        [DataRow(LineEndings.Environment, IndentationType.Spaces, 4, 2)]
+        [DataRow(LineEndings.Environment, IndentationType.Tabs, 2, 0)]
+        public async Task ToHtmlAsync_CreatesFormattedTable(LineEndings LineEndings, IndentationType indentationType, int indenationSize, int indentationLevel)
         {
             // Arrange
-            var options = new MarkdownDocumentOptions
+            var options = new HtmlDocumentOptions
             {
                 LineEndings = LineEndings,
-                MarkdownTableOptions = new MarkdownTableOptions
-                {
-                    Formatting = formatting,
-                    BoldColumnNames = boldColumnNames
-                }
+                IndentationType = indentationType,
+                IndentationSize = indenationSize
             };
 
             // Act
-            var markdownTable = await _table.ToMarkdownAsync(options);
+            var htmlTable = await _tableWithoutHeaderAttributes.ToHtmlAsync(options, indentationLevel);
 
             // Assert
-            var expectedTable = ExampleProductMarkdownTableBuilder.BuildExpectedProductTable(options);
-            markdownTable.Should().Be(expectedTable);
+            var expectedTable = ExampleProductHtmlTableBuilder.BuildExpectedProductTable(options, indentationLevel);
+            htmlTable.Should().Be(expectedTable);
         }
 
         [DataTestMethod]
-        [DataRow(LineEndings.Environment, Formatting.AlignColumns, false)]
-        public async Task CreateTable_ProvideOutputStream_CreatesFormattedTable(LineEndings LineEndings, Formatting formatting, bool boldColumnNames)
+        [DataRow(LineEndings.Environment, IndentationType.Spaces, 2, 0)]
+        [DataRow(LineEndings.Linux, IndentationType.Spaces, 2, 0)]
+        [DataRow(LineEndings.Windows, IndentationType.Spaces, 2, 0)]
+        [DataRow(LineEndings.Environment, IndentationType.Spaces, 4, 2)]
+        [DataRow(LineEndings.Environment, IndentationType.Tabs, 2, 0)]
+        public async Task WriteAsHtmlToStreamAsync_CreatesFormattedTable(LineEndings LineEndings, IndentationType indentationType, int indenationSize, int indentationLevel)
         {
             // Arrange
             var outputStream = new MemoryStream();
 
-            var options = new MarkdownDocumentOptions
+            var options = new HtmlDocumentOptions
             {
                 LineEndings = LineEndings,
-                MarkdownTableOptions = new MarkdownTableOptions
-                {
-                    Formatting = formatting,
-                    BoldColumnNames = boldColumnNames
-                }
+                IndentationType = indentationType,
+                IndentationSize = indenationSize
             };
 
             // Act
-            await _table.WriteAsMarkdownToStreamAsync(outputStream, options);
+            await _tableWithoutHeaderAttributes.WriteAsHtmlToStreamAsync(outputStream, options, indentationLevel);
 
             // Assert
             var table = StreamHelper.GetStreamContents(outputStream);
-            var expectedTable = ExampleProductMarkdownTableBuilder.BuildExpectedProductTable(options);
+            var expectedTable = ExampleProductHtmlTableBuilder.BuildExpectedProductTable(options, indentationLevel);
             table.Should().Be(expectedTable);
         }
     }

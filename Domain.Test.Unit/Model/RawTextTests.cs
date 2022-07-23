@@ -27,13 +27,13 @@ namespace NDocument.Domain.Test.Unit.Model
             // Arrange
             var newLineProvider = NewLineProviderFactory.Create(lineEndings);
 
-            _markdownDocumentOptions = new MarkdownDocumentOptions
+            var options = new MarkdownDocumentOptions
             {
                 LineEndings = lineEndings
             };
 
             // Act
-            var markdownRawText = await _rawText.ToMarkdownAsync(_markdownDocumentOptions);
+            var markdownRawText = await _rawText.ToMarkdownAsync(options);
 
             // Assert
             var expectedMarkdownRawText = _value + newLineProvider.GetNewLine();
@@ -46,13 +46,13 @@ namespace NDocument.Domain.Test.Unit.Model
             // Arrange
             var newLineProvider = NewLineProviderFactory.Create(lineEndings);
 
-            _htmlDocumentOptions = new HtmlDocumentOptions
+            var options = new HtmlDocumentOptions
             {
                 LineEndings = lineEndings
             };
 
             // Act
-            var markdownRawText = await _rawText.ToHtmlAsync(_htmlDocumentOptions);
+            var markdownRawText = await _rawText.ToHtmlAsync(options, 0);
 
             // Assert
             var expectedMarkdownRawText = _value + newLineProvider.GetNewLine();
