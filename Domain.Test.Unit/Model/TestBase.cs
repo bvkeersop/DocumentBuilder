@@ -1,4 +1,9 @@
-﻿using NDocument.Domain.Utilities;
+﻿using NDocument.Domain.Enumerations;
+using NDocument.Domain.Extensions;
+using NDocument.Domain.Factories;
+using NDocument.Domain.Model;
+using NDocument.Domain.Options;
+using NDocument.Domain.Utilities;
 
 namespace NDocument.Domain.Test.Unit.Model
 {

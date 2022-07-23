@@ -8,5 +8,7 @@
         public const string Header4 = "####";
         public const string OrderedListItem = "1.";
         public const string UnorderedListItem = "-";
+
+        public static string UnorderedList { get; internal set; }
     }
 }

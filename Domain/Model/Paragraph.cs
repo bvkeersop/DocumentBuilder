@@ -1,4 +1,6 @@
-﻿using NDocument.Domain.Options;
+﻿using NDocument.Domain.Constants;
+using NDocument.Domain.Extensions;
+using NDocument.Domain.Options;
 using System.Text;
 
 namespace NDocument.Domain.Model
@@ -20,9 +22,9 @@ namespace NDocument.Domain.Model
         public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel)
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append("<p>");
+            stringBuilder.Append(HtmlIndicators.Paragraph.ToHtmlStartTag());
             stringBuilder.Append(Value);
-            stringBuilder.Append("</p>");
+            stringBuilder.Append(HtmlIndicators.Paragraph.ToHtmlEndTag());
             var value = stringBuilder.ToString();
             return ConvertToHtml(value, options, indentationLevel);
         }

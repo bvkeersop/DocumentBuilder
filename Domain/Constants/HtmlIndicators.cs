@@ -6,6 +6,7 @@
         public const string Header2 = "h2";
         public const string Header3 = "h3";
         public const string Header4 = "h4";
+        public const string Paragraph = "p";
         public const string OrderedList = "ol";
         public const string UnorderedList = "ul";
         public const string ListItem = "li";
