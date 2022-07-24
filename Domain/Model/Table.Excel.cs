@@ -2,7 +2,6 @@
 using NDocument.Domain.Interfaces;
 using NDocument.Domain.Options;
 using NDocument.Domain.Utilities;
-using System.Globalization;
 
 namespace NDocument.Domain.Model
 {
@@ -10,6 +9,16 @@ namespace NDocument.Domain.Model
     {
         private void CreateExcelTable(ExcelDocumentOptions options)
         {
+            if (string.IsNullOrEmpty(options.WorksheetName))
+            {
+                throw new ArgumentException($"{nameof(options.WorksheetName)} cannot be null or empty");
+            }
+
+            if (string.IsNullOrEmpty(options.FilePath))
+            {
+                throw new ArgumentException($"{nameof(options.FilePath)} cannot be null or empty");
+            }
+
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add(options.WorksheetName);
 

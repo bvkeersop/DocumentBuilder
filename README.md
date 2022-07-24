@@ -5,6 +5,7 @@ The following formats are currently supported.
 
 - Markdown
 - HTML
+- Excel
 
 ## Creating a document
 
@@ -123,7 +124,10 @@ var outputStream = new MemoryStream();
 var table = new Table<ProductsTableRow>(productTableRows);
 table.WriteAsMarkdownToStreamAsync(outputStream); // Markdown
 table.WriteAsHtmlToStreamAsync(outputStream); // HTML
+table.WriteToExcel(excelDocumentOptions) // Excel
 ```
+
+> NOTE: The values written to the table cell will be the object's `ToString()` method
 
 ## Options
 
@@ -143,8 +147,12 @@ All document types have the following options:
 
 | Option                  | Type           | Description                                  | DefaultValue |
 | ----------------------- | ---------------|--------------------------------------------- | ------------ |
-| TableAlignment          | TableAlignment | How to align the table                       | AlignColumns |
+| Formatting              | Formatting     | How to align the table                       | AlignColumns |
 | BoldColumnNames         | bool           | Wheter to have the column names in bold text | false        |
+| DefaultAlignment        | Alignment      | What default (github) alignment to use       | None         |
+
+> **Formatting**: *AlignColumns, None*
+> **Alignment**: *None, Left, Right, Center*
 
 ## HTML
 
@@ -172,10 +180,9 @@ public class ProductTableRow
     [Column(nameof(Description))] // Not specifying an order will default the value to int.Max
     public string Description { get; set; }
 
-    [Column(nameof(Price), 3)]
     public string Price { get; set; }
 
-    [Column(nameof(Amount), 2)]
+    [Column(alignment: Alignment.Center)] // Applies github style markdown to align the column
     public string Amount { get; set; }
 }
 

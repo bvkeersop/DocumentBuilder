@@ -10,7 +10,7 @@ namespace NDocument.Domain.Test.Unit.Model
     public class TableExcelTests : TableTestBase
     {
         private Table<ExcelTableRow> _excelTable;
-        private const string _worksheetName = $"{nameof(TableExcelTests)}-{nameof(WriteToExcel)}";
+        private const string _worksheetName = $"{nameof(TableExcelTests)}";
         private const string _filePath = $"./{_worksheetName}.xlsx";
 
         [TestInitialize]
@@ -39,14 +39,16 @@ namespace NDocument.Domain.Test.Unit.Model
         }
 
         [TestMethod]
-        public void WriteToExcel()
+        public void WriteToExcel_Success()
         {
+            // Arrange
             var options = new ExcelDocumentOptions
             {
                 WorksheetName = _worksheetName,
                 FilePath = _filePath,
             };
 
+            // Act
             _excelTable.WriteToExcel(options);
 
             // Assert
@@ -71,6 +73,46 @@ namespace NDocument.Domain.Test.Unit.Model
             worksheet.Cell(3, "B").Value.Should().Be(row2.ElementAt(1).Value);
             worksheet.Cell(3, "C").Value.Should().Be(row2.ElementAt(2).Value);
             worksheet.Cell(3, "D").Value.Should().Be(row2.ElementAt(3).Value);
+        }
+
+        [DataTestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow(" ")]
+        public void WriteToExcel_NoWorksheetNameProvided_ThrowsArgumentException(string worksheetName)
+        {
+            // Arrange
+            var options = new ExcelDocumentOptions
+            {
+                WorksheetName = worksheetName,
+                FilePath = _filePath,
+            };
+
+            // Act
+            var action = () =>_excelTable.WriteToExcel(options);
+
+            // Assert
+            action.Should().Throw<ArgumentException>();
+        }
+
+        [DataTestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow(" ")]
+        public void WriteToExcel_NoFilePathProvided_ThrowsArgumentException(string filePath)
+        {
+            // Arrange
+            var options = new ExcelDocumentOptions
+            {
+                WorksheetName = _worksheetName,
+                FilePath = filePath,
+            };
+
+            // Act
+            var action = () => _excelTable.WriteToExcel(options);
+
+            // Assert
+            action.Should().Throw<ArgumentException>();
         }
     }
 }
