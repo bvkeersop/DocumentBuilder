@@ -9,5 +9,6 @@
         CouldNotFindColumnAtIndex,
         CouldNotFindTableRowAtIndex,
         ColumnHasNoName,
+        IdentifierMustBeGreaterThanZero,
     }
 }

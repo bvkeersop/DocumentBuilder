@@ -1,19 +1,18 @@
 ﻿using NDocument.Domain.Attributes;
 using NDocument.Domain.Helpers;
-using NDocument.Domain.Interfaces;
 using NDocument.Domain.Options;
 
 namespace NDocument.Domain.Model
 {
-    public partial class Table<T> : GenericElement, IMarkdownStreamWritable, IHtmlStreamWritable
+    public partial class Table<TValue> : GenericElement
     {
-        public Matrix<T> TableValues { get; }
+        public Matrix<TValue> TableValues { get; }
         public IEnumerable<ColumnAttribute> OrderedColumnAttributes { get; }
 
-        public Table(IEnumerable<T> tableRows)
+        public Table(IEnumerable<TValue> tableRows)
         {
-            TableValues = new Matrix<T>(tableRows);
-            OrderedColumnAttributes = ReflectionHelper<T>.GetOrderedColumnAttributes(tableRows);
+            TableValues = new Matrix<TValue>(tableRows);
+            OrderedColumnAttributes = ReflectionHelper<TValue>.GetOrderedColumnAttributes(tableRows);
         }
 
         public override async ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel)
@@ -24,6 +23,11 @@ namespace NDocument.Domain.Model
         public override async ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options)
         {
             return await CreateMarkdownTableAsync(options).ConfigureAwait(false);
+        }
+
+        public void WriteToExcel(ExcelDocumentOptions options)
+        {
+            CreateExcelTable(options);
         }
 
         public async Task WriteAsMarkdownToStreamAsync(Stream outputStream, MarkdownDocumentOptions options)

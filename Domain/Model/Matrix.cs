@@ -4,28 +4,26 @@ using System.Reflection;
 
 namespace NDocument.Domain.Model
 {
-    public class Matrix<T>
+    public class Matrix<TValue>
     {
-        private string[][] Values { get; }
+        private TableCell[][] Values { get; }
         public int NumberOfRows { get; }
         public int NumberOfColumns { get; }
 
-        public int LongestCellSize { get; private set; }
+        private readonly Dictionary<int, int> _longestCellSizeOfColumn = new();
 
-        private readonly Dictionary<int, int> _longestCellSizeOfColumn = new Dictionary<int, int>();
-
-        public Matrix(IEnumerable<T> tableRows)
+        public Matrix(IEnumerable<TValue> tableRows)
         {
-            var orderedPropertyInfos = ReflectionHelper<T>.GetOrderedTableRowPropertyInfos(tableRows);
+            var orderedPropertyInfos = ReflectionHelper<TValue>.GetOrderedTableRowPropertyInfos(tableRows);
 
             NumberOfRows = tableRows.Count();
             NumberOfColumns = orderedPropertyInfos.Count();
 
-            var matrix = new string[NumberOfRows][];
+            var matrix = new TableCell[NumberOfRows][];
 
             for (var i = 0; i < NumberOfRows; i++)
             {
-                matrix[i] = new string[NumberOfColumns];
+                matrix[i] = new TableCell[NumberOfColumns];
                 for (var j = 0; j < NumberOfColumns; j++)
                 {
                     var currentProperty = orderedPropertyInfos.ElementAt(j);
@@ -37,9 +35,9 @@ namespace NDocument.Domain.Model
                     }
 
                     var cellValue = GetTableCellValue(currentProperty, currentTableRow);
-                    matrix[i][j] = cellValue;
+                    var cellType = GetTableCellType(currentProperty);
+                    matrix[i][j] = new TableCell(cellValue, cellType);
                     CreateOrUpdateLongestCellSizeOfColumn(cellValue, j);
-                    UpdateLongestCellSize(cellValue);
                 }
             }
 
@@ -62,37 +60,27 @@ namespace NDocument.Domain.Model
             }
         }
 
-        private void UpdateLongestCellSize(string cellValue)
+        private static string GetTableCellValue(PropertyInfo properyInfo, TValue tableRow)
         {
-            if (cellValue.Length > LongestCellSize)
-            {
-                LongestCellSize = cellValue.Length;
-            }
+            return properyInfo.GetValue(tableRow)?.ToString() ?? string.Empty;
         }
 
-        private static string GetTableCellValue(PropertyInfo properyInfo, object tableRow)
+        private static Type GetTableCellType(PropertyInfo properyInfo)
         {
-            var value = properyInfo?.GetValue(tableRow);
-
-            if (value is null)
-            {
-                return string.Empty;
-            }
-
-            return value.ToString();
+            return properyInfo.PropertyType;
         }
 
-        public string[] GetColumn(int index)
+        public TableCell[] GetColumn(int index)
         {
             return Values.Select(v => v[index]).ToArray();
         }
 
-        public string[] GetRow(int index)
+        public TableCell[] GetRow(int index)
         {
             return Values[index];
         }
 
-        public string GetValue(int rowIndex, int columnIndex)
+        public TableCell GetValue(int rowIndex, int columnIndex)
         {
             return Values[rowIndex][columnIndex];
         }

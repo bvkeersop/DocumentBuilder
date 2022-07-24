@@ -3,13 +3,14 @@ using NDocument.Domain.Enumerations;
 using NDocument.Domain.Exceptions;
 using NDocument.Domain.Extensions;
 using NDocument.Domain.Factories;
+using NDocument.Domain.Interfaces;
 using NDocument.Domain.Options;
 using NDocument.Domain.Utilities;
 using System.Text;
 
 namespace NDocument.Domain.Model
 {
-    public partial class Table<T>
+    public partial class Table<TValue> : IMarkdownStreamWritable
     {
         private const char _columnDivider = '|';
         private const char _rowDivider = '-';
@@ -128,12 +129,12 @@ namespace NDocument.Domain.Model
             }
         }
 
-        private async Task CreateMarkdownTableRowAsync(MarkdownStreamWriter markdownStreamWriter, string[] tableRow, MarkdownDocumentOptions options)
+        private async Task CreateMarkdownTableRowAsync(MarkdownStreamWriter markdownStreamWriter, TableCell[] tableRow, MarkdownDocumentOptions options)
         {
             await markdownStreamWriter.WriteAsync(_columnDivider).ConfigureAwait(false);
             for (var i = 0; i < tableRow.Length; i++)
             {
-                var cellValue = tableRow[i];
+                var cellValue = tableRow[i].Value;
                 var amountOfWhiteSpace = DetermineAmountOfWhiteSpace(cellValue, i, options);
                 await CreateMarkdownTableCellAsync(markdownStreamWriter, cellValue, amountOfWhiteSpace);
             }

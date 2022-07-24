@@ -2,13 +2,14 @@
 using NDocument.Domain.Exceptions;
 using NDocument.Domain.Extensions;
 using NDocument.Domain.Factories;
+using NDocument.Domain.Interfaces;
 using NDocument.Domain.Options;
 using NDocument.Domain.Utilities;
 using System.Text;
 
 namespace NDocument.Domain.Model
 {
-    public partial class Table<T>
+    public partial class Table<TValue> : IHtmlStreamWritable
     {
         private async Task<string> CreateHtmlTableAsync(HtmlDocumentOptions options, int indentationLevel)
         {
@@ -34,17 +35,14 @@ namespace NDocument.Domain.Model
 
             await htmlStreamWriter.WriteLineAsync(HtmlIndicators.Table.ToHtmlStartTag()).ConfigureAwait(false);
 
-            await CreateHtmlTableHeaderAsync(htmlStreamWriter, newLineProvider, indentationProvider).ConfigureAwait(false);
-            await CreateHtmlTableRowsAsync(htmlStreamWriter, newLineProvider, indentationProvider).ConfigureAwait(false);
+            await CreateHtmlTableHeaderAsync(htmlStreamWriter).ConfigureAwait(false);
+            await CreateHtmlTableRowsAsync(htmlStreamWriter).ConfigureAwait(false);
 
             await htmlStreamWriter.WriteLineAsync(HtmlIndicators.Table.ToHtmlEndTag()).ConfigureAwait(false);
             await htmlStreamWriter.FlushAsync().ConfigureAwait(false);
         }
 
-        private async Task CreateHtmlTableHeaderAsync(
-            HtmlStreamWriter htmlStreamWriter,
-            INewLineProvider newLineProvider,
-            IIndentationProvider indentationProvider)
+        private async Task CreateHtmlTableHeaderAsync(HtmlStreamWriter htmlStreamWriter)
         {
             var numberOfColumns = TableValues.NumberOfColumns;
 
@@ -53,39 +51,32 @@ namespace NDocument.Domain.Model
             for (var i = 0; i < numberOfColumns; i++)
             {
                 var columnName = OrderedColumnAttributes.ElementAt(i).Name;
-                await CreateHtmlTableCellAsync(htmlStreamWriter, newLineProvider, indentationProvider, columnName, HtmlIndicators.TableHeader, 2).ConfigureAwait(false);
+                await CreateHtmlTableCellAsync(htmlStreamWriter, columnName, HtmlIndicators.TableHeader, 2).ConfigureAwait(false);
             }
 
             await htmlStreamWriter.WriteLineAsync(HtmlIndicators.TableRow.ToHtmlEndTag(), 1).ConfigureAwait(false);
         }
 
-        private async Task CreateHtmlTableRowsAsync(
-            HtmlStreamWriter htmlStreamWriter,
-            INewLineProvider newLineProvider,
-            IIndentationProvider indentationProvider)
+        private async Task CreateHtmlTableRowsAsync(HtmlStreamWriter htmlStreamWriter)
         {
             var numberOfRows = TableValues.NumberOfRows;
 
             for (var i = 0; i < numberOfRows; i++)
             {
                 var currentRow = TableValues.GetRow(i);
-                await CreateHtmlTableRowAsync(htmlStreamWriter, currentRow, newLineProvider, indentationProvider).ConfigureAwait(false);
+                await CreateHtmlTableRowAsync(htmlStreamWriter, currentRow).ConfigureAwait(false);
                 await htmlStreamWriter.WriteNewLineAsync().ConfigureAwait(false);
             }
         }
 
-        private static async Task CreateHtmlTableRowAsync(
-            HtmlStreamWriter htmlStreamWriter,
-            string[] tableRow,
-            INewLineProvider newLineProvider,
-            IIndentationProvider indentationProvider)
+        private static async Task CreateHtmlTableRowAsync(HtmlStreamWriter htmlStreamWriter, TableCell[] tableRow)
         {
             await htmlStreamWriter.WriteLineAsync(HtmlIndicators.TableRow.ToHtmlStartTag(), 1).ConfigureAwait(false);
 
             for (var i = 0; i < tableRow.Length; i++)
             {
-                var cellValue = tableRow[i];
-                await CreateHtmlTableCellAsync(htmlStreamWriter, newLineProvider, indentationProvider, cellValue, HtmlIndicators.TableData, 2).ConfigureAwait(false);
+                var cellValue = tableRow[i].Value;
+                await CreateHtmlTableCellAsync(htmlStreamWriter, cellValue, HtmlIndicators.TableData, 2).ConfigureAwait(false);
             }
 
             await htmlStreamWriter.WriteAsync(HtmlIndicators.TableRow.ToHtmlEndTag(), 1).ConfigureAwait(false);
@@ -93,8 +84,6 @@ namespace NDocument.Domain.Model
 
         private static async Task CreateHtmlTableCellAsync(
             HtmlStreamWriter htmlStreamWriter,
-            INewLineProvider newLineProvider,
-            IIndentationProvider indentationProvider,
             string cellValue,
             string htmlIndicator,
             int indentation)

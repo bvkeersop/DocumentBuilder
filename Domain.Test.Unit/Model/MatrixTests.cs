@@ -15,20 +15,11 @@ namespace NDocument.Domain.Test.Unit.Model
             _matrix = new Matrix<ProductTableRowWithHeaders>(_productTableRowsWithHeaders);
         }
 
-        [TestMethod]
-        public void GetLongestCellSize_ReturnsLongestCellSize()
-        {
-            // Act
-            var longestCellSize = _matrix.LongestCellSize;
-
-            // Assert
-            longestCellSize.Should().Be(_longestDescription.Length);
-        }
-
         [DataTestMethod]
-        [DataRow(0, 13)]
-        [DataRow(1, 13)]
-        [DataRow(2, 42)]
+        [DataRow(0, 1)]
+        [DataRow(1, 1)]
+        [DataRow(2, 4)]
+        [DataRow(3, 42)]
         public void GetLongestCellSize_ReturnsLongestCellSize(int columnIndex, int expectedLength)
         {
             // Act
@@ -47,10 +38,14 @@ namespace NDocument.Domain.Test.Unit.Model
             // Assert
             var expectedRow = _productTableRowsWithHeaders.ElementAt(0);
             row.Length.Should().Be(4); // amount of properties
-            row[0].Should().Be(expectedRow.Id);
-            row[1].Should().Be(expectedRow.Amount);
-            row[2].Should().Be(expectedRow.Price);
-            row[3].Should().Be(expectedRow.Description);
+            row[0].Value.Should().Be(expectedRow.Id);
+            row[0].Type.Should().Be(expectedRow.Id.GetType());
+            row[1].Value.Should().Be(expectedRow.Amount);
+            row[1].Type.Should().Be(expectedRow.Amount.GetType());
+            row[2].Value.Should().Be(expectedRow.Price);
+            row[2].Type.Should().Be(expectedRow.Price.GetType());
+            row[3].Value.Should().Be(expectedRow.Description);
+            row[3].Type.Should().Be(expectedRow.Description.GetType());
         }
 
         [TestMethod]
@@ -65,9 +60,12 @@ namespace NDocument.Domain.Test.Unit.Model
             var rowThree = _productTableRowsWithHeaders.ElementAt(2);
 
             column.Length.Should().Be(_productTableRowsWithHeaders.Count());
-            column[0].Should().Be(rowOne.Id);
-            column[1].Should().Be(rowTwo.Id);
-            column[2].Should().Be(rowThree.Id);
+            column[0].Value.Should().Be(rowOne.Id);
+            column[0].Type.Should().Be(rowOne.Id.GetType());
+            column[1].Value.Should().Be(rowTwo.Id);
+            column[1].Type.Should().Be(rowTwo.Id.GetType());
+            column[2].Value.Should().Be(rowThree.Id);
+            column[2].Type.Should().Be(rowThree.Id.GetType());
         }
 
         [TestMethod]
