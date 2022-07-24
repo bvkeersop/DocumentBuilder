@@ -1,49 +1,23 @@
-﻿using NDocument.Domain.Extensions;
-using NDocument.Domain.Factories;
-using NDocument.Domain.Interfaces;
+﻿using NDocument.Domain.Interfaces;
 using NDocument.Domain.Model;
 using NDocument.Domain.Options;
-using NDocument.Domain.Utilities;
+using NDocument.Domain.Writers;
 
 namespace NDocument.Domain.Builders
 {
     public class HtmlDocumentBuilder
     {
         public IEnumerable<IHtmlConvertable> HtmlConvertables { get; private set; } = new List<IHtmlConvertable>();
-        private IIndentationProvider _indentationProvider;
-        private INewLineProvider _newLineProvider;
-        private HtmlDocumentOptions _options;
-
-        private const string _docType = "<!DOCTYPE html>";
-        private const string _htmlIndicator = "html";
-        private const string _bodyIndicator = "body";
+        private readonly HtmlDocumentWriter _htmlDocumentWriter;
 
         public HtmlDocumentBuilder(HtmlDocumentOptions options)
         {
-            _indentationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize);
-            _newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
-            _options = options;
+            _htmlDocumentWriter = new HtmlDocumentWriter(options);
         }
 
-        public async Task WriteToOutputStreamAsync(Stream outputStream)
+        public async Task WriteToStreamAsync(Stream outputStream)
         {
-            var streamWriter = new StreamWriter(outputStream, leaveOpen: true);
-            using var htmlStreamWriter  = new HtmlStreamWriter(streamWriter, _newLineProvider, _indentationProvider);
-
-            await htmlStreamWriter.WriteLineAsync(_docType).ConfigureAwait(false);
-            await htmlStreamWriter.WriteLineAsync(_htmlIndicator.ToHtmlStartTag()).ConfigureAwait(false);
-            await htmlStreamWriter.WriteLineAsync(_bodyIndicator.ToHtmlStartTag(), 1).ConfigureAwait(false);
-
-            for (var i = 0; i < HtmlConvertables.Count(); i++)
-            {
-                var html = await HtmlConvertables.ElementAt(i).ToHtmlAsync(_options, 2);
-                await htmlStreamWriter.WriteAsync(html).ConfigureAwait(false);
-            }
-
-            await htmlStreamWriter.WriteLineAsync(_bodyIndicator.ToHtmlEndTag(), 1).ConfigureAwait(false);
-            await htmlStreamWriter.WriteLineAsync(_htmlIndicator.ToHtmlEndTag()).ConfigureAwait(false);
-
-            await streamWriter.FlushAsync().ConfigureAwait(false);
+            await _htmlDocumentWriter.WriteToOutputStreamAsync(outputStream, HtmlConvertables).ConfigureAwait(false);
         }
 
         public HtmlDocumentBuilder WithHeader1(string header1)

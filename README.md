@@ -5,7 +5,10 @@ The following formats are currently supported.
 
 - Markdown
 - HTML
-- Excel
+- Excel (Tables only)
+
+`NDocument` exposes a `DocumentBuilder` class that can be used to create a markdown or HTML document.
+`NDocument` also exposes a `MarkdownDocumentBuilder` and an `HTMLDocumentBuilder`, this is done so that in the future, these can be extended with markdown or HTML specific elements. For now it's recommend to use the generic `DocumentBuilder` as it has the exact same functionality.
 
 ## Creating a document
 
@@ -38,7 +41,28 @@ var unorderedList = new List<string>
 
 ```C#
 
-// Create a markdown document
+// Create a document using the generic document builder
+
+var outputStream = new MemoryStream();
+
+var documentBuilder = new DocumentBuilder(options)
+    .WithHeader1(header1)
+    .WithHeader2(header2)
+    .WithHeader3(header3)
+    .WithHeader4(header4)
+    .WithParagraph(paragraph)
+    .WithUnorderedList(unorderedList)
+    .WithOrderedList(orderedList)
+    .WithTable(productTableRows) // More on tables below
+    .WriteToStreamAsync(outputStream, DocumentType.Markdown); // Or HTML
+
+```
+
+```C#
+
+```C#
+
+// Create a document using the markdown document builder
 
 var outputStream = new MemoryStream();
 
@@ -51,13 +75,13 @@ var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
     .WithUnorderedList(unorderedList)
     .WithOrderedList(orderedList)
     .WithTable(productTableRows) // More on tables below
-    .WriteToOutputStream(outputStream);
+    .WriteToStreamAsync(outputStream);
 
 ```
 
 ```C#
 
-// Or an html document
+// Create a document using the html document builder
 
 var outputStream = new MemoryStream();
 
@@ -70,7 +94,7 @@ var htmlDocumentBuilder = new HtmlDocumentBuilder(options)
     .WithUnorderedList(unorderedList)
     .WithOrderedList(orderedList)
     .WithTable(productTableRows) // More on tables below
-    .WriteToOutputStream(outputStream);
+    .WriteToStreamAsync(outputStream);
 ```
 
 ## Tables
@@ -113,7 +137,7 @@ var outputStream = new MemoryStream();
 
 var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
     .WithTable(productTableRows)
-    .WriteToOutputStream(outputStream);
+    .WriteToStream(outputStream);
 
 ```
 

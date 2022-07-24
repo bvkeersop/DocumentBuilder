@@ -3,56 +3,33 @@ using NDocument.Domain.Extensions;
 using NDocument.Domain.Factories;
 using NDocument.Domain.Model;
 using NDocument.Domain.Options;
-using NDocument.Domain.Utilities;
+using NDocument.Domain.Writers;
 
 namespace NDocument.Domain.Builders
 {
     internal class DocumentBuilder
     {
         public IEnumerable<GenericElement> Convertables { get; private set; } = new List<GenericElement>();
-
-        private readonly INewLineProvider _newLineProvider;
         private readonly DocumentOptions _options;
 
         public DocumentBuilder(DocumentOptions options)
         {
-            _newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
             _options = options;
         }
 
-        private Func<GenericElement, Task<string>> GetCreateContentFunction(DocumentType type)
+        public async Task WriteToStreamAsync(Stream outputStream, DocumentType documentType)
         {
-            return type switch
+            switch (documentType)
             {
-                DocumentType.Markdown => async (GenericElement element) => await element.ToMarkdownAsync(_options.ToMarkdownDocumentOptions()),
-                DocumentType.Html => async (GenericElement element) => await element.ToHtmlAsync(_options.ToHtmlDocumentOptions(), 2),
-                _ => throw new NotSupportedException($"{type} is currently not supported")
+                case (DocumentType.Markdown):
+                    await WriteToStreamAsMarkdownAsync(outputStream).ConfigureAwait(false);
+                    break;
+                case (DocumentType.Html):
+                    await WriteToStreamAsHtmlAsync(outputStream).ConfigureAwait(false);
+                    break;
+                default:
+                    throw new NotSupportedException($"{documentType} is not supported");
             };
-        }
-
-        public async Task WriteToOutputStreamAsync(Stream outputStream, DocumentType documentType)
-        {
-            var createContentFunction = GetCreateContentFunction(documentType);
-            await WriteToOutputStreamInternalAsync(outputStream, createContentFunction);
-        }
-
-        public async Task WriteToOutputStreamInternalAsync(Stream outputStream, Func<GenericElement, Task<string>> getContentToWrite)
-        {
-            using var streamWriter = new StreamWriter(outputStream, leaveOpen: true);
-
-            for (var i = 0; i < Convertables.Count(); i++)
-            {
-                var currentConvertable = Convertables.ElementAt(i);
-                var content = await getContentToWrite(currentConvertable);
-                await streamWriter.WriteAsync(content).ConfigureAwait(false);
-
-                if (i < Convertables.Count() - 1)
-                {
-                    await streamWriter.WriteAsync(_newLineProvider.GetNewLine()).ConfigureAwait(false);
-                }
-            }
-
-            await streamWriter.FlushAsync().ConfigureAwait(false);
         }
 
         public DocumentBuilder WithHeader1(string header1)
@@ -101,6 +78,20 @@ namespace NDocument.Domain.Builders
         {
             Convertables = Convertables.Append(new Table<T>(tableRows));
             return this;
+        }
+
+        private async Task WriteToStreamAsMarkdownAsync(Stream outputStream)
+        {
+            var options = _options.ToMarkdownDocumentOptions();
+            var markdownDocumentWriter = new MarkdownDocumentWriter(options);
+            await markdownDocumentWriter.WriteToStreamAsync(outputStream, Convertables);
+        }
+
+        private async Task WriteToStreamAsHtmlAsync(Stream outputStream)
+        {
+            var options = _options.ToHtmlDocumentOptions();
+            var htmlDocumentWriter = new HtmlDocumentWriter(options);
+            await htmlDocumentWriter.WriteToOutputStreamAsync(outputStream, Convertables);
         }
     }
 }

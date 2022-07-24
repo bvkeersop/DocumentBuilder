@@ -1,43 +1,23 @@
-﻿using NDocument.Domain.Factories;
-using NDocument.Domain.Interfaces;
+﻿using NDocument.Domain.Interfaces;
 using NDocument.Domain.Model;
 using NDocument.Domain.Options;
-using NDocument.Domain.Utilities;
+using NDocument.Domain.Writers;
 
 namespace NDocument.Domain.Builders
 {
     public class MarkdownDocumentBuilder
     {
         public IEnumerable<IMarkdownConvertable> MarkdownConvertables { get; private set; } = new List<IMarkdownConvertable>();
-
-        private readonly INewLineProvider _newLineProvider;
-        private readonly MarkdownDocumentOptions _options;
+        private readonly MarkdownDocumentWriter _markdownDocumentWriter;
 
         public MarkdownDocumentBuilder(MarkdownDocumentOptions options)
         {
-            _newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
-            _options = options;
+            _markdownDocumentWriter = new MarkdownDocumentWriter(options);
         }
 
-        public async Task WriteToOutputStreamAsync(Stream outputStream)
+        public async Task WriteToStreamAsync(Stream outputStream)
         {
-            var streamWriter = new StreamWriter(outputStream, leaveOpen: true);
-            using var markdownStreamWriter = new MarkdownStreamWriter(streamWriter, _newLineProvider);
-
-            for (var i = 0; i < MarkdownConvertables.Count(); i++)
-            {
-                var markdown = await MarkdownConvertables.ElementAt(i).ToMarkdownAsync(_options);
-
-                if (i < MarkdownConvertables.Count() - 1)
-                {
-                    await markdownStreamWriter.WriteLineAsync(markdown).ConfigureAwait(false);
-                    continue;
-                }
-
-                await markdownStreamWriter.WriteAsync(markdown).ConfigureAwait(false);
-            }
-
-            await streamWriter.FlushAsync().ConfigureAwait(false);
+            await _markdownDocumentWriter.WriteToStreamAsync(outputStream, MarkdownConvertables).ConfigureAwait(false);
         }
 
         public MarkdownDocumentBuilder WithHeader1(string header1)

@@ -2,6 +2,9 @@
 {
     public static class HtmlIndicators
     {
+        public const string DocType = "<!DOCTYPE html>";
+        public const string Html = "html";
+        public const string Body = "body";
         public const string Header1 = "h1";
         public const string Header2 = "h2";
         public const string Header3 = "h3";

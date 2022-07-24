@@ -1,15 +1,46 @@
 ﻿using FluentAssertions;
 using NDocument.Domain.Builders;
 using NDocument.Domain.Enumerations;
-using NDocument.Domain.Factories;
 using NDocument.Domain.Options;
 using NDocument.Domain.Test.Unit.TestHelpers;
 
 namespace NDocument.Domain.Test.Unit.Builders
 {
     [TestClass]
-    public class MarkdownDocumentBuilderTests : BuilderTestBase
+    public class DocumentBuilderTests : BuilderTestBase
     {
+        [TestMethod]
+        public async Task Build_CreatesHtmlDocument()
+        {
+            // Arrange
+            var options = new HtmlDocumentOptions()
+            {
+                LineEndings = LineEndings.Environment,
+                IndentationType = IndentationType.Spaces,
+                IndentationSize = 2
+            };
+
+            var outputStream = new MemoryStream();
+
+            var htmlDocumentBuilder = new DocumentBuilder(options)
+                .WithHeader1(_header1)
+                .WithHeader2(_header2)
+                .WithHeader3(_header3)
+                .WithHeader4(_header4)
+                .WithParagraph(_paragraph)
+                .WithUnorderedList(_unorderedList)
+                .WithOrderedList(_orderedList)
+                .WithTable(_productTableRowsWithoutHeaders);
+
+            // Act
+            await htmlDocumentBuilder.WriteToStreamAsync(outputStream, DocumentType.Html);
+
+            // Assert
+            var expectedHtmlDocument = GetExpectedHtmlDocument(options);
+            var htmlDocument = StreamHelper.GetStreamContents(outputStream);
+            htmlDocument.Should().Be(expectedHtmlDocument);
+        }
+
         [TestMethod]
         public async Task Build_CreatesMarkdownDocument()
         {
@@ -26,7 +57,7 @@ namespace NDocument.Domain.Test.Unit.Builders
 
             var outputStream = new MemoryStream();
 
-            var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
+            var markdownDocumentBuilder = new DocumentBuilder(options)
                 .WithHeader1(_header1)
                 .WithHeader2(_header2)
                 .WithHeader3(_header3)
@@ -37,7 +68,7 @@ namespace NDocument.Domain.Test.Unit.Builders
                 .WithTable(_productTableRowsWithoutHeaders);
 
             // Act
-            await markdownDocumentBuilder.WriteToStreamAsync(outputStream);
+            await markdownDocumentBuilder.WriteToStreamAsync(outputStream, DocumentType.Markdown);
 
             // Assert
             var expectedMarkdownDocument = GetExpectedMarkdownDocument(options);
