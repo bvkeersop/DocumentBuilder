@@ -2,14 +2,13 @@
 using NDocument.Domain.Exceptions;
 using NDocument.Domain.Extensions;
 using NDocument.Domain.Factories;
-using NDocument.Domain.Interfaces;
 using NDocument.Domain.Options;
 using NDocument.Domain.Utilities;
 using System.Text;
 
 namespace NDocument.Domain.Model
 {
-    public partial class Table<TValue> : IHtmlStreamWritable
+    public partial class Table<TValue>
     {
         private async Task<string> CreateHtmlTableAsync(HtmlDocumentOptions options, int indentationLevel)
         {
@@ -50,7 +49,7 @@ namespace NDocument.Domain.Model
 
             for (var i = 0; i < numberOfColumns; i++)
             {
-                var columnName = OrderedColumnAttributes.ElementAt(i).Name;
+                var columnName = OrderedColumnAttributes.ElementAt(i).Name.Value;
                 await CreateHtmlTableCellAsync(htmlStreamWriter, columnName, HtmlIndicators.TableHeader, 2).ConfigureAwait(false);
             }
 

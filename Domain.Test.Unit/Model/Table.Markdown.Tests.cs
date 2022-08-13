@@ -46,36 +46,6 @@ namespace NDocument.Domain.Test.Unit.Model
         }
 
         [DataTestMethod]
-        [DataRow(LineEndings.Environment, Formatting.AlignColumns)]
-        [DataRow(LineEndings.Linux, Formatting.AlignColumns)]
-        [DataRow(LineEndings.Windows, Formatting.AlignColumns)]
-        [DataRow(LineEndings.Environment, Formatting.None)]
-        [DataRow(LineEndings.Linux, Formatting.None)]
-        [DataRow(LineEndings.Windows, Formatting.None)]
-        public async Task WriteAsMarkdownToStreamAsync_CreatesFormattedTable(LineEndings LineEndings, Formatting formatting)
-        {
-            // Arrange
-            var outputStream = new MemoryStream();
-
-            var options = new MarkdownDocumentOptions
-            {
-                LineEndings = LineEndings,
-                MarkdownTableOptions = new MarkdownTableOptions
-                {
-                    Formatting = formatting
-                }
-            };
-
-            // Act
-            await _tableWithoutHeaderAttributes.WriteAsMarkdownToStreamAsync(outputStream, options);
-
-            // Assert
-            var table = StreamHelper.GetStreamContents(outputStream);
-            var expectedTable = ExampleProductMarkdownTableBuilder.BuildExpectedFormattedProductTable(options);
-            table.Should().Be(expectedTable);
-        }
-
-        [DataTestMethod]
         [DataRow(Alignment.Left)]
         [DataRow(Alignment.Right)]
         [DataRow(Alignment.Center)]
@@ -100,56 +70,6 @@ namespace NDocument.Domain.Test.Unit.Model
         [DataRow(Alignment.Right)]
         [DataRow(Alignment.Center)]
         [DataRow(Alignment.None)]
-        public async Task WriteToMarkdownAsStreamAsync_ProvideAlignmentInColumnAttribute_CreatesAlignedColumn(Alignment alignment)
-        {
-            // Arrange
-            var outputStream = new MemoryStream();
-            var options = new MarkdownDocumentOptions();
-            var alignedColumn = GetAlignedColumn(alignment);
-            var alignedTable = new Table<AlignedColumn>(alignedColumn);
-
-            // Act
-            await alignedTable.WriteAsMarkdownToStreamAsync(outputStream, options);
-
-            // Assert
-            var table = StreamHelper.GetStreamContents(outputStream);
-            var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(alignment, options);
-            table.Should().Be(expectedTable);
-        }
-
-        [DataTestMethod]
-        [DataRow(Alignment.Left)]
-        [DataRow(Alignment.Right)]
-        [DataRow(Alignment.Center)]
-        [DataRow(Alignment.None)]
-        public async Task WriteAsMarkdownToStreamAsync_ProvideAlignmentInOptions_CreatesAlignedColumn(Alignment alignment)
-        {
-            // Arrange
-            var outputStream = new MemoryStream();
-            var alignedColumn = GetAlignedColumn(Alignment.Default);
-            var alignedTable = new Table<AlignedColumn>(alignedColumn);
-            var options = new MarkdownDocumentOptions
-            {
-                MarkdownTableOptions = new MarkdownTableOptions
-                {
-                    DefaultAligment = alignment
-                }
-            };
-
-            // Act
-            await alignedTable.WriteAsMarkdownToStreamAsync(outputStream, options);
-
-            // Assert
-            var table = StreamHelper.GetStreamContents(outputStream);
-            var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(alignment, options);
-            table.Should().Be(expectedTable);
-        }
-
-        [DataTestMethod]
-        [DataRow(Alignment.Left)]
-        [DataRow(Alignment.Right)]
-        [DataRow(Alignment.Center)]
-        [DataRow(Alignment.None)]
         public async Task ToMarkdownAsync_ProvideAlignmentInOptions_CreatesAlignedColumn(Alignment alignment)
         {
             // Arrange
@@ -159,7 +79,7 @@ namespace NDocument.Domain.Test.Unit.Model
             {
                 MarkdownTableOptions = new MarkdownTableOptions
                 {
-                    DefaultAligment = alignment
+                    DefaultAlignment = alignment
                 }
             };
 
@@ -170,35 +90,6 @@ namespace NDocument.Domain.Test.Unit.Model
             var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(alignment, options);
             table.Should().Be(expectedTable);
         }
-
-        [TestMethod]
-        public async Task WriteAsMarkdownToStreamAsync_BoldColumnNames_CreatesTableWithBoldColumnNames()
-        {
-            // Arrange
-            var outputStream = new MemoryStream();
-            var alignedColumn = GetAlignedColumn(Alignment.Default);
-            var alignedTable = new Table<AlignedColumn>(alignedColumn);
-            var options = new MarkdownDocumentOptions
-            {
-                MarkdownTableOptions = new MarkdownTableOptions
-                {
-                    BoldColumnNames = true
-                }
-            };
-
-            // Act
-            await alignedTable.WriteAsMarkdownToStreamAsync(outputStream, options);
-
-            // Assert
-            var table = StreamHelper.GetStreamContents(outputStream);
-            var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
-            var expectedTable = 
-                 "| **ColumnName** |" + newLineProvider.GetNewLine() +
-                $"| -------------- |" + newLineProvider.GetNewLine() +
-                $"| ColumnValue    |" + newLineProvider.GetNewLine();
-            table.Should().Be(expectedTable);
-        }
-
 
         [TestMethod]
         public async Task ToMarkdownAsync_BoldColumnNames_CreatesTableWithBoldColumnNames()

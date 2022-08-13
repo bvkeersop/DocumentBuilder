@@ -33,11 +33,6 @@ namespace NDocument.Domain.Exceptions
             ErrorCode = errorCode;
         }
 
-        private NDocumentException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-            ErrorCode = (NDocumentErrorCode)info.GetValue(nameof(ErrorCode), typeof(NDocumentErrorCode));
-        }
-
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             if (info == null)

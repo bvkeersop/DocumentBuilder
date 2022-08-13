@@ -9,8 +9,13 @@ namespace NDocument.Domain.Model
         private TableCell[][] Values { get; }
         public int NumberOfRows { get; }
         public int NumberOfColumns { get; }
+        public IEnumerable<TableCell> TableCells
+        {
+            get { return _tableCells; }
+        }
 
         private readonly Dictionary<int, int> _longestCellSizeOfColumn = new();
+        private readonly IEnumerable<TableCell> _tableCells = Enumerable.Empty<TableCell>();
 
         public Matrix(IEnumerable<TValue> tableRows)
         {
@@ -36,7 +41,9 @@ namespace NDocument.Domain.Model
 
                     var cellValue = GetTableCellValue(currentProperty, currentTableRow);
                     var cellType = GetTableCellType(currentProperty);
-                    matrix[i][j] = new TableCell(cellValue, cellType);
+                    var tableCell = new TableCell(cellValue, cellType, i, j);
+                    matrix[i][j] = tableCell;
+                    _tableCells.Append(tableCell);
                     CreateOrUpdateLongestCellSizeOfColumn(cellValue, j);
                 }
             }

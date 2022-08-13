@@ -10,7 +10,7 @@ using System.Text;
 
 namespace NDocument.Domain.Model
 {
-    public partial class Table<TValue> : IMarkdownStreamWritable
+    public partial class Table<TValue>
     {
         private const char _columnDivider = '|';
         private const char _rowDivider = '-';
@@ -90,7 +90,7 @@ namespace NDocument.Domain.Model
         {
             if (columnAttribute.Alignment == Alignment.Default)
             {
-                return options.MarkdownTableOptions.DefaultAligment;
+                return options.MarkdownTableOptions.DefaultAlignment;
             }
 
             return columnAttribute.Alignment;
@@ -192,7 +192,7 @@ namespace NDocument.Domain.Model
 
             var longestCellSizeForColumnValue = GetLongestCellSizeForColumn(columnIndex, options.MarkdownTableOptions.BoldColumnNames);
             var columnName = OrderedColumnAttributes.ElementAt(columnIndex);
-            var boldColumnNameSize = columnName.Name.Length + 4;
+            var boldColumnNameSize = columnName.Name.Value.Length + 4;
             return Math.Max(longestCellSizeForColumnValue, boldColumnNameSize);
         }
 

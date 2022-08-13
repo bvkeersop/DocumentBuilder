@@ -7,7 +7,7 @@ using NDocument.Domain.Test.Unit.TestHelpers;
 namespace NDocument.Domain.Test.Unit.Builders
 {
     [TestClass]
-    public class DocumentBuilderTests : BuilderTestBase
+    public class GenericDocumentBuilderTests : BuilderTestBase
     {
         [TestMethod]
         public async Task Build_CreatesHtmlDocument()
@@ -22,7 +22,7 @@ namespace NDocument.Domain.Test.Unit.Builders
 
             var outputStream = new MemoryStream();
 
-            var htmlDocumentBuilder = new DocumentBuilder(options)
+            var htmlDocumentBuilder = new GenericDocumentBuilder(options)
                 .WithHeader1(_header1)
                 .WithHeader2(_header2)
                 .WithHeader3(_header3)
@@ -57,7 +57,7 @@ namespace NDocument.Domain.Test.Unit.Builders
 
             var outputStream = new MemoryStream();
 
-            var markdownDocumentBuilder = new DocumentBuilder(options)
+            var markdownDocumentBuilder = new GenericDocumentBuilder(options)
                 .WithHeader1(_header1)
                 .WithHeader2(_header2)
                 .WithHeader3(_header3)

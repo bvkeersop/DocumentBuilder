@@ -10,5 +10,6 @@
         CouldNotFindTableRowAtIndex,
         ColumnHasNoName,
         IdentifierMustBeGreaterThanZero,
+        NoWorksheetInstantiated
     }
 }
