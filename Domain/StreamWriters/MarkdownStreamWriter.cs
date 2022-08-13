@@ -1,4 +1,6 @@
-﻿namespace NDocument.Domain.Utilities
+﻿using NDocument.Domain.Utilities;
+
+namespace NDocument.Domain.StreamWriters
 {
     internal class MarkdownStreamWriter : IDisposable
     {

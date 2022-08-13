@@ -1,10 +1,10 @@
-﻿using NDocument.Domain.Enumerations;
+﻿using NDocument.Domain.DocumentWriters;
+using NDocument.Domain.Enumerations;
 using NDocument.Domain.Extensions;
 using NDocument.Domain.Factories;
 using NDocument.Domain.Model;
 using NDocument.Domain.Model.Generic;
 using NDocument.Domain.Options;
-using NDocument.Domain.Writers;
 
 namespace NDocument.Domain.Builders
 {

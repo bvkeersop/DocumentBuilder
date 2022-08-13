@@ -1,5 +1,5 @@
 ﻿using NDocument.Domain.Options;
-using NDocument.Domain.Utilities;
+using NDocument.Domain.StreamWriters;
 
 namespace NDocument.Domain.Factories
 {

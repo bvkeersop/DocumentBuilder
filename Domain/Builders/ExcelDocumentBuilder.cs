@@ -1,9 +1,9 @@
-﻿using NDocument.Domain.Exceptions;
+﻿using NDocument.Domain.DocumentWriters;
+using NDocument.Domain.Exceptions;
 using NDocument.Domain.Interfaces;
 using NDocument.Domain.Model;
 using NDocument.Domain.Model.Excel;
 using NDocument.Domain.Options;
-using NDocument.Domain.Writers;
 
 namespace NDocument.Domain.Builders
 {

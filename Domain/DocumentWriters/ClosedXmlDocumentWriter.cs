@@ -4,7 +4,7 @@ using NDocument.Domain.Interfaces;
 using NDocument.Domain.Model.Excel;
 using NDocument.Domain.Options;
 
-namespace NDocument.Domain.Writers
+namespace NDocument.Domain.DocumentWriters
 {
     internal class ClosedXmlDocumentWriter : IExcelDocumentWriter, IDisposable
     {

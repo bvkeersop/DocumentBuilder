@@ -62,6 +62,12 @@ namespace NDocument.Domain.Test.Unit.Builders
             _excelTableTwo = new Table<ExcelTableRow>(_excelTableRowsTwo);
         }
 
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            File.Delete(_filePath);
+        }
+
         [TestMethod]
         public void Save_Success()
         {
