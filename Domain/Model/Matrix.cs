@@ -43,7 +43,7 @@ namespace NDocument.Domain.Model
                     var cellType = GetTableCellType(currentProperty);
                     var tableCell = new TableCell(cellValue, cellType, i, j);
                     matrix[i][j] = tableCell;
-                    _tableCells.Append(tableCell);
+                    _tableCells = _tableCells.Append(tableCell);
                     CreateOrUpdateLongestCellSizeOfColumn(cellValue, j);
                 }
             }

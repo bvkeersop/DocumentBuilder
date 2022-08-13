@@ -23,19 +23,21 @@ namespace NDocument.Domain.Writers
             _currentWorksheet = _workbook.Worksheets.Add(worksheetName);
         }
 
-        public void Write(IExcelConvertable excelConvertable)
+        public void Write(WorksheetExcelConvertable worksheetExcelConvertable)
         {
             if (_currentWorksheet == null)
             {
                 throw new NDocumentException(NDocumentErrorCode.NoWorksheetInstantiated);
             }
 
-            var excelTableCells = excelConvertable.ToExcel(_options);
-            WriteExcelTableCells(_currentWorksheet, excelTableCells);
+            var excelTableCells = worksheetExcelConvertable.ExcelConvertable.ToExcel(_options);
+            WriteExcelTableCells(worksheetExcelConvertable.WorksheetName, excelTableCells);
         }
 
-        private static void WriteExcelTableCells(IXLWorksheet worksheet, IEnumerable<ExcelTableCell> excelTableCells)
+        private void WriteExcelTableCells(string worksheetName, IEnumerable<ExcelTableCell> excelTableCells)
         {
+            var worksheet = _workbook.Worksheet(worksheetName);
+
             foreach (var excelTableCell in excelTableCells)
             {
                 var currentCell = worksheet.Cell(excelTableCell.ExcelRowIdentifier, excelTableCell.ExcelColumnIdentifier);

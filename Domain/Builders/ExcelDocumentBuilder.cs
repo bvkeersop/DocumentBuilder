@@ -1,4 +1,5 @@
-﻿using NDocument.Domain.Interfaces;
+﻿using NDocument.Domain.Exceptions;
+using NDocument.Domain.Interfaces;
 using NDocument.Domain.Model;
 using NDocument.Domain.Options;
 using NDocument.Domain.Writers;
@@ -7,7 +8,8 @@ namespace NDocument.Domain.Builders
 {
     internal class ExcelDocumentBuilder
     {
-        public IEnumerable<IExcelConvertable> ExcelConvertables { get; private set; } = Enumerable.Empty<IExcelConvertable>();
+        private string? _currentWorksheet = string.Empty;
+        public IEnumerable<WorksheetExcelConvertable> WorksheetExcelConvertables { get; private set; } = Enumerable.Empty<WorksheetExcelConvertable>();
         private readonly IExcelDocumentWriter _excelDocumentWriter;
 
         public ExcelDocumentBuilder(ExcelDocumentOptions options)
@@ -17,18 +19,29 @@ namespace NDocument.Domain.Builders
 
         public ExcelDocumentBuilder AddWorksheet(string worksheetName)
         {
+            _currentWorksheet = worksheetName;
             _excelDocumentWriter.AddWorksheet(worksheetName);
             return this;
         }
 
         public ExcelDocumentBuilder WithTable<T>(IEnumerable<T> tableRows)
         {
-            ExcelConvertables = ExcelConvertables.Append(new Table<T>(tableRows));
+            if (_currentWorksheet == null)
+            {
+                throw new NDocumentException(NDocumentErrorCode.NoWorksheetInstantiated);
+            }
+
+            var worksheetExcelConvertable = new WorksheetExcelConvertable(_currentWorksheet, new Table<T>(tableRows));
+            WorksheetExcelConvertables = WorksheetExcelConvertables.Append(worksheetExcelConvertable);
             return this;
         }
 
-        public void Build(string filePath)
+        public void Save(string filePath)
         {
+            foreach (var worksheetExcelConvertable in WorksheetExcelConvertables)
+            {
+                _excelDocumentWriter.Write(worksheetExcelConvertable);
+            }
             _excelDocumentWriter.Save(filePath);
         }
     }

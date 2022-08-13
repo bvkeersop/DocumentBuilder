@@ -13,8 +13,9 @@ namespace NDocument.Domain.Extensions
 
         public static ExcelTableCell ToExcelTableCell(this TableCell tableCell)
         {
-            var excelColumnIdentifier = ExcelColumnIdentifierGenerator.GenerateColumnIdentifier(tableCell.ColumnPosition);
-            return new ExcelTableCell(tableCell.Value, tableCell.RowPosition, excelColumnIdentifier);
+            // +1 since excel starts at 1, not 0
+            var excelColumnIdentifier = ExcelColumnIdentifierGenerator.GenerateColumnIdentifier(tableCell.ColumnPosition + 1);
+            return new ExcelTableCell(tableCell.Value, tableCell.RowPosition + 1, excelColumnIdentifier);
         }
     }
 }

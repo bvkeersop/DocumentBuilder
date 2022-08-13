@@ -70,7 +70,7 @@ namespace NDocument.Domain.Model
                     currentOrderedColumnAttribute.Name.GetType(),
                     0,
                     i);
-                columnTableCells.Append(tableCell);
+                columnTableCells = columnTableCells.Append(tableCell);
             }
 
             var shiftedTableCells = TableValues.TableCells.Select(t => t.ShiftRow());
