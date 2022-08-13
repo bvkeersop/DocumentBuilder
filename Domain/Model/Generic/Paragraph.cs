@@ -19,7 +19,7 @@ namespace NDocument.Domain.Model.Generic
             return ConvertToMarkdown(Value, options);
         }
 
-        public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel)
+        public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.Append(HtmlIndicators.Paragraph.ToHtmlStartTag());

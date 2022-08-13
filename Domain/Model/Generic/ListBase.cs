@@ -30,7 +30,7 @@ namespace NDocument.Domain.Model.Generic
             return new ValueTask<string>(list); // Already has a new line
         }
 
-        protected async ValueTask<string> CreateHtmlListAsync(string listIndicator, HtmlDocumentOptions options, int indentationLevel)
+        protected async ValueTask<string> CreateHtmlListAsync(string listIndicator, HtmlDocumentOptions options, int indentationLevel = 0)
         {
             var indentationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize, indentationLevel);
             var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);

@@ -14,7 +14,7 @@ namespace NDocument.Domain.Model.Generic
             return CreateMarkdownList(MarkdownIndicators.OrderedListItem, options);
         }
 
-        public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel)
+        public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
         {
             return CreateHtmlListAsync(HtmlIndicators.OrderedList, options, indentationLevel);
         }

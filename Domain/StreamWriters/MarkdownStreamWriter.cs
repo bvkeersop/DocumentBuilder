@@ -1,8 +1,9 @@
-﻿using NDocument.Domain.Utilities;
+﻿using NDocument.Domain.Interfaces;
+using NDocument.Domain.Utilities;
 
 namespace NDocument.Domain.StreamWriters
 {
-    internal class MarkdownStreamWriter : IDisposable
+    internal class MarkdownStreamWriter : IMarkdownStreamWriter
     {
         private bool _disposedValue;
 
@@ -35,6 +36,7 @@ namespace NDocument.Domain.StreamWriters
         {
             await StreamWriter.WriteAsync(NewLineProvider.GetNewLine()).ConfigureAwait(false);
         }
+
         public async Task FlushAsync()
         {
             await StreamWriter.FlushAsync();

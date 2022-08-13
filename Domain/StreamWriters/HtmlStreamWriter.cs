@@ -1,8 +1,9 @@
-﻿using NDocument.Domain.Utilities;
+﻿using NDocument.Domain.Interfaces;
+using NDocument.Domain.Utilities;
 
 namespace NDocument.Domain.StreamWriters
 {
-    public class HtmlStreamWriter : IDisposable
+    internal class HtmlStreamWriter : IHtmlStreamWriter
     {
         private bool _disposedValue;
 
@@ -16,7 +17,6 @@ namespace NDocument.Domain.StreamWriters
             NewLineProvider = newLineProvider;
             IndentationProvider = indentationProvider;
         }
-
 
         public async Task WriteLineAsync(string value, int indenationLevel = 0)
         {

@@ -14,7 +14,7 @@ namespace NDocument.Domain.Model.Generic
             return CreateMarkdownHeader(MarkdownIndicators.Header2, options);
         }
 
-        public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel)
+        public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
         {
             return CreateHtmlHeader(HtmlIndicators.Header2, options, indentationLevel);
         }

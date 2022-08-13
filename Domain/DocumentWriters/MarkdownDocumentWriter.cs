@@ -1,5 +1,4 @@
-﻿using NDocument.Domain.Enumerations;
-using NDocument.Domain.Interfaces;
+﻿using NDocument.Domain.Interfaces;
 using NDocument.Domain.Options;
 using NDocument.Domain.StreamWriters;
 
@@ -7,10 +6,10 @@ namespace NDocument.Domain.DocumentWriters
 {
     internal class MarkdownDocumentWriter
     {
-        private readonly Func<Stream, MarkdownDocumentOptions, MarkdownStreamWriter> _markdownStreamWriterFactory;
+        private readonly Func<Stream, MarkdownDocumentOptions, IMarkdownStreamWriter> _markdownStreamWriterFactory;
         private readonly MarkdownDocumentOptions _options;
 
-        public MarkdownDocumentWriter(Func<Stream, MarkdownDocumentOptions, MarkdownStreamWriter> markdownStreamWriterFactory, MarkdownDocumentOptions options)
+        public MarkdownDocumentWriter(Func<Stream, MarkdownDocumentOptions, IMarkdownStreamWriter> markdownStreamWriterFactory, MarkdownDocumentOptions options)
         {
             _markdownStreamWriterFactory = markdownStreamWriterFactory;
             _options = options;

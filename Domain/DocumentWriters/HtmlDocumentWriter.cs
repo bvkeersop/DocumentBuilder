@@ -8,16 +8,16 @@ namespace NDocument.Domain.DocumentWriters
 {
     internal class HtmlDocumentWriter
     {
-        private Func<Stream, HtmlDocumentOptions, HtmlStreamWriter> _htmlStreamWriterFactory;
+        private Func<Stream, HtmlDocumentOptions, IHtmlStreamWriter> _htmlStreamWriterFactory;
         private readonly HtmlDocumentOptions _options;
 
-        public HtmlDocumentWriter(Func<Stream, HtmlDocumentOptions, HtmlStreamWriter> htmlStreamWriterFactory, HtmlDocumentOptions options)
+        public HtmlDocumentWriter(Func<Stream, HtmlDocumentOptions, IHtmlStreamWriter> htmlStreamWriterFactory, HtmlDocumentOptions options)
         {
             _htmlStreamWriterFactory = htmlStreamWriterFactory;
             _options = options;
         }
 
-        public async Task WriteToOutputStreamAsync(Stream outputStream, IEnumerable<IHtmlConvertable> htmlConvertables)
+        public async Task WriteToStreamAsync(Stream outputStream, IEnumerable<IHtmlConvertable> htmlConvertables)
         {
             using var htmlStreamWriter = _htmlStreamWriterFactory(outputStream, _options);
 

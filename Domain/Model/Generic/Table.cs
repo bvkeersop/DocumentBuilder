@@ -21,7 +21,7 @@ namespace NDocument.Domain.Model
             TableCells = CreateEnumerableOfTableCells();
         }
 
-        public override async ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel)
+        public override async ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
         {
             return await CreateHtmlTableAsync(options, indentationLevel).ConfigureAwait(false);
         }

@@ -19,7 +19,7 @@ namespace NDocument.Domain.Builders
 
         public async Task WriteToStreamAsync(Stream outputStream)
         {
-            await _htmlDocumentWriter.WriteToOutputStreamAsync(outputStream, HtmlConvertables).ConfigureAwait(false);
+            await _htmlDocumentWriter.WriteToStreamAsync(outputStream, HtmlConvertables).ConfigureAwait(false);
         }
 
         public HtmlDocumentBuilder WithHeader1(string header1)

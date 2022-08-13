@@ -92,7 +92,7 @@ namespace NDocument.Domain.Builders
         {
             var options = _options.ToHtmlDocumentOptions();
             var htmlDocumentWriter = new HtmlDocumentWriter(HtmlStreamWriterFactory.Create, options);
-            await htmlDocumentWriter.WriteToOutputStreamAsync(outputStream, Convertables);
+            await htmlDocumentWriter.WriteToStreamAsync(outputStream, Convertables);
         }
     }
 }
