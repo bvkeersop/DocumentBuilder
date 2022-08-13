@@ -1,5 +1,5 @@
 ﻿using NDocument.Domain.Builders;
-using NDocument.Domain.Model;
+using NDocument.Domain.Model.Excel;
 
 namespace NDocument.Domain.Interfaces
 {

@@ -1,4 +1,4 @@
-﻿using NDocument.Domain.Model;
+﻿using NDocument.Domain.Model.Excel;
 using NDocument.Domain.Options;
 
 namespace NDocument.Domain.Interfaces

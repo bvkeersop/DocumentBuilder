@@ -1,6 +1,8 @@
 ﻿using NDocument.Domain.Enumerations;
 using NDocument.Domain.Extensions;
+using NDocument.Domain.Factories;
 using NDocument.Domain.Model;
+using NDocument.Domain.Model.Generic;
 using NDocument.Domain.Options;
 using NDocument.Domain.Writers;
 
@@ -82,14 +84,14 @@ namespace NDocument.Domain.Builders
         private async Task WriteToStreamAsMarkdownAsync(Stream outputStream)
         {
             var options = _options.ToMarkdownDocumentOptions();
-            var markdownDocumentWriter = new MarkdownDocumentWriter(options);
+            var markdownDocumentWriter = new MarkdownDocumentWriter(MarkdownStreamWriterFactory.Create, options);
             await markdownDocumentWriter.WriteToStreamAsync(outputStream, Convertables);
         }
 
         private async Task WriteToStreamAsHtmlAsync(Stream outputStream)
         {
             var options = _options.ToHtmlDocumentOptions();
-            var htmlDocumentWriter = new HtmlDocumentWriter(options);
+            var htmlDocumentWriter = new HtmlDocumentWriter(HtmlStreamWriterFactory.Create, options);
             await htmlDocumentWriter.WriteToOutputStreamAsync(outputStream, Convertables);
         }
     }

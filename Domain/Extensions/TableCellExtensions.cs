@@ -1,4 +1,5 @@
-﻿using NDocument.Domain.Model;
+﻿using NDocument.Domain.Model.Excel;
+using NDocument.Domain.Model.Generic;
 using NDocument.Domain.Utilities;
 
 namespace NDocument.Domain.Extensions
