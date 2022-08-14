@@ -46,9 +46,9 @@ namespace NDocument.Domain.DocumentWriters
             }
         }
 
-        public void Save(string filePath)
+        public void WriteToStream(Stream outputStream)
         {
-            _workbook.SaveAs(filePath);
+            _workbook.SaveAs(outputStream);
         }
 
         protected virtual void Dispose(bool disposing)

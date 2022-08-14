@@ -1,5 +1,4 @@
-﻿using NDocument.Domain.Builders;
-using NDocument.Domain.Model.Excel;
+﻿using NDocument.Domain.Model.Excel;
 
 namespace NDocument.Domain.Interfaces
 {
@@ -7,6 +6,6 @@ namespace NDocument.Domain.Interfaces
     {
         public void AddWorksheet(string worksheetName);
         public void Write(WorksheetExcelConvertable excelConvertable);
-        public void Save(string filePath);
+        public void WriteToStream(Stream outputStream);
     }
 }

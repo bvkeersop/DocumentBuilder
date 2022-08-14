@@ -1,7 +1,6 @@
 ﻿using NDocument.Domain.Constants;
 using NDocument.Domain.DocumentWriters;
 using NDocument.Domain.Extensions;
-using NDocument.Domain.Factories;
 using NDocument.Domain.Interfaces;
 using NDocument.Domain.Model.Generic;
 using NDocument.Domain.Options;

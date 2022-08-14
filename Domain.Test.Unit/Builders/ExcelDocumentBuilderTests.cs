@@ -14,14 +14,10 @@ namespace NDocument.Domain.Test.Unit.Builders
         private IEnumerable<ExcelTableRow> _excelTableRowsTwo;
         private Table<ExcelTableRow> _excelTableOne;
         private Table<ExcelTableRow> _excelTableTwo;
-        private const string _fileName = $"{nameof(ExcelDocumentBuilderTests)}";
-        private const string _filePath = $"./{_fileName}.xlsx";
 
         [TestInitialize]
         public void TestInitialize()
         {
-            File.Delete(_filePath);
-
             _excelTableRowsOne = new List<ExcelTableRow>
             {
                 new ExcelTableRow
@@ -62,16 +58,11 @@ namespace NDocument.Domain.Test.Unit.Builders
             _excelTableTwo = new Table<ExcelTableRow>(_excelTableRowsTwo);
         }
 
-        [TestCleanup]
-        public void TestCleanup()
-        {
-            File.Delete(_filePath);
-        }
-
         [TestMethod]
         public void Save_Success()
         {
             // Arrange
+            var memoryStream = new MemoryStream();
             var firstWorksheetName = "worksheetOne";
             var secondWorksheetName = "worksheetTwo";
             var options = new ExcelDocumentOptions();
@@ -82,10 +73,10 @@ namespace NDocument.Domain.Test.Unit.Builders
                 .WithTable(_excelTableRowsTwo);
 
             // Act
-            excelDocumentBuilder.Save(_filePath);
+            excelDocumentBuilder.WriteToStream(memoryStream);
 
             // Assert
-            var workbook = new XLWorkbook(_filePath);
+            var workbook = new XLWorkbook(memoryStream);
 
             //// First worksheet
             var worksheetOne = workbook.Worksheet(firstWorksheetName);

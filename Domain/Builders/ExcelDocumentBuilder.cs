@@ -37,13 +37,13 @@ namespace NDocument.Domain.Builders
             return this;
         }
 
-        public void Save(string filePath)
+        public void WriteToStream(Stream outputStream)
         {
             foreach (var worksheetExcelConvertable in WorksheetExcelConvertables)
             {
                 _excelDocumentWriter.Write(worksheetExcelConvertable);
             }
-            _excelDocumentWriter.Save(filePath);
+            _excelDocumentWriter.WriteToStream(outputStream);
         }
     }
 }
