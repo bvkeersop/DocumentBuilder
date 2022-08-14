@@ -1,18 +1,19 @@
-﻿using NDocument.Domain.Enumerations;
+﻿using NDocument.Domain.DocumentWriters;
+using NDocument.Domain.Enumerations;
 using NDocument.Domain.Extensions;
 using NDocument.Domain.Factories;
 using NDocument.Domain.Model;
+using NDocument.Domain.Model.Generic;
 using NDocument.Domain.Options;
-using NDocument.Domain.Writers;
 
 namespace NDocument.Domain.Builders
 {
-    internal class DocumentBuilder
+    internal class GenericDocumentBuilder
     {
         public IEnumerable<GenericElement> Convertables { get; private set; } = new List<GenericElement>();
         private readonly DocumentOptions _options;
 
-        public DocumentBuilder(DocumentOptions options)
+        public GenericDocumentBuilder(DocumentOptions options)
         {
             _options = options;
         }
@@ -32,49 +33,49 @@ namespace NDocument.Domain.Builders
             };
         }
 
-        public DocumentBuilder WithHeader1(string header1)
+        public GenericDocumentBuilder WithHeader1(string header1)
         {
             Convertables = Convertables.Append(new Header1(header1));
             return this;
         }
 
-        public DocumentBuilder WithHeader2(string header2)
+        public GenericDocumentBuilder WithHeader2(string header2)
         {
             Convertables = Convertables.Append(new Header2(header2));
             return this;
         }
 
-        public DocumentBuilder WithHeader3(string header3)
+        public GenericDocumentBuilder WithHeader3(string header3)
         {
             Convertables = Convertables.Append(new Header3(header3));
             return this;
         }
 
-        public DocumentBuilder WithHeader4(string header4)
+        public GenericDocumentBuilder WithHeader4(string header4)
         {
             Convertables = Convertables.Append(new Header4(header4));
             return this;
         }
 
-        public DocumentBuilder WithParagraph(string paragraph)
+        public GenericDocumentBuilder WithParagraph(string paragraph)
         {
             Convertables = Convertables.Append(new Paragraph(paragraph));
             return this;
         }
 
-        public DocumentBuilder WithOrderedList<T>(IEnumerable<T> orderedList)
+        public GenericDocumentBuilder WithOrderedList<T>(IEnumerable<T> orderedList)
         {
             Convertables = Convertables.Append(new OrderedList<T>(orderedList));
             return this;
         }
 
-        public DocumentBuilder WithUnorderedList<T>(IEnumerable<T> unorderedList)
+        public GenericDocumentBuilder WithUnorderedList<T>(IEnumerable<T> unorderedList)
         {
             Convertables = Convertables.Append(new UnorderedList<T>(unorderedList));
             return this;
         }
 
-        public DocumentBuilder WithTable<T>(IEnumerable<T> tableRows)
+        public GenericDocumentBuilder WithTable<T>(IEnumerable<T> tableRows)
         {
             Convertables = Convertables.Append(new Table<T>(tableRows));
             return this;
@@ -83,15 +84,15 @@ namespace NDocument.Domain.Builders
         private async Task WriteToStreamAsMarkdownAsync(Stream outputStream)
         {
             var options = _options.ToMarkdownDocumentOptions();
-            var markdownDocumentWriter = new MarkdownDocumentWriter(options);
+            var markdownDocumentWriter = new MarkdownDocumentWriter(MarkdownStreamWriterFactory.Create, options);
             await markdownDocumentWriter.WriteToStreamAsync(outputStream, Convertables);
         }
 
         private async Task WriteToStreamAsHtmlAsync(Stream outputStream)
         {
             var options = _options.ToHtmlDocumentOptions();
-            var htmlDocumentWriter = new HtmlDocumentWriter(options);
-            await htmlDocumentWriter.WriteToOutputStreamAsync(outputStream, Convertables);
+            var htmlDocumentWriter = new HtmlDocumentWriter(HtmlStreamWriterFactory.Create, options);
+            await htmlDocumentWriter.WriteToStreamAsync(outputStream, Convertables);
         }
     }
 }

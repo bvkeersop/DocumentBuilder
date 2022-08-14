@@ -1,7 +1,9 @@
-﻿using NDocument.Domain.Interfaces;
+﻿using NDocument.Domain.DocumentWriters;
+using NDocument.Domain.Factories;
+using NDocument.Domain.Interfaces;
 using NDocument.Domain.Model;
+using NDocument.Domain.Model.Generic;
 using NDocument.Domain.Options;
-using NDocument.Domain.Writers;
 
 namespace NDocument.Domain.Builders
 {
@@ -12,12 +14,12 @@ namespace NDocument.Domain.Builders
 
         public HtmlDocumentBuilder(HtmlDocumentOptions options)
         {
-            _htmlDocumentWriter = new HtmlDocumentWriter(options);
+            _htmlDocumentWriter = new HtmlDocumentWriter(HtmlStreamWriterFactory.Create, options);
         }
 
         public async Task WriteToStreamAsync(Stream outputStream)
         {
-            await _htmlDocumentWriter.WriteToOutputStreamAsync(outputStream, HtmlConvertables).ConfigureAwait(false);
+            await _htmlDocumentWriter.WriteToStreamAsync(outputStream, HtmlConvertables).ConfigureAwait(false);
         }
 
         public HtmlDocumentBuilder WithHeader1(string header1)

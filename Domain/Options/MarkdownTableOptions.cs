@@ -17,6 +17,6 @@ namespace NDocument.Domain.Options
         /// <summary>
         /// What the default aligment is
         /// </summary>
-        public Alignment DefaultAligment { get; set; } = Alignment.None;
+        public Alignment DefaultAlignment { get; set; } = Alignment.None;
     }
 }

@@ -1,9 +1,10 @@
-﻿using NDocument.Domain.Options;
+﻿using NDocument.Domain.Model.Excel;
+using NDocument.Domain.Options;
 
 namespace NDocument.Domain.Interfaces
 {
-    public interface IExcelWritable
+    public interface IExcelConvertable
     {
-        void WriteToExcel(ExcelDocumentOptions excelDocumentOptions);
+        IEnumerable<ExcelTableCell> ToExcel(ExcelDocumentOptions excelDocumentOptions);
     }
 }

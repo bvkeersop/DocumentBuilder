@@ -43,7 +43,7 @@ namespace NDocument.Domain.Helpers
                 return new ColumnAttribute(tableCell.Name);
             }
 
-            if (columnAttribute.Name is null)
+            if (columnAttribute.Name.IsSet == false)
             {
                 return new ColumnAttribute(tableCell.Name, columnAttribute.Alignment, columnAttribute.Order);
             }

@@ -1,14 +1,15 @@
 # NDocument
 
-`NDocument` is a library that allows you to programatically create different kinds of documents.
-The following formats are currently supported.
+`NDocument` is a library that uses the `Builder` pattern to enable you to declaratively create different kinds of documents is an easy way.
+It is **not** a full fledged solution for creating complex documents. `NDocument` focuses on ease of use.
+
+The following formats are currently supported:
 
 - Markdown
 - HTML
-- Excel (Tables only)
+- Excel
 
-`NDocument` exposes a `DocumentBuilder` class that can be used to create a markdown or HTML document.
-`NDocument` also exposes a `MarkdownDocumentBuilder` and an `HTMLDocumentBuilder`, this is done so that in the future, these can be extended with markdown or HTML specific elements. For now it's recommend to use the generic `DocumentBuilder` as it has the exact same functionality.
+`NDocument` exposes a `GenericDocumentBuilder` class that can be used to create a markdown or HTML document, it does not support Excel since it's document structure is too different. `NDocument` also exposes a `MarkdownDocumentBuilder` and an `HTMLDocumentBuilder`, this is done so that in the future, these can be extended with markdown or HTML specific elements. For now it's recommend to use the generic `GenericDocumentBuilder` as it has the exact same functionality.
 
 ## Creating a document
 
@@ -38,6 +39,9 @@ var unorderedList = new List<string>
     "list"
 };
 
+### Generic Documents
+
+The generic document builder allows you to create generic documents that can easily be written to a markdown or HTML format.
 
 ```C#
 
@@ -54,11 +58,15 @@ var documentBuilder = new DocumentBuilder(options)
     .WithUnorderedList(unorderedList)
     .WithOrderedList(orderedList)
     .WithTable(productTableRows) // More on tables below
-    .WriteToStreamAsync(outputStream, DocumentType.Markdown); // Or HTML
+    .WriteToStreamAsync(outputStream, DocumentType.Markdown); // Or HTML (DocumentType.HTML)
 
 ```
 
 ```C#
+
+### Markdown
+
+The markdown document builder allows you to create markdown documents, it is not yet different from the `GenericDocumentBuilder`, but might include markdown specific functionality in the future.
 
 ```C#
 
@@ -79,6 +87,10 @@ var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
 
 ```
 
+### HTML
+
+The HTML document builder allows you to create HTML documents, it is not yet different from the `GenericDocumentBuilder`, but might include HTML specific functionality in the future.
+
 ```C#
 
 // Create a document using the html document builder
@@ -93,6 +105,22 @@ var htmlDocumentBuilder = new HtmlDocumentBuilder(options)
     .WithParagraph(paragraph)
     .WithUnorderedList(unorderedList)
     .WithOrderedList(orderedList)
+    .WithTable(productTableRows) // More on tables below
+    .WriteToStreamAsync(outputStream);
+```
+
+### Excel
+
+The Excel document builder allows you to create excel documents. Since the structure of excel document is not comparable to markdown or HTML, it's not supported by the `GenericDocumentBuilder`.
+
+```C#
+
+// Create a document using the excel document builder
+
+var outputStream = new MemoryStream();
+
+var excelDocumentBuilder = new ExcelDocumentBuilder(options)
+    .AddWorksheet("my-worksheet-name")
     .WithTable(productTableRows) // More on tables below
     .WriteToStreamAsync(outputStream);
 ```
@@ -139,16 +167,6 @@ var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
     .WithTable(productTableRows)
     .WriteToStream(outputStream);
 
-```
-
-### 4. Or instead wrap it in the table class and write it to a stream directly
-
-```C#
-var outputStream = new MemoryStream();
-var table = new Table<ProductsTableRow>(productTableRows);
-table.WriteAsMarkdownToStreamAsync(outputStream); // Markdown
-table.WriteAsHtmlToStreamAsync(outputStream); // HTML
-table.WriteToExcel(excelDocumentOptions) // Excel
 ```
 
 > NOTE: The values written to the table cell will be the object's `ToString()` method
@@ -211,3 +229,24 @@ public class ProductTableRow
 }
 
 ```
+
+## Credits
+
+`NDocument` is made possible by the following projects:
+
+[ClosedXML](https://github.com/ClosedXML/ClosedXML)
+[FluentAssertions](https://fluentassertions.com/)
+[NSubstitute](https://nsubstitute.github.io/)
+
+## Future work
+
+If there's any features that you would like to see implemented, please create a issue with the `enhancement` label at the [Github Issues](https://github.com/bvkeersop/NDocument/issues) page. Note that I am working on this project in my free time, and might not have time to implement your request (or simply decline it since I don't see the added value for the project).
+
+Currently I'm still looking to implement the following (no deadline set):
+
+- Releasing a MVP on NuGet
+- Image support for Markdown and HTML
+- Raw insertions for Markdown and HTML
+- Word support
+- More insertables for Excel
+- Better styling options for Excel

@@ -1,7 +1,9 @@
-﻿using NDocument.Domain.Interfaces;
+﻿using NDocument.Domain.DocumentWriters;
+using NDocument.Domain.Factories;
+using NDocument.Domain.Interfaces;
 using NDocument.Domain.Model;
+using NDocument.Domain.Model.Generic;
 using NDocument.Domain.Options;
-using NDocument.Domain.Writers;
 
 namespace NDocument.Domain.Builders
 {
@@ -12,7 +14,7 @@ namespace NDocument.Domain.Builders
 
         public MarkdownDocumentBuilder(MarkdownDocumentOptions options)
         {
-            _markdownDocumentWriter = new MarkdownDocumentWriter(options);
+            _markdownDocumentWriter = new MarkdownDocumentWriter(MarkdownStreamWriterFactory.Create, options);
         }
 
         public async Task WriteToStreamAsync(Stream outputStream)
