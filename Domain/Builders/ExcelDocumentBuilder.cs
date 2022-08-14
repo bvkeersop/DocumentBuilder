@@ -1,5 +1,6 @@
 ﻿using NDocument.Domain.DocumentWriters;
 using NDocument.Domain.Exceptions;
+using NDocument.Domain.Factories;
 using NDocument.Domain.Interfaces;
 using NDocument.Domain.Model;
 using NDocument.Domain.Model.Excel;
@@ -15,7 +16,7 @@ namespace NDocument.Domain.Builders
 
         public ExcelDocumentBuilder(ExcelDocumentOptions options)
         {
-            _excelDocumentWriter = new ClosedXmlDocumentWriter(options);
+            _excelDocumentWriter = new ClosedXmlDocumentWriter(XLWorkbookFactory.Create, options);
         }
 
         public ExcelDocumentBuilder AddWorksheet(string worksheetName)

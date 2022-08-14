@@ -1,6 +1,5 @@
 ﻿using NDocument.Domain.Interfaces;
 using NDocument.Domain.Options;
-using NDocument.Domain.StreamWriters;
 
 namespace NDocument.Domain.DocumentWriters
 {

@@ -9,13 +9,13 @@ namespace NDocument.Domain.DocumentWriters
     internal class ClosedXmlDocumentWriter : IExcelDocumentWriter, IDisposable
     {
         private bool _disposedValue;
-        private readonly XLWorkbook _workbook;
+        private readonly IXLWorkbook _workbook;
         private readonly ExcelDocumentOptions _options;
         private IXLWorksheet? _currentWorksheet;
 
-        public ClosedXmlDocumentWriter(ExcelDocumentOptions options)
+        public ClosedXmlDocumentWriter(Func<IXLWorkbook> factory, ExcelDocumentOptions options)
         {
-            _workbook = new XLWorkbook();
+            _workbook = factory();
             _options = options;
         }
 

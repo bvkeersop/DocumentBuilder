@@ -17,15 +17,14 @@ namespace NDocument.Domain.Test.Unit.DocumentWriters
             var options = new MarkdownDocumentOptions();
             var memoryStream = new MemoryStream();
             var header1 = new Header1("header1");
-            var markdownStreamWriter = Substitute.For<IMarkdownStreamWriter>();
+            var markdownStreamWriterMock = Substitute.For<IMarkdownStreamWriter>();
             var markdownConvertibles = new List<IMarkdownConvertable>
             {
                 header1
             };
 
-
             Func<Stream, MarkdownDocumentOptions, IMarkdownStreamWriter> factory
-                = (Stream outputStream, MarkdownDocumentOptions options) => markdownStreamWriter;
+                = (Stream outputStream, MarkdownDocumentOptions options) => markdownStreamWriterMock;
 
             var markdownDocumentWriter = new MarkdownDocumentWriter(factory, options);
 
@@ -34,8 +33,8 @@ namespace NDocument.Domain.Test.Unit.DocumentWriters
 
             // Assert
             var header1Value = await header1.ToMarkdownAsync(options);
-            await markdownStreamWriter.Received(1).WriteAsync(header1Value);
-            await markdownStreamWriter.Received(1).FlushAsync();
+            await markdownStreamWriterMock.Received(1).WriteAsync(header1Value);
+            await markdownStreamWriterMock.Received(1).FlushAsync();
         }
 
         [TestMethod]
@@ -46,7 +45,7 @@ namespace NDocument.Domain.Test.Unit.DocumentWriters
             var memoryStream = new MemoryStream();
             var header1 = new Header1("header1");
             var header2 = new Header2("header2");
-            var markdownStreamWriter = Substitute.For<IMarkdownStreamWriter>();
+            var markdownStreamWriterMock = Substitute.For<IMarkdownStreamWriter>();
             var markdownConvertibles = new List<IMarkdownConvertable>
             {
                 header1,
@@ -55,7 +54,7 @@ namespace NDocument.Domain.Test.Unit.DocumentWriters
 
 
             Func<Stream, MarkdownDocumentOptions, IMarkdownStreamWriter> factory
-                = (Stream outputStream, MarkdownDocumentOptions options) => markdownStreamWriter;
+                = (Stream outputStream, MarkdownDocumentOptions options) => markdownStreamWriterMock;
 
             var markdownDocumentWriter = new MarkdownDocumentWriter(factory, options);
 
@@ -65,9 +64,9 @@ namespace NDocument.Domain.Test.Unit.DocumentWriters
             // Assert
             var header1Value = await header1.ToMarkdownAsync(options);
             var header2Value = await header2.ToMarkdownAsync(options);
-            await markdownStreamWriter.Received(1).WriteLineAsync(header1Value);
-            await markdownStreamWriter.Received(1).WriteAsync(header2Value);
-            await markdownStreamWriter.Received(1).FlushAsync();
+            await markdownStreamWriterMock.Received(1).WriteLineAsync(header1Value);
+            await markdownStreamWriterMock.Received(1).WriteAsync(header2Value);
+            await markdownStreamWriterMock.Received(1).FlushAsync();
         }
     }
 }
