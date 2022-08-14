@@ -244,6 +244,7 @@ If there's any features that you would like to see implemented, please create a 
 
 Currently I'm still looking to implement the following (no deadline set):
 
+- Releasing a MVP on NuGet
 - Image support for Markdown and HTML
 - Raw insertions for Markdown and HTML
 - Word support
