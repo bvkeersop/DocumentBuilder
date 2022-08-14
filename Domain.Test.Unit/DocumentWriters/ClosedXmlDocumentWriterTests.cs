@@ -51,19 +51,23 @@ namespace NDocument.Domain.Test.Unit.DocumentWriters
         {
             // Arrange
             var worksheetName = "worksheetName";
+
             var excelTableRowOne = new ExcelTableRow
             {
                 TextValue = "valueOne"
             };
+
             var excelTableRowTwo = new ExcelTableRow
             {
                 TextValue = "valueTwo"
             };
+
             var excelTableRows = new List<ExcelTableRow>
             {
                 excelTableRowOne,
                 excelTableRowTwo
             };
+
             var table = new Table<ExcelTableRow>(excelTableRows);
             var worksheetExcelConvertable = new WorksheetExcelConvertable(worksheetName, table);
             var options = new ExcelDocumentOptions();

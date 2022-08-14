@@ -7,9 +7,9 @@ namespace NDocument.Domain.StreamWriters
     {
         private bool _disposedValue;
 
-        public StreamWriter StreamWriter { get; init; }
-        public INewLineProvider NewLineProvider { get; init; }
-        public IIndentationProvider IndentationProvider { get; init; }
+        public StreamWriter StreamWriter { get; }
+        public INewLineProvider NewLineProvider { get; }
+        public IIndentationProvider IndentationProvider { get; }
 
         public HtmlStreamWriter(StreamWriter streamWriter, INewLineProvider newLineProvider, IIndentationProvider indentationProvider)
         {

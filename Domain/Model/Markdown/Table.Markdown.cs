@@ -55,7 +55,7 @@ namespace NDocument.Domain.Model
                 await CreateMarkdownTableCellAsync(markdownStreamWriter, columnName, amountOfWhiteSpace);
             }
 
-            await markdownStreamWriter.WriteNewLine();
+            await markdownStreamWriter.WriteNewLineAsync();
         }
 
         private async Task CreateMarkdownTableDividerAsync(IMarkdownStreamWriter markdownStreamWriter, INewLineProvider newLineProvider, MarkdownDocumentOptions options)
@@ -73,7 +73,7 @@ namespace NDocument.Domain.Model
                 await CreateMarkdownTableCellAsync(markdownStreamWriter, alignedDivider, 0, whiteSpaceCharacter: _rowDivider);
             }
 
-            await markdownStreamWriter.WriteNewLine();
+            await markdownStreamWriter.WriteNewLineAsync();
         }
 
         private int GetNumberOfCharactersForDividerCell(int columnIndex, MarkdownDocumentOptions options)
@@ -125,7 +125,7 @@ namespace NDocument.Domain.Model
             {
                 var currentRow = TableValues.GetRow(i);
                 await CreateMarkdownTableRowAsync(markdownStreamWriter, currentRow, options);
-                await markdownStreamWriter.WriteNewLine();
+                await markdownStreamWriter.WriteNewLineAsync();
             }
         }
 

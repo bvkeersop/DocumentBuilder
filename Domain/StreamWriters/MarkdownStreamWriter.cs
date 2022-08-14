@@ -7,7 +7,7 @@ namespace NDocument.Domain.StreamWriters
     {
         private bool _disposedValue;
 
-        public StreamWriter StreamWriter { get; init; }
+        public StreamWriter StreamWriter { get; }
         public INewLineProvider NewLineProvider { get; }
 
         public MarkdownStreamWriter(StreamWriter streamWriter, INewLineProvider newLineProvider)
@@ -29,10 +29,10 @@ namespace NDocument.Domain.StreamWriters
         public async Task WriteLineAsync(string value)
         {
             await StreamWriter.WriteAsync(value).ConfigureAwait(false);
-            await WriteNewLine().ConfigureAwait(false);
+            await WriteNewLineAsync().ConfigureAwait(false);
         }
 
-        public async Task WriteNewLine()
+        public async Task WriteNewLineAsync()
         {
             await StreamWriter.WriteAsync(NewLineProvider.GetNewLine()).ConfigureAwait(false);
         }

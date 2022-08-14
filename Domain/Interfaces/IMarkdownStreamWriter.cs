@@ -8,7 +8,7 @@
 
         Task WriteLineAsync(string value);
 
-        Task WriteNewLine();
+        Task WriteNewLineAsync();
 
         Task FlushAsync();
     }
