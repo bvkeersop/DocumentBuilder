@@ -70,7 +70,7 @@ namespace NDocument.Domain.Test.Unit.StreamWriters
             await _markdownStreamWriter.WriteNewLineAsync();
 
             // Assert
-            _streamWriterMock.HasReceivedWriteLine(Arg.Any<string>());
+            _streamWriterMock.WriteStringValuesReceived.Count().Should().Be(1);
             _newLineProviderMock.Received(1).GetNewLine();
         }
 
