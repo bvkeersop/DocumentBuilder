@@ -1,7 +1,7 @@
 # NDocument
 
 `NDocument` is a library that uses the `Builder` pattern to enable you to declaratively create different kinds of documents is an easy way.
-
+It is **not** a full fledged solution for creating complex documents. `NDocument` focuses on ease of use.
 
 The following formats are currently supported:
 
@@ -117,14 +117,13 @@ The Excel document builder allows you to create excel documents. Since the struc
 
 // Create a document using the excel document builder
 
+var outputStream = new MemoryStream();
+
 var excelDocumentBuilder = new ExcelDocumentBuilder(options)
     .AddWorksheet("my-worksheet-name")
     .WithTable(productTableRows) // More on tables below
-    .Build("./my-file-path.xlsx");
+    .WriteToStreamAsync(outputStream);
 ```
-
-> Note: Currently no stream support
-> Note: Excel support will be basic, since this project uses (And is limited to) the builder pattern. if you need to create complex structures in excel I recommend using [ClosedXML](https://github.com/ClosedXML/ClosedXML), it's what NDocument uses under the hood.
 
 ## Tables
 
@@ -233,7 +232,20 @@ public class ProductTableRow
 
 ## Credits
 
-NDocument is made possible by the following projects:
+`NDocument` is made possible by the following projects:
 
 [ClosedXML](https://github.com/ClosedXML/ClosedXML)
 [FluentAssertions](https://fluentassertions.com/)
+[NSubstitute](https://nsubstitute.github.io/)
+
+## Future work
+
+If there's any features that you would like to see implemented, please create a issue with the `enhancement` label at the [Github Issues](https://github.com/bvkeersop/NDocument/issues) page. Note that I am working on this project in my free time, and might not have time to implement your request (or simply decline it since I don't see the added value for the project).
+
+Currently I'm still looking to implement the following (no deadline set):
+
+- Image support for Markdown and HTML
+- Raw insertions for Markdown and HTML
+- Word support
+- More insertables for Excel
+- Better styling options for Excel
