@@ -1,9 +1,9 @@
-﻿using FluentAssertions;
-using NDocument.Domain.Enumerations;
-using NDocument.Domain.Factories;
+﻿using DocumentBuilder.Domain.Enumerations;
+using DocumentBuilder.Domain.Factories;
+using FluentAssertions;
 using System.Text;
 
-namespace NDocument.Domain.Test.Unit.Utilities
+namespace DocumentBuilder.Domain.Test.Unit.Utilities
 {
     [TestClass]
     public class IndentationProviderTests
@@ -32,7 +32,7 @@ namespace NDocument.Domain.Test.Unit.Utilities
         private string CreateExpectedIndentation(IndentationType indentationType, int indentationSize, int indentationLevel, int rootIndentationLevel)
         {
             var indentationCharacter = GetIndentationCharacter(indentationType);
-            var identation = (rootIndentationLevel * indentationSize) + (indentationSize * indentationLevel);
+            var identation = rootIndentationLevel * indentationSize + indentationSize * indentationLevel;
 
             return new StringBuilder(indentationCharacter.Length * identation)
                 .Insert(0, indentationCharacter, identation)

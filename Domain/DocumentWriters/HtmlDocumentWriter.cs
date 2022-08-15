@@ -1,9 +1,9 @@
-﻿using NDocument.Domain.Constants;
-using NDocument.Domain.Extensions;
-using NDocument.Domain.Interfaces;
-using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Constants;
+using DocumentBuilder.Domain.Extensions;
+using DocumentBuilder.Domain.Interfaces;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.DocumentWriters
+namespace DocumentBuilder.Domain.DocumentWriters
 {
     internal class HtmlDocumentWriter
     {

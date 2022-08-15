@@ -1,7 +1,7 @@
-﻿using NDocument.Domain.Constants;
-using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Constants;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Model.Generic
+namespace DocumentBuilder.Domain.Model.Generic
 {
     public class Header1 : Header
     {

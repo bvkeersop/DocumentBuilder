@@ -1,4 +1,4 @@
-﻿namespace NDocument.Domain.Enumerations
+﻿namespace DocumentBuilder.Domain.Enumerations
 {
     public enum Formatting
     {

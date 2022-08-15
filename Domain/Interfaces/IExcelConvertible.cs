@@ -1,7 +1,7 @@
-﻿using NDocument.Domain.Model.Excel;
-using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Model.Excel;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Interfaces
+namespace DocumentBuilder.Domain.Interfaces
 {
     public interface IExcelConvertable
     {

@@ -1,10 +1,9 @@
-﻿namespace NDocument.Domain.Exceptions
+﻿namespace DocumentBuilder.Domain.Exceptions
 {
-    public enum NDocumentErrorCode
+    public enum DocumentBuilderErrorCode
     {
         Unknown,
         ProvidedTableIsEmpty,
-        TableCellValueIsntOfTypeString,
         StreamIsNotWriteable,
         CouldNotFindColumnAtIndex,
         CouldNotFindTableRowAtIndex,

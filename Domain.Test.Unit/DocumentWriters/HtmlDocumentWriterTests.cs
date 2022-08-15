@@ -1,12 +1,12 @@
-﻿using NDocument.Domain.Constants;
-using NDocument.Domain.DocumentWriters;
-using NDocument.Domain.Extensions;
-using NDocument.Domain.Interfaces;
-using NDocument.Domain.Model.Generic;
-using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Constants;
+using DocumentBuilder.Domain.Extensions;
+using DocumentBuilder.Domain.Interfaces;
+using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Domain.DocumentWriters;
+using DocumentBuilder.Domain.Model.Generic;
 using NSubstitute;
 
-namespace NDocument.Domain.Test.Unit.DocumentWriters
+namespace DocumentBuilder.Domain.Test.Unit.DocumentWriters
 {
     [TestClass]
     public class HtmlDocumentWriterTests
@@ -25,7 +25,7 @@ namespace NDocument.Domain.Test.Unit.DocumentWriters
             };
 
             Func<Stream, HtmlDocumentOptions, IHtmlStreamWriter> factory
-                = (Stream outputStream, HtmlDocumentOptions options) => htmlStreamWriterMock;
+                = (outputStream, options) => htmlStreamWriterMock;
 
             var htmlDocumentWriter = new HtmlDocumentWriter(factory, options);
 
@@ -59,7 +59,7 @@ namespace NDocument.Domain.Test.Unit.DocumentWriters
             };
 
             Func<Stream, HtmlDocumentOptions, IHtmlStreamWriter> factory
-                = (Stream outputStream, HtmlDocumentOptions options) => htmlStreamWriterMock;
+                = (outputStream, options) => htmlStreamWriterMock;
 
             var HtmlDocumentWriter = new HtmlDocumentWriter(factory, options);
 

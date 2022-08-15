@@ -1,9 +1,9 @@
-﻿using NDocument.Domain.Enumerations;
-using NDocument.Domain.Factories;
-using NDocument.Domain.Options;
-using NDocument.Domain.Utilities;
+﻿using DocumentBuilder.Domain.Enumerations;
+using DocumentBuilder.Domain.Factories;
+using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Domain.Utilities;
 
-namespace NDocument.Domain.Test.Unit.TestHelpers
+namespace DocumentBuilder.Domain.Test.Unit.TestHelpers
 {
     internal static class ExampleProductMarkdownTableBuilder
     {

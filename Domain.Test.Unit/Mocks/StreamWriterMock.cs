@@ -1,4 +1,4 @@
-﻿namespace NDocument.Domain.Test.Unit.Mocks
+﻿namespace DocumentBuilder.Domain.Test.Unit.Mocks
 {
     internal class StreamWriterMock : StreamWriter
     {

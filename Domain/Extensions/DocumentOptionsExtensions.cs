@@ -1,6 +1,6 @@
-﻿using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Extensions
+namespace DocumentBuilder.Domain.Extensions
 {
     internal static class DocumentOptionsExtensions
     {

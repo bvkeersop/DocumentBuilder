@@ -1,8 +1,8 @@
-﻿using NDocument.Domain.Constants;
-using NDocument.Domain.Enumerations;
-using NDocument.Domain.Model.Generic;
+﻿using DocumentBuilder.Domain.Constants;
+using DocumentBuilder.Domain.Enumerations;
+using DocumentBuilder.Domain.Model.Generic;
 
-namespace NDocument.Domain.Test.Unit.Model.Generic
+namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
 {
     [TestClass]
     public class Header1Tests : HeaderTestBase

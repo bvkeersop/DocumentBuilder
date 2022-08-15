@@ -1,7 +1,29 @@
-# NDocument
+# Table of Contents
 
-`NDocument` is a library that uses the `Builder` pattern to enable you to declaratively create different kinds of documents is an easy way.
-It is **not** a full fledged solution for creating complex documents. `NDocument` focuses on ease of use.
+- [Table of Contents](#table-of-contents)
+- [DocumentBuilder](#documentbuilder)
+  - [Creating a document](#creating-a-document)
+    - [Markdown](#markdown)
+    - [HTML](#html)
+    - [Excel](#excel)
+  - [Tables](#tables)
+    - [1. Define a POCO](#1-define-a-poco)
+    - [2. Put your POCOs in an IEnumerable](#2-put-your-pocos-in-an-ienumerable)
+    - [3. Use it inside a document builder to generate a table](#3-use-it-inside-a-document-builder-to-generate-a-table)
+  - [Options](#options)
+  - [Generic](#generic)
+  - [Markdown](#markdown-1)
+      - [MarkdownTableOptions](#markdowntableoptions)
+  - [HTML](#html-1)
+      - [HtmlDocumentOptions](#htmldocumentoptions)
+    - [Attributes](#attributes)
+  - [Credits](#credits)
+  - [Future work](#future-work)
+
+# DocumentBuilder
+
+`DocumentBuilder` is a library that uses the `Builder` pattern to enable you to declaratively create different kinds of documents is an easy way.
+It is **not** a full fledged solution for creating complex documents. `DocumentBuilder` focuses on ease of use.
 
 The following formats are currently supported:
 
@@ -9,7 +31,7 @@ The following formats are currently supported:
 - HTML
 - Excel
 
-`NDocument` exposes a `GenericDocumentBuilder` class that can be used to create a markdown or HTML document, it does not support Excel since it's document structure is too different. `NDocument` also exposes a `MarkdownDocumentBuilder` and an `HTMLDocumentBuilder`, this is done so that in the future, these can be extended with markdown or HTML specific elements. For now it's recommend to use the generic `GenericDocumentBuilder` as it has the exact same functionality.
+`DocumentBuilder` exposes a `GenericDocumentBuilder` class that can be used to create a markdown or HTML document, it does not support Excel since it's document structure is too different. `DocumentBuilder` also exposes a `MarkdownDocumentBuilder` and an `HTMLDocumentBuilder`, this is done so that in the future, these can be extended with markdown or HTML specific elements. For now it's recommend to use the generic `GenericDocumentBuilder` as it has the exact same functionality.
 
 ## Creating a document
 
@@ -50,21 +72,21 @@ The generic document builder allows you to create generic documents that can eas
 var outputStream = new MemoryStream();
 
 var documentBuilder = new DocumentBuilder(options)
-    .WithHeader1(header1)
-    .WithHeader2(header2)
-    .WithHeader3(header3)
-    .WithHeader4(header4)
-    .WithParagraph(paragraph)
-    .WithUnorderedList(unorderedList)
-    .WithOrderedList(orderedList)
-    .WithTable(productTableRows) // More on tables below
+    .AddHeader1(header1)
+    .AddHeader2(header2)
+    .AddHeader3(header3)
+    .AddHeader4(header4)
+    .AddParagraph(paragraph)
+    .AddUnorderedList(unorderedList)
+    .AddOrderedList(orderedList)
+    .AddTable(productTableRows) // More on tables below
     .WriteToStreamAsync(outputStream, DocumentType.Markdown); // Or HTML (DocumentType.HTML)
 
 ```
 
-```C#
-
 ### Markdown
+
+```C#
 
 The markdown document builder allows you to create markdown documents, it is not yet different from the `GenericDocumentBuilder`, but might include markdown specific functionality in the future.
 
@@ -75,14 +97,14 @@ The markdown document builder allows you to create markdown documents, it is not
 var outputStream = new MemoryStream();
 
 var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
-    .WithHeader1(header1)
-    .WithHeader2(header2)
-    .WithHeader3(header3)
-    .WithHeader4(header4)
-    .WithParagraph(paragraph)
-    .WithUnorderedList(unorderedList)
-    .WithOrderedList(orderedList)
-    .WithTable(productTableRows) // More on tables below
+    .AddHeader1(header1)
+    .AddHeader2(header2)
+    .AddHeader3(header3)
+    .AddHeader4(header4)
+    .AddParagraph(paragraph)
+    .AddUnorderedList(unorderedList)
+    .AddOrderedList(orderedList)
+    .AddTable(productTableRows) // More on tables below
     .WriteToStreamAsync(outputStream);
 
 ```
@@ -98,14 +120,14 @@ The HTML document builder allows you to create HTML documents, it is not yet dif
 var outputStream = new MemoryStream();
 
 var htmlDocumentBuilder = new HtmlDocumentBuilder(options)
-    .WithHeader1(header1)
-    .WithHeader2(header2)
-    .WithHeader3(header3)
-    .WithHeader4(header4)
-    .WithParagraph(paragraph)
-    .WithUnorderedList(unorderedList)
-    .WithOrderedList(orderedList)
-    .WithTable(productTableRows) // More on tables below
+    .AddHeader1(header1)
+    .AddHeader2(header2)
+    .AddHeader3(header3)
+    .AddHeader4(header4)
+    .AddParagraph(paragraph)
+    .AddUnorderedList(unorderedList)
+    .AddOrderedList(orderedList)
+    .AddTable(productTableRows) // More on tables below
     .WriteToStreamAsync(outputStream);
 ```
 
@@ -121,13 +143,13 @@ var outputStream = new MemoryStream();
 
 var excelDocumentBuilder = new ExcelDocumentBuilder(options)
     .AddWorksheet("my-worksheet-name")
-    .WithTable(productTableRows) // More on tables below
+    .AddTable(productTableRows) // More on tables below
     .WriteToStreamAsync(outputStream);
 ```
 
 ## Tables
 
-NDocument supports the creation of tables by creating a POCO (Plain Old C# Object). It will use the name of the property has the column name, and will order the table columns in the same order as the properties defined in the POCO.
+`DocumentBuilder` supports the creation of tables by creating a POCO (Plain Old C# Object). It will use the name of the property has the column name, and will order the table columns in the same order as the properties defined in the POCO.
 There are [options](#options) available to configure this.
 
 ### 1. Define a POCO
@@ -164,7 +186,7 @@ var productTableRows = new List<ProductTableRow>
 var outputStream = new MemoryStream();
 
 var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
-    .WithTable(productTableRows)
+    .AddTable(productTableRows)
     .WriteToStream(outputStream);
 
 ```
@@ -232,15 +254,15 @@ public class ProductTableRow
 
 ## Credits
 
-`NDocument` is made possible by the following projects:
+`DocumentBuilder` is made possible by the following projects:
 
-[ClosedXML](https://github.com/ClosedXML/ClosedXML)
-[FluentAssertions](https://fluentassertions.com/)
-[NSubstitute](https://nsubstitute.github.io/)
+- [ClosedXML](https://github.com/ClosedXML/ClosedXML)
+- [FluentAssertions](https://fluentassertions.com/)
+- [NSubstitute](https://nsubstitute.github.io/)
 
 ## Future work
 
-If there's any features that you would like to see implemented, please create a issue with the `enhancement` label at the [Github Issues](https://github.com/bvkeersop/NDocument/issues) page. Note that I am working on this project in my free time, and might not have time to implement your request (or simply decline it since I don't see the added value for the project).
+If there's any features that you would like to see implemented, please create a issue with the `enhancement` label at the [Github Issues](https://github.com/bvkeersop/DocumentBuilder/issues) page. Note that I am working on this project in my free time, and might not have time to implement your request (or simply decline it since I don't see the added value for the project).
 
 Currently I'm still looking to implement the following (no deadline set):
 

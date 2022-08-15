@@ -1,8 +1,8 @@
-﻿using NDocument.Domain.Exceptions;
-using NDocument.Domain.Helpers;
+﻿using DocumentBuilder.Domain.Exceptions;
+using DocumentBuilder.Domain.Helpers;
 using System.Reflection;
 
-namespace NDocument.Domain.Model.Generic
+namespace DocumentBuilder.Domain.Model.Generic
 {
     public class Matrix<TValue>
     {
@@ -36,7 +36,7 @@ namespace NDocument.Domain.Model.Generic
 
                     if (currentTableRow == null)
                     {
-                        throw new NDocumentException(NDocumentErrorCode.CouldNotFindTableRowAtIndex, $"Could not find table row at index {i}");
+                        throw new DocumentBuilderException(DocumentBuilderErrorCode.CouldNotFindTableRowAtIndex, $"Could not find table row at index {i}");
                     }
 
                     var cellValue = GetTableCellValue(currentProperty, currentTableRow);
@@ -96,7 +96,7 @@ namespace NDocument.Domain.Model.Generic
         {
             if (columnIndex < 0 || columnIndex > NumberOfColumns)
             {
-                throw new NDocumentException(NDocumentErrorCode.CouldNotFindColumnAtIndex);
+                throw new DocumentBuilderException(DocumentBuilderErrorCode.CouldNotFindColumnAtIndex);
             }
 
             return _longestCellSizeOfColumn[columnIndex];

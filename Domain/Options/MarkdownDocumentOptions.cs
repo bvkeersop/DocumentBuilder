@@ -1,4 +1,4 @@
-﻿namespace NDocument.Domain.Options
+﻿namespace DocumentBuilder.Domain.Options
 {
     public class MarkdownDocumentOptions : DocumentOptions
     {

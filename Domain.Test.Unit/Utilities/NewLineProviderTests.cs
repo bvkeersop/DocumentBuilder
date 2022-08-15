@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
-using NDocument.Domain.Enumerations;
-using NDocument.Domain.Factories;
+﻿using DocumentBuilder.Domain.Enumerations;
+using DocumentBuilder.Domain.Factories;
+using FluentAssertions;
 
-namespace NDocument.Domain.Test.Unit.Utilities
+namespace DocumentBuilder.Domain.Test.Unit.Utilities
 {
     [TestClass]
     public class NewLineProviderTests

@@ -1,8 +1,8 @@
-﻿using NDocument.Domain.Interfaces;
-using NDocument.Domain.Options;
-using NDocument.Domain.StreamWriters;
+﻿using DocumentBuilder.Domain.Interfaces;
+using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Domain.StreamWriters;
 
-namespace NDocument.Domain.Factories
+namespace DocumentBuilder.Domain.Factories
 {
     internal static class MarkdownStreamWriterFactory
     {

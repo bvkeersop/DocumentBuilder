@@ -1,6 +1,6 @@
-﻿using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Interfaces
+namespace DocumentBuilder.Domain.Interfaces
 {
     public interface IHtmlConvertable
     {

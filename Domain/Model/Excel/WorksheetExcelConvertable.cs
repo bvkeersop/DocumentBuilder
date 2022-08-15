@@ -1,6 +1,6 @@
-﻿using NDocument.Domain.Interfaces;
+﻿using DocumentBuilder.Domain.Interfaces;
 
-namespace NDocument.Domain.Model.Excel
+namespace DocumentBuilder.Domain.Model.Excel
 {
     public class WorksheetExcelConvertable
     {

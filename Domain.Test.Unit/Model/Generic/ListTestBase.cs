@@ -1,11 +1,11 @@
-﻿using FluentAssertions;
-using NDocument.Domain.Factories;
-using NDocument.Domain.Model.Generic;
-using NDocument.Domain.Options;
-using NDocument.Domain.Test.Unit.TestHelpers;
-using NDocument.Domain.Utilities;
+﻿using DocumentBuilder.Domain.Factories;
+using DocumentBuilder.Domain.Model.Generic;
+using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+using DocumentBuilder.Domain.Utilities;
+using FluentAssertions;
 
-namespace NDocument.Domain.Test.Unit.Model.Generic
+namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
 {
     [TestClass]
     public class ListTestBase : TestBase

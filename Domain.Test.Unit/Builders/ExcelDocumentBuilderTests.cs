@@ -1,11 +1,11 @@
 ﻿using ClosedXML.Excel;
+using DocumentBuilder.Domain.Test.Unit.TestHelpers;
 using FluentAssertions;
-using NDocument.Domain.Builders;
-using NDocument.Domain.Model;
-using NDocument.Domain.Options;
-using NDocument.Domain.Test.Unit.TestHelpers;
+using DocumentBuilder.Domain.DocumentBuilders;
+using DocumentBuilder.Domain.Model;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Test.Unit.Builders
+namespace DocumentBuilder.Domain.Test.Unit.Builders
 {
     [TestClass]
     public class ExcelDocumentBuilderTests
@@ -68,9 +68,9 @@ namespace NDocument.Domain.Test.Unit.Builders
             var options = new ExcelDocumentOptions();
             var excelDocumentBuilder = new ExcelDocumentBuilder(options)
                 .AddWorksheet(firstWorksheetName)
-                .WithTable(_excelTableRowsOne)
+                .AddTable(_excelTableRowsOne)
                 .AddWorksheet(secondWorksheetName)
-                .WithTable(_excelTableRowsTwo);
+                .AddTable(_excelTableRowsTwo);
 
             // Act
             excelDocumentBuilder.WriteToStream(memoryStream);

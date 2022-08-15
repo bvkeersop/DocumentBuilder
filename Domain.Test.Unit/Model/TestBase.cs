@@ -1,11 +1,11 @@
-﻿using NDocument.Domain.Enumerations;
-using NDocument.Domain.Extensions;
-using NDocument.Domain.Factories;
-using NDocument.Domain.Model;
-using NDocument.Domain.Options;
-using NDocument.Domain.Utilities;
+﻿using DocumentBuilder.Domain.Utilities;
+using DocumentBuilder.Domain.Enumerations;
+using DocumentBuilder.Domain.Extensions;
+using DocumentBuilder.Domain.Factories;
+using DocumentBuilder.Domain.Model;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Test.Unit.Model
+namespace DocumentBuilder.Domain.Test.Unit.Model
 {
     public abstract class TestBase
     {

@@ -1,6 +1,6 @@
-﻿using NDocument.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Domain.Test.Unit.TestHelpers;
 
-namespace NDocument.Domain.Test.Unit.Model
+namespace DocumentBuilder.Domain.Test.Unit.Model
 {
     public class TableTestBase
     {

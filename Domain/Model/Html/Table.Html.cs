@@ -1,13 +1,13 @@
-﻿using NDocument.Domain.Constants;
-using NDocument.Domain.Exceptions;
-using NDocument.Domain.Extensions;
-using NDocument.Domain.Factories;
-using NDocument.Domain.Model.Generic;
-using NDocument.Domain.Options;
-using NDocument.Domain.StreamWriters;
+﻿using DocumentBuilder.Domain.Constants;
+using DocumentBuilder.Domain.Exceptions;
+using DocumentBuilder.Domain.Extensions;
+using DocumentBuilder.Domain.Factories;
+using DocumentBuilder.Domain.Model.Generic;
+using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Domain.StreamWriters;
 using System.Text;
 
-namespace NDocument.Domain.Model
+namespace DocumentBuilder.Domain.Model
 {
     public partial class Table<TValue>
     {
@@ -24,7 +24,7 @@ namespace NDocument.Domain.Model
         {
             if (!outputStream.CanWrite)
             {
-                throw new NDocumentException(NDocumentErrorCode.StreamIsNotWriteable, nameof(outputStream));
+                throw new DocumentBuilderException(DocumentBuilderErrorCode.StreamIsNotWriteable, nameof(outputStream));
             }
 
             var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);

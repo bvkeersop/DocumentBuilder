@@ -1,10 +1,10 @@
-﻿using FluentAssertions;
-using NDocument.Domain.Builders;
-using NDocument.Domain.Enumerations;
-using NDocument.Domain.Options;
-using NDocument.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Domain.Enumerations;
+using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+using FluentAssertions;
+using DocumentBuilder.Domain.DocumentBuilders;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Test.Unit.Builders
+namespace DocumentBuilder.Domain.Test.Unit.Builders
 {
     [TestClass]
     public class HtmlDocumentBuilderTests : BuilderTestBase
@@ -23,14 +23,14 @@ namespace NDocument.Domain.Test.Unit.Builders
             var outputStream = new MemoryStream();
 
             var htmlDocumentBuilder = new HtmlDocumentBuilder(options)
-                .WithHeader1(_header1)
-                .WithHeader2(_header2)
-                .WithHeader3(_header3)
-                .WithHeader4(_header4)
-                .WithParagraph(_paragraph)
-                .WithUnorderedList(_unorderedList)
-                .WithOrderedList(_orderedList)
-                .WithTable(_productTableRowsWithoutHeaders);
+                .AddHeader1(_header1)
+                .AddHeader2(_header2)
+                .AddHeader3(_header3)
+                .AddHeader4(_header4)
+                .AddParagraph(_paragraph)
+                .AddUnorderedList(_unorderedList)
+                .AddOrderedList(_orderedList)
+                .AddTable(_productTableRowsWithoutHeaders);
 
             // Act
             await htmlDocumentBuilder.WriteToStreamAsync(outputStream);

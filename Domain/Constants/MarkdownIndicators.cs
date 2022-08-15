@@ -1,4 +1,4 @@
-﻿namespace NDocument.Domain.Constants
+﻿namespace DocumentBuilder.Domain.Constants
 {
     public class MarkdownIndicators
     {

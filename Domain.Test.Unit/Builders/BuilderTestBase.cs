@@ -1,9 +1,9 @@
-﻿using NDocument.Domain.Factories;
-using NDocument.Domain.Options;
-using NDocument.Domain.Test.Unit.Model;
-using NDocument.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Domain.Factories;
+using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Domain.Test.Unit.Model;
+using DocumentBuilder.Domain.Test.Unit.TestHelpers;
 
-namespace NDocument.Domain.Test.Unit.Builders
+namespace DocumentBuilder.Domain.Test.Unit.Builders
 {
     [TestClass]
     public abstract class BuilderTestBase : TestBase

@@ -1,8 +1,8 @@
-﻿using NDocument.Domain.Factories;
-using NDocument.Domain.Interfaces;
-using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Factories;
+using DocumentBuilder.Domain.Interfaces;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Model.Generic
+namespace DocumentBuilder.Domain.Model.Generic
 {
     public abstract class GenericElement : IMarkdownConvertable, IHtmlConvertable
     {

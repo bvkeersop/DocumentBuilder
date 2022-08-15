@@ -1,6 +1,6 @@
-﻿using NDocument.Domain.Model.Excel;
+﻿using DocumentBuilder.Domain.Model.Excel;
 
-namespace NDocument.Domain.Interfaces
+namespace DocumentBuilder.Domain.Interfaces
 {
     public interface IExcelDocumentWriter
     {
