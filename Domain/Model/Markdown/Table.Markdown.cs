@@ -37,13 +37,13 @@ namespace DocumentBuilder.Domain.Model
 
             var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
             using var markdownStreamWriter = MarkdownStreamWriterFactory.Create(outputStream, options);
-            await CreateMarkdownTableHeaderAsync(markdownStreamWriter, newLineProvider, options).ConfigureAwait(false);
+            await CreateMarkdownTableHeaderAsync(markdownStreamWriter, options).ConfigureAwait(false);
             await CreateMarkdownTableDividerAsync(markdownStreamWriter, newLineProvider, options).ConfigureAwait(false);
             await CreateMarkdownTableRowsAsync(markdownStreamWriter, newLineProvider, options).ConfigureAwait(false);
             await markdownStreamWriter.FlushAsync().ConfigureAwait(false);
         }
 
-        private async Task CreateMarkdownTableHeaderAsync(IMarkdownStreamWriter markdownStreamWriter, INewLineProvider newLineProvider, MarkdownDocumentOptions options)
+        private async Task CreateMarkdownTableHeaderAsync(IMarkdownStreamWriter markdownStreamWriter, MarkdownDocumentOptions options)
         {
             await markdownStreamWriter.WriteAsync(_columnDivider).ConfigureAwait(false);
             var numberOfColumns = TableValues.NumberOfColumns;

@@ -25,7 +25,7 @@ namespace DocumentBuilder.Domain.Test.Unit.Utilities
             newLine.Should().Be(expectedNewLine);
         }
 
-        private string GetExpectedNewLine(LineEndings lineEndings)
+        private static string GetExpectedNewLine(LineEndings lineEndings)
         {
             return lineEndings switch
             {

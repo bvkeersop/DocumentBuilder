@@ -4,7 +4,7 @@ using DocumentBuilder.Domain.StreamWriters;
 
 namespace DocumentBuilder.Domain.Factories
 {
-    internal class HtmlStreamWriterFactory
+    internal static class HtmlStreamWriterFactory
     {
         public static IHtmlStreamWriter Create(Stream outputStream, HtmlDocumentOptions options)
         {

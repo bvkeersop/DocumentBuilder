@@ -43,7 +43,7 @@ namespace DocumentBuilder.Domain.Helpers
                 return new ColumnAttribute(tableCell.Name);
             }
 
-            if (columnAttribute.Name.IsSet == false)
+            if (!columnAttribute.Name.IsSet)
             {
                 return new ColumnAttribute(tableCell.Name, columnAttribute.Alignment, columnAttribute.Order);
             }

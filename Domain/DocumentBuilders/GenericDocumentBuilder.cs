@@ -30,7 +30,7 @@ namespace DocumentBuilder.Domain.DocumentBuilders
                     break;
                 default:
                     throw new NotSupportedException($"{documentType} is not supported");
-            };
+            }
         }
 
         public GenericDocumentBuilder AddHeader1(string header1)

@@ -29,7 +29,7 @@ namespace DocumentBuilder.Domain.Test.Unit.Utilities
             indentation.Should().Be(expectedIndentation);
         }
 
-        private string CreateExpectedIndentation(IndentationType indentationType, int indentationSize, int indentationLevel, int rootIndentationLevel)
+        private static string CreateExpectedIndentation(IndentationType indentationType, int indentationSize, int indentationLevel, int rootIndentationLevel)
         {
             var indentationCharacter = GetIndentationCharacter(indentationType);
             var identation = rootIndentationLevel * indentationSize + indentationSize * indentationLevel;
@@ -39,7 +39,7 @@ namespace DocumentBuilder.Domain.Test.Unit.Utilities
                 .ToString();
         }
 
-        private string GetIndentationCharacter(IndentationType indentationType)
+        private static string GetIndentationCharacter(IndentationType indentationType)
         {
             return indentationType switch
             {
