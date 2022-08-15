@@ -10,7 +10,7 @@ namespace DocumentBuilder.Domain.Model.Generic
     {
         protected IEnumerable<TValue> Value { get; }
 
-        public ListBase(IEnumerable<TValue> value)
+        protected ListBase(IEnumerable<TValue> value)
         {
             Value = value;
         }

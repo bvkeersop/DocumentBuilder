@@ -1,5 +1,6 @@
 ﻿using DocumentBuilder.Domain.Extensions;
 using DocumentBuilder.Domain.Options;
+using FluentAssertions;
 
 namespace DocumentBuilder.Domain.Test.Unit.Model.Excel
 {
@@ -17,7 +18,9 @@ namespace DocumentBuilder.Domain.Test.Unit.Model.Excel
 
             // Assert
             var expectedExcelTableCells = _tableWithoutHeaderAttributes.TableCells.Select(t => t.ToExcelTableCell());
-            excelTableCells.SequenceEqual(expectedExcelTableCells);
+
+            //TODO: fix test
+            excelTableCells.SequenceEqual(expectedExcelTableCells).Should().BeTrue();
         }
     }
 }

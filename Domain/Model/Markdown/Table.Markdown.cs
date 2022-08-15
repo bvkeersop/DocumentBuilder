@@ -6,7 +6,6 @@ using DocumentBuilder.Domain.Factories;
 using DocumentBuilder.Domain.Interfaces;
 using DocumentBuilder.Domain.Model.Generic;
 using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.Utilities;
 using System.Text;
 
 namespace DocumentBuilder.Domain.Model
@@ -38,8 +37,8 @@ namespace DocumentBuilder.Domain.Model
             var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
             using var markdownStreamWriter = MarkdownStreamWriterFactory.Create(outputStream, options);
             await CreateMarkdownTableHeaderAsync(markdownStreamWriter, options).ConfigureAwait(false);
-            await CreateMarkdownTableDividerAsync(markdownStreamWriter, newLineProvider, options).ConfigureAwait(false);
-            await CreateMarkdownTableRowsAsync(markdownStreamWriter, newLineProvider, options).ConfigureAwait(false);
+            await CreateMarkdownTableDividerAsync(markdownStreamWriter, options).ConfigureAwait(false);
+            await CreateMarkdownTableRowsAsync(markdownStreamWriter, options).ConfigureAwait(false);
             await markdownStreamWriter.FlushAsync().ConfigureAwait(false);
         }
 
@@ -58,7 +57,7 @@ namespace DocumentBuilder.Domain.Model
             await markdownStreamWriter.WriteNewLineAsync();
         }
 
-        private async Task CreateMarkdownTableDividerAsync(IMarkdownStreamWriter markdownStreamWriter, INewLineProvider newLineProvider, MarkdownDocumentOptions options)
+        private async Task CreateMarkdownTableDividerAsync(IMarkdownStreamWriter markdownStreamWriter, MarkdownDocumentOptions options)
         {
             await markdownStreamWriter.WriteAsync(_columnDivider).ConfigureAwait(false);
             var numberOfColumns = TableValues.NumberOfColumns;
@@ -117,7 +116,7 @@ namespace DocumentBuilder.Domain.Model
             return cellDividerValue;
         }
 
-        private async Task CreateMarkdownTableRowsAsync(IMarkdownStreamWriter markdownStreamWriter, INewLineProvider newLineProvider, MarkdownDocumentOptions options)
+        private async Task CreateMarkdownTableRowsAsync(IMarkdownStreamWriter markdownStreamWriter, MarkdownDocumentOptions options)
         {
             var numberOfRows = TableValues.NumberOfRows;
 
