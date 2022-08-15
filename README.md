@@ -1,6 +1,7 @@
 # DocumentBuilder
 
-![example workflow](https://github.com/bvkeersop/DocumentBuilder/actions/workflows/dotnet.yml/badge.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](https://opensource.org/licenses/MIT)
+![Workflows: dotnet](https://github.com/bvkeersop/DocumentBuilder/actions/workflows/dotnet.yml/badge.svg)
 
 `DocumentBuilder` is a library that uses the `Builder` pattern to enable you to declaratively create different kinds of documents easily.
 It is **not** a full-fledged solution for creating complex documents. `DocumentBuilder` focuses on ease of use.
