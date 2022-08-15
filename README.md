@@ -1,15 +1,32 @@
+# DocumentBuilder
+
+![example workflow](https://github.com/bvkeersop/DocumentBuilder/actions/workflows/dotnet.yml/badge.svg)
+
+`DocumentBuilder` is a library that uses the `Builder` pattern to enable you to declaratively create different kinds of documents easily.
+It is **not** a full-fledged solution for creating complex documents. `DocumentBuilder` focuses on ease of use.
+
+The following formats are currently supported:
+
+- Markdown
+- HTML
+- Excel
+
+`DocumentBuilder` exposes a `GenericDocumentBuilder` class that can be used to create a markdown or HTML document, it does not support Excel since its document structure is too different. `DocumentBuilder` also exposes a `MarkdownDocumentBuilder` and an `HTMLDocumentBuilder`, this is done so that in the future, these can be extended with Markdown or HTML-specific elements. For now, it's recommended to use the generic `GenericDocumentBuilder` as it has the same functionality.
+
 # Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [DocumentBuilder](#documentbuilder)
+- [Table of Contents](#table-of-contents)
   - [Creating a document](#creating-a-document)
+    - [Generic Documents](#generic-documents)
     - [Markdown](#markdown)
     - [HTML](#html)
     - [Excel](#excel)
   - [Tables](#tables)
-    - [1. Define a POCO](#1-define-a-poco)
-    - [2. Put your POCOs in an IEnumerable](#2-put-your-pocos-in-an-ienumerable)
-    - [3. Use it inside a document builder to generate a table](#3-use-it-inside-a-document-builder-to-generate-a-table)
+    - [Creating a Table](#creating-a-table)
+      - [1. Define a POCO](#1-define-a-poco)
+      - [2. Put your POCOs in an IEnumerable](#2-put-your-pocos-in-an-ienumerable)
+      - [3. Use it inside a document builder to generate a table](#3-use-it-inside-a-document-builder-to-generate-a-table)
   - [Options](#options)
   - [Generic](#generic)
   - [Markdown](#markdown-1)
@@ -20,22 +37,9 @@
   - [Credits](#credits)
   - [Future work](#future-work)
 
-# DocumentBuilder
-
-`DocumentBuilder` is a library that uses the `Builder` pattern to enable you to declaratively create different kinds of documents is an easy way.
-It is **not** a full fledged solution for creating complex documents. `DocumentBuilder` focuses on ease of use.
-
-The following formats are currently supported:
-
-- Markdown
-- HTML
-- Excel
-
-`DocumentBuilder` exposes a `GenericDocumentBuilder` class that can be used to create a markdown or HTML document, it does not support Excel since it's document structure is too different. `DocumentBuilder` also exposes a `MarkdownDocumentBuilder` and an `HTMLDocumentBuilder`, this is done so that in the future, these can be extended with markdown or HTML specific elements. For now it's recommend to use the generic `GenericDocumentBuilder` as it has the exact same functionality.
-
 ## Creating a document
 
-Create documents as follows:
+Below are examples of how you can use the document builders provided by `DocumentBuilder` to create markdown, HTML and Excel documents.
 
 ```C#
 
@@ -61,9 +65,11 @@ var unorderedList = new List<string>
     "list"
 };
 
+```
+
 ### Generic Documents
 
-The generic document builder allows you to create generic documents that can easily be written to a markdown or HTML format.
+The generic document builder allows you to create generic documents that can easily be written to a stream as either Markdown or HTML.
 
 ```C#
 
@@ -86,9 +92,7 @@ var documentBuilder = new DocumentBuilder(options)
 
 ### Markdown
 
-```C#
-
-The markdown document builder allows you to create markdown documents, it is not yet different from the `GenericDocumentBuilder`, but might include markdown specific functionality in the future.
+The `MarkdownDocumentBuilder` allows you to create Markdown documents, it is not yet different from the `GenericDocumentBuilder`, but might include Markdown-specific functionality in the future.
 
 ```C#
 
@@ -111,7 +115,7 @@ var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
 
 ### HTML
 
-The HTML document builder allows you to create HTML documents, it is not yet different from the `GenericDocumentBuilder`, but might include HTML specific functionality in the future.
+The `HTMLDocumentBuilder` allows you to create Markdown documents, it is not yet different from the `GenericDocumentBuilder`, but might include HTML-specific functionality in the future.
 
 ```C#
 
@@ -133,7 +137,7 @@ var htmlDocumentBuilder = new HtmlDocumentBuilder(options)
 
 ### Excel
 
-The Excel document builder allows you to create excel documents. Since the structure of excel document is not comparable to markdown or HTML, it's not supported by the `GenericDocumentBuilder`.
+The Excel document builder allows you to create Excel documents. Since the structure of Excel documents is not comparable to Markdown or HTML, it's not supported by the `GenericDocumentBuilder`.
 
 ```C#
 
@@ -149,10 +153,11 @@ var excelDocumentBuilder = new ExcelDocumentBuilder(options)
 
 ## Tables
 
-`DocumentBuilder` supports the creation of tables by creating a POCO (Plain Old C# Object). It will use the name of the property has the column name, and will order the table columns in the same order as the properties defined in the POCO.
-There are [options](#options) available to configure this.
+`DocumentBuilder` supports the creation of tables by creating a POCO (Plain Old C# Object). It will use the name of the property as the column name and will order the columns as defined on the POCO. There are [options](#options) available to configure this.
 
-### 1. Define a POCO
+### Creating a Table
+
+#### 1. Define a POCO
 
 ```C#
 
@@ -166,7 +171,7 @@ public class ProductTableRow
 
 ```
 
-### 2. Put your POCOs in an IEnumerable
+#### 2. Put your POCOs in an IEnumerable
 
 ```C#
 
@@ -179,7 +184,7 @@ var productTableRows = new List<ProductTableRow>
 
 ```
 
-### 3. Use it inside a document builder to generate a table
+#### 3. Use it inside a document builder to generate a table
 
 ```C#
 
@@ -191,7 +196,7 @@ var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
 
 ```
 
-> NOTE: The values written to the table cell will be the object's `ToString()` method
+> NOTE: In case of using an object, the values written to the table cell will be the object's `ToString()` method.
 
 ## Options
 
@@ -262,11 +267,11 @@ public class ProductTableRow
 
 ## Future work
 
-If there's any features that you would like to see implemented, please create a issue with the `enhancement` label at the [Github Issues](https://github.com/bvkeersop/DocumentBuilder/issues) page. Note that I am working on this project in my free time, and might not have time to implement your request (or simply decline it since I don't see the added value for the project).
+If there are any features that you would like to see implemented, please create an issue with the `enhancement` label on the [Github Issues](https://github.com/bvkeersop/DocumentBuilder/issues) page. Note that I am working on this project in my free time, and might not have time to implement your request (or simply decline it since I don't see the added value for the project).
 
-Currently I'm still looking to implement the following (no deadline set):
+Currently, I'm still looking to implement the following (no deadline set):
 
-- Releasing a MVP on NuGet
+- Releasing an MVP on NuGet
 - Image support for Markdown and HTML
 - Raw insertions for Markdown and HTML
 - Word support
