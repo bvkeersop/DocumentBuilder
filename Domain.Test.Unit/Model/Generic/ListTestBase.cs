@@ -7,7 +7,6 @@ using FluentAssertions;
 
 namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
 {
-    [TestClass]
     public class ListTestBase : TestBase
     {
         protected IEnumerable<ProductTableRowWithoutHeaders> _exampleProducts;

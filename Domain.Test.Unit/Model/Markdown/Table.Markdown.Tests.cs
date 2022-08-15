@@ -10,14 +10,6 @@ namespace DocumentBuilder.Domain.Test.Unit.Model.Markdown
     [TestClass]
     public class TableMarkdownTests : TableTestBase
     {
-        private Table<ProductTableRowWithoutHeaders> _tableWithoutHeaderAttributes;
-
-        [TestInitialize]
-        public void TestInitialize()
-        {
-            _tableWithoutHeaderAttributes = new Table<ProductTableRowWithoutHeaders>(_productTableRowsWithoutHeaders);
-        }
-
         [DataTestMethod]
         [DataRow(LineEndings.Environment, Formatting.AlignColumns)]
         [DataRow(LineEndings.Linux, Formatting.AlignColumns)]

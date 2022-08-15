@@ -1,23 +1,13 @@
 ﻿using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Test.Unit.Model;
+using DocumentBuilder.Domain.Options;
 using DocumentBuilder.Domain.Test.Unit.TestHelpers;
 using FluentAssertions;
-using DocumentBuilder.Domain.Model;
-using DocumentBuilder.Domain.Options;
 
 namespace DocumentBuilder.Domain.Test.Unit.Model.Html
 {
     [TestClass]
     public class TableHtmlTests : TableTestBase
     {
-        private Table<ProductTableRowWithoutHeaders> _tableWithoutHeaderAttributes;
-
-        [TestInitialize]
-        public void TestInitialize()
-        {
-            _tableWithoutHeaderAttributes = new Table<ProductTableRowWithoutHeaders>(_productTableRowsWithoutHeaders);
-        }
-
         [DataTestMethod]
         [DataRow(LineEndings.Environment, IndentationType.Spaces, 2, 0)]
         [DataRow(LineEndings.Linux, IndentationType.Spaces, 2, 0)]
