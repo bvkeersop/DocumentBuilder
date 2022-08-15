@@ -1,6 +1,6 @@
-﻿using NDocument.Domain.Enumerations;
+﻿using DocumentBuilder.Domain.Enumerations;
 
-namespace NDocument.Domain.Options
+namespace DocumentBuilder.Domain.Options
 {
     public class MarkdownTableOptions
     {

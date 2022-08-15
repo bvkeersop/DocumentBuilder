@@ -1,8 +1,9 @@
-﻿using FluentAssertions;
-using NDocument.Domain.Model.Generic;
-using NDocument.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Domain.Model.Generic;
+using DocumentBuilder.Domain.Test.Unit.Model;
+using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+using FluentAssertions;
 
-namespace NDocument.Domain.Test.Unit.Model.Generic
+namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
 {
     [TestClass]
     public class MatrixTests : TableTestBase

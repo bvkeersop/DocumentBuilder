@@ -1,12 +1,12 @@
-﻿using NDocument.Domain.DocumentWriters;
-using NDocument.Domain.Enumerations;
-using NDocument.Domain.Extensions;
-using NDocument.Domain.Factories;
-using NDocument.Domain.Model;
-using NDocument.Domain.Model.Generic;
-using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Enumerations;
+using DocumentBuilder.Domain.Extensions;
+using DocumentBuilder.Domain.Factories;
+using DocumentBuilder.Domain.Model.Generic;
+using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Domain.DocumentWriters;
+using DocumentBuilder.Domain.Model;
 
-namespace NDocument.Domain.Builders
+namespace DocumentBuilder.Domain.DocumentBuilders
 {
     internal class GenericDocumentBuilder
     {
@@ -22,10 +22,10 @@ namespace NDocument.Domain.Builders
         {
             switch (documentType)
             {
-                case (DocumentType.Markdown):
+                case DocumentType.Markdown:
                     await WriteToStreamAsMarkdownAsync(outputStream).ConfigureAwait(false);
                     break;
-                case (DocumentType.Html):
+                case DocumentType.Html:
                     await WriteToStreamAsHtmlAsync(outputStream).ConfigureAwait(false);
                     break;
                 default:
@@ -33,49 +33,49 @@ namespace NDocument.Domain.Builders
             };
         }
 
-        public GenericDocumentBuilder WithHeader1(string header1)
+        public GenericDocumentBuilder AddHeader1(string header1)
         {
             Convertables = Convertables.Append(new Header1(header1));
             return this;
         }
 
-        public GenericDocumentBuilder WithHeader2(string header2)
+        public GenericDocumentBuilder AddHeader2(string header2)
         {
             Convertables = Convertables.Append(new Header2(header2));
             return this;
         }
 
-        public GenericDocumentBuilder WithHeader3(string header3)
+        public GenericDocumentBuilder AddHeader3(string header3)
         {
             Convertables = Convertables.Append(new Header3(header3));
             return this;
         }
 
-        public GenericDocumentBuilder WithHeader4(string header4)
+        public GenericDocumentBuilder AddHeader4(string header4)
         {
             Convertables = Convertables.Append(new Header4(header4));
             return this;
         }
 
-        public GenericDocumentBuilder WithParagraph(string paragraph)
+        public GenericDocumentBuilder AddParagraph(string paragraph)
         {
             Convertables = Convertables.Append(new Paragraph(paragraph));
             return this;
         }
 
-        public GenericDocumentBuilder WithOrderedList<T>(IEnumerable<T> orderedList)
+        public GenericDocumentBuilder AddOrderedList<T>(IEnumerable<T> orderedList)
         {
             Convertables = Convertables.Append(new OrderedList<T>(orderedList));
             return this;
         }
 
-        public GenericDocumentBuilder WithUnorderedList<T>(IEnumerable<T> unorderedList)
+        public GenericDocumentBuilder AddUnorderedList<T>(IEnumerable<T> unorderedList)
         {
             Convertables = Convertables.Append(new UnorderedList<T>(unorderedList));
             return this;
         }
 
-        public GenericDocumentBuilder WithTable<T>(IEnumerable<T> tableRows)
+        public GenericDocumentBuilder AddTable<T>(IEnumerable<T> tableRows)
         {
             Convertables = Convertables.Append(new Table<T>(tableRows));
             return this;

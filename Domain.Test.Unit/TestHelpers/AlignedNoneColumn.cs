@@ -1,7 +1,7 @@
-﻿using NDocument.Domain.Attributes;
-using NDocument.Domain.Enumerations;
+﻿using DocumentBuilder.Domain.Enumerations;
+using DocumentBuilder.Domain.Attributes;
 
-namespace NDocument.Domain.Test.Unit.TestHelpers
+namespace DocumentBuilder.Domain.Test.Unit.TestHelpers
 {
     internal class AlignedNoneColumn : AlignedColumn
     {

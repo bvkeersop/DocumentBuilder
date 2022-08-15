@@ -1,10 +1,11 @@
-﻿using FluentAssertions;
-using NDocument.Domain.Enumerations;
-using NDocument.Domain.Model;
-using NDocument.Domain.Options;
-using NDocument.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Domain.Enumerations;
+using DocumentBuilder.Domain.Test.Unit.Model;
+using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+using FluentAssertions;
+using DocumentBuilder.Domain.Model;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Test.Unit.Model.Html
+namespace DocumentBuilder.Domain.Test.Unit.Model.Html
 {
     [TestClass]
     public class TableHtmlTests : TableTestBase

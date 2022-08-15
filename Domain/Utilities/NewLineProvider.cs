@@ -1,4 +1,4 @@
-﻿namespace NDocument.Domain.Utilities
+﻿namespace DocumentBuilder.Domain.Utilities
 {
     public interface INewLineProvider
     {

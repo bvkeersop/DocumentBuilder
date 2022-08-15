@@ -1,8 +1,8 @@
-﻿using FluentAssertions;
-using NDocument.Domain.Helpers;
-using NDocument.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Domain.Helpers;
+using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+using FluentAssertions;
 
-namespace NDocument.Domain.Test.Unit.Helpers
+namespace DocumentBuilder.Domain.Test.Unit.Helpers
 {
     [TestClass]
     public class ReflectionHelperTests

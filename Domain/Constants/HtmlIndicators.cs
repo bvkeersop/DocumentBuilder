@@ -1,4 +1,4 @@
-﻿namespace NDocument.Domain.Constants
+﻿namespace DocumentBuilder.Domain.Constants
 {
     public static class HtmlIndicators
     {

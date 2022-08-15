@@ -1,11 +1,11 @@
-﻿using FluentAssertions;
-using NDocument.Domain.Enumerations;
-using NDocument.Domain.Factories;
-using NDocument.Domain.Model;
-using NDocument.Domain.Options;
-using NDocument.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Domain.Enumerations;
+using DocumentBuilder.Domain.Factories;
+using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+using FluentAssertions;
+using DocumentBuilder.Domain.Model;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Test.Unit.Model.Markdown
+namespace DocumentBuilder.Domain.Test.Unit.Model.Markdown
 {
     [TestClass]
     public class TableMarkdownTests : TableTestBase

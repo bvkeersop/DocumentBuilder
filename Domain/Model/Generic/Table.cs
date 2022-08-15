@@ -1,12 +1,12 @@
-﻿using NDocument.Domain.Attributes;
-using NDocument.Domain.Extensions;
-using NDocument.Domain.Helpers;
-using NDocument.Domain.Interfaces;
-using NDocument.Domain.Model.Excel;
-using NDocument.Domain.Model.Generic;
-using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Attributes;
+using DocumentBuilder.Domain.Extensions;
+using DocumentBuilder.Domain.Helpers;
+using DocumentBuilder.Domain.Interfaces;
+using DocumentBuilder.Domain.Model.Excel;
+using DocumentBuilder.Domain.Model.Generic;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Model
+namespace DocumentBuilder.Domain.Model
 {
     public partial class Table<TValue> : GenericElement, IExcelConvertable
     {

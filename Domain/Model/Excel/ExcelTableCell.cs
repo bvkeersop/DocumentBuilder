@@ -1,4 +1,4 @@
-﻿namespace NDocument.Domain.Model.Excel
+﻿namespace DocumentBuilder.Domain.Model.Excel
 {
     public class ExcelTableCell
     {

@@ -1,6 +1,6 @@
-﻿using NDocument.Domain.Enumerations;
+﻿using DocumentBuilder.Domain.Enumerations;
 
-namespace NDocument.Domain.Attributes
+namespace DocumentBuilder.Domain.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class ColumnAttribute : Attribute

@@ -1,8 +1,8 @@
-﻿using NDocument.Domain.Model.Excel;
-using NDocument.Domain.Model.Generic;
-using NDocument.Domain.Utilities;
+﻿using DocumentBuilder.Domain.Model.Excel;
+using DocumentBuilder.Domain.Model.Generic;
+using DocumentBuilder.Domain.Utilities;
 
-namespace NDocument.Domain.Extensions
+namespace DocumentBuilder.Domain.Extensions
 {
     public static class TableCellExtensions
     {

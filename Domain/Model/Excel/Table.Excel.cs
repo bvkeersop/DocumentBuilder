@@ -1,8 +1,8 @@
-﻿using NDocument.Domain.Extensions;
-using NDocument.Domain.Model.Excel;
-using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Extensions;
+using DocumentBuilder.Domain.Model.Excel;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Model
+namespace DocumentBuilder.Domain.Model
 {
     public partial class Table<TValue>
     {

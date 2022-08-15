@@ -1,8 +1,8 @@
-﻿using NDocument.Domain.Options;
-using NDocument.Domain.Factories;
-using NDocument.Domain.Utilities;
+﻿using DocumentBuilder.Domain.Utilities;
+using DocumentBuilder.Domain.Factories;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Test.Unit.TestHelpers
+namespace DocumentBuilder.Domain.Test.Unit.TestHelpers
 {
     internal class ExampleProductHtmlTableBuilder
     {

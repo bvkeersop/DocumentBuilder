@@ -1,7 +1,7 @@
-﻿using FluentAssertions;
-using NDocument.Domain.Utilities;
+﻿using DocumentBuilder.Domain.Utilities;
+using FluentAssertions;
 
-namespace NDocument.Domain.Test.Unit.Utilities
+namespace DocumentBuilder.Domain.Test.Unit.Utilities
 {
     [TestClass]
     public class ExcelColumnIdentifierGeneratorTests

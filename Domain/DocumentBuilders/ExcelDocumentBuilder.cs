@@ -1,12 +1,12 @@
-﻿using NDocument.Domain.DocumentWriters;
-using NDocument.Domain.Exceptions;
-using NDocument.Domain.Factories;
-using NDocument.Domain.Interfaces;
-using NDocument.Domain.Model;
-using NDocument.Domain.Model.Excel;
-using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Exceptions;
+using DocumentBuilder.Domain.Factories;
+using DocumentBuilder.Domain.Interfaces;
+using DocumentBuilder.Domain.Model.Excel;
+using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Domain.DocumentWriters;
+using DocumentBuilder.Domain.Model;
 
-namespace NDocument.Domain.Builders
+namespace DocumentBuilder.Domain.DocumentBuilders
 {
     internal class ExcelDocumentBuilder
     {
@@ -26,11 +26,11 @@ namespace NDocument.Domain.Builders
             return this;
         }
 
-        public ExcelDocumentBuilder WithTable<T>(IEnumerable<T> tableRows)
+        public ExcelDocumentBuilder AddTable<T>(IEnumerable<T> tableRows)
         {
             if (_currentWorksheet == null)
             {
-                throw new NDocumentException(NDocumentErrorCode.NoWorksheetInstantiated);
+                throw new DocumentBuilderException(DocumentBuilderErrorCode.NoWorksheetInstantiated);
             }
 
             var worksheetExcelConvertable = new WorksheetExcelConvertable(_currentWorksheet, new Table<T>(tableRows));

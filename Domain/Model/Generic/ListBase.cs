@@ -1,10 +1,10 @@
-﻿using NDocument.Domain.Constants;
-using NDocument.Domain.Extensions;
-using NDocument.Domain.Factories;
-using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Constants;
+using DocumentBuilder.Domain.Extensions;
+using DocumentBuilder.Domain.Factories;
+using DocumentBuilder.Domain.Options;
 using System.Text;
 
-namespace NDocument.Domain.Model.Generic
+namespace DocumentBuilder.Domain.Model.Generic
 {
     public abstract class ListBase<TValue> : GenericElement
     {

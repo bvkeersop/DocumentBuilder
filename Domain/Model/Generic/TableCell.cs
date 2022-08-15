@@ -1,4 +1,4 @@
-﻿namespace NDocument.Domain.Model.Generic
+﻿namespace DocumentBuilder.Domain.Model.Generic
 {
     public class TableCell
     {

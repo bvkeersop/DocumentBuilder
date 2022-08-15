@@ -1,8 +1,8 @@
-﻿using NDocument.Domain.Constants;
-using NDocument.Domain.Interfaces;
-using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Constants;
+using DocumentBuilder.Domain.Interfaces;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Model.Generic
+namespace DocumentBuilder.Domain.Model.Generic
 {
     public class UnorderedList<T> : ListBase<T>, IMarkdownConvertable, IHtmlConvertable
     {

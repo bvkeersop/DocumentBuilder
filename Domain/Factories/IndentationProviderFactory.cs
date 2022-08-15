@@ -1,7 +1,7 @@
-﻿using NDocument.Domain.Enumerations;
-using NDocument.Domain.Utilities;
+﻿using DocumentBuilder.Domain.Enumerations;
+using DocumentBuilder.Domain.Utilities;
 
-namespace NDocument.Domain.Factories
+namespace DocumentBuilder.Domain.Factories
 {
     internal static class IndentationProviderFactory
     {

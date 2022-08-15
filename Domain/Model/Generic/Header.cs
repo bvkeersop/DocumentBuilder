@@ -1,7 +1,7 @@
-﻿using NDocument.Domain.Extensions;
-using NDocument.Domain.Options;
+﻿using DocumentBuilder.Domain.Extensions;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.Model.Generic
+namespace DocumentBuilder.Domain.Model.Generic
 {
     public abstract class Header : GenericElement
     {

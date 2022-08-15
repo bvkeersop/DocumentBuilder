@@ -1,11 +1,11 @@
-﻿using NDocument.Domain.DocumentWriters;
-using NDocument.Domain.Interfaces;
-using NDocument.Domain.Model.Generic;
-using NDocument.Domain.Options;
-using NDocument.Domain.StreamWriters;
+﻿using DocumentBuilder.Domain.Interfaces;
+using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Domain.DocumentWriters;
+using DocumentBuilder.Domain.Model.Generic;
+using DocumentBuilder.Domain.StreamWriters;
 using NSubstitute;
 
-namespace NDocument.Domain.Test.Unit.DocumentWriters
+namespace DocumentBuilder.Domain.Test.Unit.DocumentWriters
 {
     [TestClass]
     public class MarkdownDocumentWriterTests
@@ -24,7 +24,7 @@ namespace NDocument.Domain.Test.Unit.DocumentWriters
             };
 
             Func<Stream, MarkdownDocumentOptions, IMarkdownStreamWriter> factory
-                = (Stream outputStream, MarkdownDocumentOptions options) => markdownStreamWriterMock;
+                = (outputStream, options) => markdownStreamWriterMock;
 
             var markdownDocumentWriter = new MarkdownDocumentWriter(factory, options);
 
@@ -54,7 +54,7 @@ namespace NDocument.Domain.Test.Unit.DocumentWriters
 
 
             Func<Stream, MarkdownDocumentOptions, IMarkdownStreamWriter> factory
-                = (Stream outputStream, MarkdownDocumentOptions options) => markdownStreamWriterMock;
+                = (outputStream, options) => markdownStreamWriterMock;
 
             var markdownDocumentWriter = new MarkdownDocumentWriter(factory, options);
 

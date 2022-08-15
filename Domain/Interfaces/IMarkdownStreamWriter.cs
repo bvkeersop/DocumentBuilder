@@ -1,4 +1,4 @@
-﻿namespace NDocument.Domain.Interfaces
+﻿namespace DocumentBuilder.Domain.Interfaces
 {
     public interface IMarkdownStreamWriter : IDisposable
     {

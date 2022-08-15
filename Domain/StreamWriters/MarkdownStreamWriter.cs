@@ -1,7 +1,7 @@
-﻿using NDocument.Domain.Interfaces;
-using NDocument.Domain.Utilities;
+﻿using DocumentBuilder.Domain.Interfaces;
+using DocumentBuilder.Domain.Utilities;
 
-namespace NDocument.Domain.StreamWriters
+namespace DocumentBuilder.Domain.StreamWriters
 {
     internal class MarkdownStreamWriter : IMarkdownStreamWriter
     {

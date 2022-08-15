@@ -1,10 +1,10 @@
 ﻿using ClosedXML.Excel;
-using NDocument.Domain.Exceptions;
-using NDocument.Domain.Interfaces;
-using NDocument.Domain.Model.Excel;
-using NDocument.Domain.Options;
+using DocumentBuilder.Domain.Exceptions;
+using DocumentBuilder.Domain.Interfaces;
+using DocumentBuilder.Domain.Model.Excel;
+using DocumentBuilder.Domain.Options;
 
-namespace NDocument.Domain.DocumentWriters
+namespace DocumentBuilder.Domain.DocumentWriters
 {
     internal class ClosedXmlDocumentWriter : IExcelDocumentWriter, IDisposable
     {
@@ -28,7 +28,7 @@ namespace NDocument.Domain.DocumentWriters
         {
             if (_currentWorksheet == null)
             {
-                throw new NDocumentException(NDocumentErrorCode.NoWorksheetInstantiated);
+                throw new DocumentBuilderException(DocumentBuilderErrorCode.NoWorksheetInstantiated);
             }
 
             var excelTableCells = worksheetExcelConvertable.ExcelConvertable.ToExcel(_options);

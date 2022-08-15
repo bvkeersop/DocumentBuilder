@@ -1,4 +1,4 @@
-﻿namespace NDocument.Domain.Test.Unit.TestHelpers
+﻿namespace DocumentBuilder.Domain.Test.Unit.TestHelpers
 {
     internal static class ExampleProductsGenerator
     {

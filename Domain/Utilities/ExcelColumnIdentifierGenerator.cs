@@ -1,6 +1,6 @@
-﻿using NDocument.Domain.Exceptions;
+﻿using DocumentBuilder.Domain.Exceptions;
 
-namespace NDocument.Domain.Utilities
+namespace DocumentBuilder.Domain.Utilities
 {
     public static class ExcelColumnIdentifierGenerator
     {
@@ -8,7 +8,7 @@ namespace NDocument.Domain.Utilities
         {
             if (index < 1)
             {
-                throw new NDocumentException(NDocumentErrorCode.IdentifierMustBeGreaterThanZero);
+                throw new DocumentBuilderException(DocumentBuilderErrorCode.IdentifierMustBeGreaterThanZero);
             }
 
             var columnName = string.Empty;

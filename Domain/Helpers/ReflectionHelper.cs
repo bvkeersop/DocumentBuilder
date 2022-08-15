@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using NDocument.Domain.Attributes;
-using NDocument.Domain.Exceptions;
+using DocumentBuilder.Domain.Attributes;
+using DocumentBuilder.Domain.Exceptions;
 
-namespace NDocument.Domain.Helpers
+namespace DocumentBuilder.Domain.Helpers
 {
     public static class ReflectionHelper<T>
     {
@@ -27,7 +27,7 @@ namespace NDocument.Domain.Helpers
 
             if (tableRow == null)
             {
-                throw new NDocumentException(NDocumentErrorCode.ProvidedTableIsEmpty);
+                throw new DocumentBuilderException(DocumentBuilderErrorCode.ProvidedTableIsEmpty);
             }
 
             var tableRowType = tableRow.GetType();

@@ -1,9 +1,9 @@
-﻿using FluentAssertions;
-using NDocument.Domain.Enumerations;
-using NDocument.Domain.Factories;
-using NDocument.Domain.Utilities;
+﻿using DocumentBuilder.Domain.Enumerations;
+using DocumentBuilder.Domain.Factories;
+using DocumentBuilder.Domain.Utilities;
+using FluentAssertions;
 
-namespace NDocument.Domain.Test.Unit.Factories
+namespace DocumentBuilder.Domain.Test.Unit.Factories
 {
     [TestClass]
     public class IndentationProviderFactoryTests
@@ -21,7 +21,7 @@ namespace NDocument.Domain.Test.Unit.Factories
             indentationProvider.GetType().Should().Be(expectedIndentationProvider.GetType());
         }
 
-        private IIndentationProvider GetIndenationProvider(IndentationType indentationType, int indentationSize, int rootIndentationLevel)
+        private static IIndentationProvider GetIndenationProvider(IndentationType indentationType, int indentationSize, int rootIndentationLevel)
         {
             return indentationType switch
             {

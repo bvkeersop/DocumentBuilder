@@ -1,10 +1,10 @@
-﻿using FluentAssertions;
-using NDocument.Domain.StreamWriters;
-using NDocument.Domain.Test.Unit.Mocks;
-using NDocument.Domain.Utilities;
+﻿using DocumentBuilder.Domain.StreamWriters;
+using DocumentBuilder.Domain.Test.Unit.Mocks;
+using DocumentBuilder.Domain.Utilities;
+using FluentAssertions;
 using NSubstitute;
 
-namespace NDocument.Domain.Test.Unit.StreamWriters
+namespace DocumentBuilder.Domain.Test.Unit.StreamWriters
 {
     internal class HtmlStreamWriterTests
     {

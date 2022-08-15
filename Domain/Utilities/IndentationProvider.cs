@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace NDocument.Domain.Utilities
+namespace DocumentBuilder.Domain.Utilities
 {
     public interface IIndentationProvider
     {
@@ -46,7 +46,7 @@ namespace NDocument.Domain.Utilities
 
         protected string CreateIndentation(int indentationLevel)
         {
-            var identation = (_rootIndentationLevel * _indentationSize) + (_indentationSize * indentationLevel);
+            var identation = _rootIndentationLevel * _indentationSize + _indentationSize * indentationLevel;
 
             return new StringBuilder(_indentationCharacter.Length * identation)
                 .Insert(0, _indentationCharacter, identation)
