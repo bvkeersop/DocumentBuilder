@@ -23,6 +23,6 @@ namespace DocumentBuilder.Domain.Model.Generic
 
         public abstract ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options);
 
-        public abstract ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel);
+        public abstract ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0);
     }
 }

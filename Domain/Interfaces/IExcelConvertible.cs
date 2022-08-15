@@ -5,6 +5,6 @@ namespace DocumentBuilder.Domain.Interfaces
 {
     public interface IExcelConvertable
     {
-        IEnumerable<ExcelTableCell> ToExcel(ExcelDocumentOptions excelDocumentOptions);
+        IEnumerable<ExcelTableCell> ToExcel(ExcelDocumentOptions options);
     }
 }

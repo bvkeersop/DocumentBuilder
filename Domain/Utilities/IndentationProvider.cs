@@ -4,7 +4,7 @@ namespace DocumentBuilder.Domain.Utilities
 {
     public interface IIndentationProvider
     {
-        string GetIndentation(int level);
+        string GetIndentation(int indentationLevel);
     }
 
     public class SpaceIdentationProvider : IdentationProviderBase, IIndentationProvider
