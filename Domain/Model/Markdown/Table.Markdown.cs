@@ -34,7 +34,6 @@ namespace DocumentBuilder.Domain.Model
                 throw new DocumentBuilderException(DocumentBuilderErrorCode.StreamIsNotWriteable, nameof(outputStream));
             }
 
-            var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
             using var markdownStreamWriter = MarkdownStreamWriterFactory.Create(outputStream, options);
             await CreateMarkdownTableHeaderAsync(markdownStreamWriter, options).ConfigureAwait(false);
             await CreateMarkdownTableDividerAsync(markdownStreamWriter, options).ConfigureAwait(false);
