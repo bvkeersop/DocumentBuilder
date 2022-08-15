@@ -9,7 +9,7 @@ namespace DocumentBuilder.Domain.Utilities
 
     public class SpaceIdentationProvider : IdentationProviderBase, IIndentationProvider
     {
-        protected SpaceIdentationProvider(int identationSize, int rootIndentationLevel) : base(identationSize, " ", rootIndentationLevel) { }
+        public SpaceIdentationProvider(int identationSize, int rootIndentationLevel) : base(identationSize, " ", rootIndentationLevel) { }
 
         public string GetIndentation(int indentationLevel)
         {
@@ -19,7 +19,7 @@ namespace DocumentBuilder.Domain.Utilities
 
     public class TabIdentationProvider : IdentationProviderBase, IIndentationProvider
     {
-        protected TabIdentationProvider(int identationSize, int rootIndentationLevel) : base(identationSize, "    ", rootIndentationLevel) { }
+        public TabIdentationProvider(int identationSize, int rootIndentationLevel) : base(identationSize, "    ", rootIndentationLevel) { }
 
         public string GetIndentation(int indentationLevel)
         {
@@ -33,7 +33,7 @@ namespace DocumentBuilder.Domain.Utilities
         private readonly int _rootIndentationLevel;
         private readonly int _indentationSize;
 
-        public IdentationProviderBase(int identationSize, string indentationCharacter, int rootIndentationLevel)
+        protected IdentationProviderBase(int identationSize, string indentationCharacter, int rootIndentationLevel)
         {
             _indentationCharacter = indentationCharacter;
             _rootIndentationLevel = rootIndentationLevel;
