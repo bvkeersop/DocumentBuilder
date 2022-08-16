@@ -46,7 +46,8 @@ namespace DocumentBuilder.Domain.Exceptions
 
         private DocumentBuilderException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
-            ErrorCode = (DocumentBuilderErrorCode)info.GetValue(nameof(ErrorCode), typeof(DocumentBuilderErrorCode));
+            var errorCode = info.GetValue(nameof(ErrorCode), typeof(DocumentBuilderErrorCode)) ?? DocumentBuilderErrorCode.Unknown;
+            ErrorCode = (DocumentBuilderErrorCode) errorCode;
         }
     }
 }
