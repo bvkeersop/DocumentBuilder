@@ -1,7 +1,9 @@
 # DocumentBuilder
-
-![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](https://opensource.org/licenses/MIT)
 ![Workflows: dotnet](https://github.com/bvkeersop/DocumentBuilder/actions/workflows/dotnet.yml/badge.svg)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bvkeersop_DocumentBuilder&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bvkeersop_DocumentBuilder)
+
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bvkeersop_DocumentBuilder&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bvkeersop_DocumentBuilder)
 
 `DocumentBuilder` is a library that uses the `Builder` pattern to enable you to declaratively create different kinds of documents easily.
 It is **not** a full-fledged solution for creating complex documents. `DocumentBuilder` focuses on ease of use.
@@ -19,7 +21,7 @@ The following formats are currently supported:
 - [DocumentBuilder](#documentbuilder)
 - [Table of Contents](#table-of-contents)
   - [Creating a document](#creating-a-document)
-    - [Generic Documents](#generic-documents)
+    - [Generic](#generic)
     - [Markdown](#markdown)
     - [HTML](#html)
     - [Excel](#excel)
@@ -29,7 +31,7 @@ The following formats are currently supported:
       - [2. Put your POCOs in an IEnumerable](#2-put-your-pocos-in-an-ienumerable)
       - [3. Use it inside a document builder to generate a table](#3-use-it-inside-a-document-builder-to-generate-a-table)
   - [Options](#options)
-  - [Generic](#generic)
+  - [Generic](#generic-1)
   - [Markdown](#markdown-1)
       - [MarkdownTableOptions](#markdowntableoptions)
   - [HTML](#html-1)
@@ -68,7 +70,7 @@ var unorderedList = new List<string>
 
 ```
 
-### Generic Documents
+### Generic
 
 The generic document builder allows you to create generic documents that can easily be written to a stream as either Markdown or HTML.
 
