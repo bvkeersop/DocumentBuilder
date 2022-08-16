@@ -4,6 +4,6 @@ namespace DocumentBuilder.Domain.Interfaces
 {
     public interface IHtmlConvertable
     {
-        ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel);
+        ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0);
     }
 }

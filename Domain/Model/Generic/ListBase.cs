@@ -8,9 +8,9 @@ namespace DocumentBuilder.Domain.Model.Generic
 {
     public abstract class ListBase<TValue> : GenericElement
     {
-        public IEnumerable<TValue> Value { get; }
+        protected IEnumerable<TValue> Value { get; }
 
-        public ListBase(IEnumerable<TValue> value)
+        protected ListBase(IEnumerable<TValue> value)
         {
             Value = value;
         }
@@ -55,7 +55,7 @@ namespace DocumentBuilder.Domain.Model.Generic
         private static ValueTask<string> CreateHtmlListItem(TValue? item, HtmlDocumentOptions options, int indentationLevel)
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append(HtmlIndicators.ListItem.ToHtmlStartTag()); ;
+            stringBuilder.Append(HtmlIndicators.ListItem.ToHtmlStartTag());
             stringBuilder.Append(item);
             stringBuilder.Append(HtmlIndicators.ListItem.ToHtmlEndTag());
             var listItem = stringBuilder.ToString();

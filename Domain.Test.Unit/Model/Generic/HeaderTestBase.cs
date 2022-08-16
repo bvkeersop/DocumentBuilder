@@ -11,7 +11,7 @@ namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
     {
         protected private const string _value = "Header";
 
-        public async Task AssertToMarkdownReturnsCorrectMarkdownHeader(
+        public static async Task AssertToMarkdownReturnsCorrectMarkdownHeader(
             Header header,
             string headerIndicator,
             LineEndings lineEndings)
@@ -32,7 +32,7 @@ namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
             markdownHeader.Should().Be(expectedMarkdownHeader);
         }
 
-        public async Task AssertToHtmlReturnsCorrectHtmlHeader(
+        public static async Task AssertToHtmlReturnsCorrectHtmlHeader(
           Header header,
           string headerIndicator,
           LineEndings lineEndings,

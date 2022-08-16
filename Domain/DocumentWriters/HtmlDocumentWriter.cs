@@ -7,7 +7,7 @@ namespace DocumentBuilder.Domain.DocumentWriters
 {
     internal class HtmlDocumentWriter
     {
-        private Func<Stream, HtmlDocumentOptions, IHtmlStreamWriter> _htmlStreamWriterFactory;
+        private readonly Func<Stream, HtmlDocumentOptions, IHtmlStreamWriter> _htmlStreamWriterFactory;
         private readonly HtmlDocumentOptions _options;
 
         public HtmlDocumentWriter(Func<Stream, HtmlDocumentOptions, IHtmlStreamWriter> htmlStreamWriterFactory, HtmlDocumentOptions options)

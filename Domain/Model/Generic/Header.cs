@@ -18,7 +18,7 @@ namespace DocumentBuilder.Domain.Model.Generic
             return ConvertToMarkdown(markdown, options);
         }
 
-        protected ValueTask<string> CreateHtmlHeader(string headerIndicator, HtmlDocumentOptions options, int indentationLevel)
+        protected ValueTask<string> CreateHtmlHeader(string headerIndicator, HtmlDocumentOptions options, int indentationLevel = 0)
         {
             var html = $"{headerIndicator.ToHtmlStartTag()}{Value}{headerIndicator.ToHtmlEndTag()}";
             return ConvertToHtml(html, options, indentationLevel);

@@ -1,6 +1,6 @@
 ﻿namespace DocumentBuilder.Domain.Constants
 {
-    public class MarkdownIndicators
+    public static class MarkdownIndicators
     {
         public const string Header1 = "#";
         public const string Header2 = "##";
