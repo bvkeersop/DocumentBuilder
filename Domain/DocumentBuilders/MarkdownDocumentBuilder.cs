@@ -69,5 +69,11 @@ namespace DocumentBuilder.Domain.DocumentBuilders
             MarkdownConvertables = MarkdownConvertables.Append(new Table<T>(tableRows));
             return this;
         }
+
+        public MarkdownDocumentBuilder AddImage(string name, string path, string? caption = null)
+        {
+            MarkdownConvertables = MarkdownConvertables.Append(new Image(name, path, caption));
+            return this;
+        }
     }
 }
