@@ -66,7 +66,11 @@ namespace DocumentBuilder.Domain.Test.Unit.Builders
                             $"<li>{_orderedList.ElementAt(1)}</li>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 3) +
                             $"<li>{_orderedList.ElementAt(2)}</li>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
                         "</ol>" + GetNewLine(newLineProvider) +
-                        ExampleProductHtmlTableBuilder.BuildExpectedProductTable(options, 2) + GetIndentation(indentationProvider, 1) +
+                        ExampleProductHtmlTableBuilder.BuildExpectedProductTable(options, 2) + GetIndentation(indentationProvider, 2) +
+                        "<figure>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 3) +
+                            $"<img src=\"{_imagePath}\" alt=\"{_imageName}\" />" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 3) +
+                            $"<figcaption>{_imageCaption}</figcaption>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        $"</figure>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 1) +
                     "</body>" + GetNewLine(newLineProvider) +
                 "</html>" + GetNewLine(newLineProvider);
         }

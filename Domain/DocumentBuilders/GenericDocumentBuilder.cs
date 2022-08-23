@@ -81,6 +81,12 @@ namespace DocumentBuilder.Domain.DocumentBuilders
             return this;
         }
 
+        public GenericDocumentBuilder AddImage(string name, string path, string? caption = null)
+        {
+            Convertables = Convertables.Append(new Image(name, path, caption));
+            return this;
+        }
+
         private async Task WriteToStreamAsMarkdownAsync(Stream outputStream)
         {
             var options = _options.ToMarkdownDocumentOptions();
