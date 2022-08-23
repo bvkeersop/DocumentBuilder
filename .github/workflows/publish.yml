@@ -1,13 +1,14 @@
 # See: https://github.com/marketplace/actions/publish-nuget
 name: Publish to NuGet
 on:
-  push:
-    branches:
-      - master
+  workflow_run:
+    workflows: [build_test_analyse]
+    types: [completed]
+    branches: [master]
 jobs:
-  publish:
-    name: Build, Pack & Publish
+  on-success:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
       - name: Install GitVersion
@@ -26,3 +27,4 @@ jobs:
         with:
           PROJECT_FILE_PATH: ./DocumentBuilder.sln
           VERSION_STATIC: $GITVERSION_SEMVER
+          NUGET_KEY: ${{secrets.NUGET_KEY}}
