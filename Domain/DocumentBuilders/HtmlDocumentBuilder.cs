@@ -69,5 +69,11 @@ namespace DocumentBuilder.Domain.DocumentBuilders
             HtmlConvertables = HtmlConvertables.Append(new Table<T>(tableRows));
             return this;
         }
+
+        public HtmlDocumentBuilder AddImage(string name, string path, string? caption = null)
+        {
+            HtmlConvertables = HtmlConvertables.Append(new Image(name, path, caption));
+            return this;
+        }
     }
 }

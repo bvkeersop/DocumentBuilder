@@ -30,7 +30,8 @@ namespace DocumentBuilder.Domain.Test.Unit.Builders
                 .AddParagraph(_paragraph)
                 .AddUnorderedList(_unorderedList)
                 .AddOrderedList(_orderedList)
-                .AddTable(_productTableRowsWithoutHeaders);
+                .AddTable(_productTableRowsWithoutHeaders)
+                .AddImage(_imageName, _imagePath, _imageCaption);
 
             // Act
             await htmlDocumentBuilder.WriteToStreamAsync(outputStream);

@@ -13,6 +13,9 @@ namespace DocumentBuilder.Domain.Test.Unit.Builders
         protected const string _header3 = "Header3";
         protected const string _header4 = "Header4";
         protected const string _paragraph = "An interesting paragraph";
+        protected const string _imageName = "imageName";
+        protected const string _imagePath = "./imagePath";
+        protected const string _imageCaption = "this is an image";
         protected IEnumerable<ProductTableRowWithHeaders> _productTableRowsWithHeaders;
         protected IEnumerable<ProductTableRowWithoutHeaders> _productTableRowsWithoutHeaders;
         protected List<string> _orderedList;
@@ -63,7 +66,11 @@ namespace DocumentBuilder.Domain.Test.Unit.Builders
                             $"<li>{_orderedList.ElementAt(1)}</li>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 3) +
                             $"<li>{_orderedList.ElementAt(2)}</li>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
                         "</ol>" + GetNewLine(newLineProvider) +
-                        ExampleProductHtmlTableBuilder.BuildExpectedProductTable(options, 2) + GetIndentation(indentationProvider, 1) +
+                        ExampleProductHtmlTableBuilder.BuildExpectedProductTable(options, 2) + GetIndentation(indentationProvider, 2) +
+                        "<figure>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 3) +
+                            $"<img src=\"{_imagePath}\" alt=\"{_imageName}\" />" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 3) +
+                            $"<figcaption>{_imageCaption}</figcaption>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 2) +
+                        $"</figure>" + GetNewLineAndIndentation(newLineProvider, indentationProvider, 1) +
                     "</body>" + GetNewLine(newLineProvider) +
                 "</html>" + GetNewLine(newLineProvider);
         }
@@ -91,7 +98,9 @@ namespace DocumentBuilder.Domain.Test.Unit.Builders
                 $"1. {_orderedList.ElementAt(1)}" + newLineProvider.GetNewLine() +
                 $"1. {_orderedList.ElementAt(2)}" + newLineProvider.GetNewLine() +
                 newLineProvider.GetNewLine() +
-                ExampleProductMarkdownTableBuilder.BuildExpectedFormattedProductTable(options);
+                ExampleProductMarkdownTableBuilder.BuildExpectedFormattedProductTable(options) + newLineProvider.GetNewLine() +
+                "![imageName](./imagePath)" + newLineProvider.GetNewLine() +
+                "*this is an image*" + newLineProvider.GetNewLine();
         }
     }
 }

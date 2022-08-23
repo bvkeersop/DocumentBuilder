@@ -17,5 +17,8 @@
         public const string TableHeader = "th";
         public const string TableRow = "tr";
         public const string TableData = "td";
+        public const string Figure = "figure";
+        public const string FigCaption = "figcaption";
+        public const string Image = "img";
     }
 }
