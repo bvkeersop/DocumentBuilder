@@ -52,7 +52,7 @@ jobs:
     - name: Determine Version
       uses: gittools/actions/gitversion/execute@v0.9.7
     - name: Display Version
-      run: "SemVer: $GITVERSION_SEMVER"
+      run: "echo SemVer: $GITVERSION_SEMVER"
     - name: Publish to NuGet
       id: publish_nuget
       uses: brandedoutcast/publish-nuget@v2
