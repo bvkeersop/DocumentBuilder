@@ -1,7 +1,7 @@
-﻿using DocumentBuilder.Domain.Interfaces;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Interfaces;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.DocumentWriters
+namespace DocumentBuilder.DocumentWriters
 {
     internal class MarkdownDocumentWriter
     {

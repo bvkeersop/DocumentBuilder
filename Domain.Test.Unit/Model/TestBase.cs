@@ -1,11 +1,11 @@
-﻿using DocumentBuilder.Domain.Utilities;
-using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Model;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Utilities;
+using DocumentBuilder.Enumerations;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Model;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Test.Unit.Model
+namespace DocumentBuilder.Test.Unit.Model
 {
     public abstract class TestBase
     {

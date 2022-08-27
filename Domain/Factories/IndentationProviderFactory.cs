@@ -1,7 +1,7 @@
-﻿using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Utilities;
+﻿using DocumentBuilder.Enumerations;
+using DocumentBuilder.Utilities;
 
-namespace DocumentBuilder.Domain.Factories
+namespace DocumentBuilder.Factories
 {
     internal static class IndentationProviderFactory
     {

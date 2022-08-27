@@ -1,11 +1,11 @@
-﻿using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Model.Excel;
-using DocumentBuilder.Domain.Model.Generic;
-using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.Utilities;
+﻿using DocumentBuilder.Extensions;
+using DocumentBuilder.Model.Excel;
+using DocumentBuilder.Model.Generic;
+using DocumentBuilder.Options;
+using DocumentBuilder.Utilities;
 using FluentAssertions;
 
-namespace DocumentBuilder.Domain.Test.Unit.Model.Excel
+namespace DocumentBuilder.Test.Unit.Model.Excel
 {
     [TestClass]
     public class TableExcelTests : TableTestBase

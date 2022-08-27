@@ -1,11 +1,11 @@
-﻿using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Enumerations;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Test.Unit.TestHelpers;
 using FluentAssertions;
-using DocumentBuilder.Domain.Model;
-using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Model;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Test.Unit.Model.Markdown
+namespace DocumentBuilder.Test.Unit.Model.Markdown
 {
     [TestClass]
     public class TableMarkdownTests : TableTestBase

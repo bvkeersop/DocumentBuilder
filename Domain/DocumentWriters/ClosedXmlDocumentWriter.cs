@@ -1,10 +1,10 @@
 ﻿using ClosedXML.Excel;
-using DocumentBuilder.Domain.Exceptions;
-using DocumentBuilder.Domain.Interfaces;
-using DocumentBuilder.Domain.Model.Excel;
-using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Exceptions;
+using DocumentBuilder.Interfaces;
+using DocumentBuilder.Model.Excel;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.DocumentWriters
+namespace DocumentBuilder.DocumentWriters
 {
     internal class ClosedXmlDocumentWriter : IExcelDocumentWriter, IDisposable
     {

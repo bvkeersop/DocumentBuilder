@@ -1,11 +1,11 @@
-﻿using DocumentBuilder.Domain.Constants;
-using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Model.Generic;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Model.Generic;
+using DocumentBuilder.Options;
 using FluentAssertions;
 
-namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
+namespace DocumentBuilder.Test.Unit.Model.Generic
 {
     [TestClass]
     public class ImageTests

@@ -1,10 +1,10 @@
-﻿using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Enumerations;
+using DocumentBuilder.Test.Unit.TestHelpers;
 using FluentAssertions;
-using DocumentBuilder.Domain.DocumentBuilders;
-using DocumentBuilder.Domain.Options;
+using DocumentBuilder.DocumentBuilders;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Test.Unit.Builders
+namespace DocumentBuilder.Test.Unit.Builders
 {
     [TestClass]
     public class HtmlDocumentBuilderTests : BuilderTestBase

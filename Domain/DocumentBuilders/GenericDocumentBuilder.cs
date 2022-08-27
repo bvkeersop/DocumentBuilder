@@ -1,12 +1,12 @@
-﻿using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Model.Generic;
-using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.DocumentWriters;
-using DocumentBuilder.Domain.Model;
+﻿using DocumentBuilder.Enumerations;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Model.Generic;
+using DocumentBuilder.Options;
+using DocumentBuilder.DocumentWriters;
+using DocumentBuilder.Model;
 
-namespace DocumentBuilder.Domain.DocumentBuilders
+namespace DocumentBuilder.DocumentBuilders
 {
     internal class GenericDocumentBuilder
     {

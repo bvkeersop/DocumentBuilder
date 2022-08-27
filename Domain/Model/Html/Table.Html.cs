@@ -1,13 +1,13 @@
-﻿using DocumentBuilder.Domain.Constants;
-using DocumentBuilder.Domain.Exceptions;
-using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Model.Generic;
-using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.StreamWriters;
+﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Exceptions;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Model.Generic;
+using DocumentBuilder.Options;
+using DocumentBuilder.StreamWriters;
 using System.Text;
 
-namespace DocumentBuilder.Domain.Model
+namespace DocumentBuilder.Model
 {
     public partial class Table<TValue>
     {

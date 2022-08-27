@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace DocumentBuilder.Domain.Utilities
+namespace DocumentBuilder.Utilities
 {
     public interface IIndentationProvider
     {

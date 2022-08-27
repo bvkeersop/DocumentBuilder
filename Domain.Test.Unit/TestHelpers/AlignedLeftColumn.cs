@@ -1,7 +1,7 @@
-﻿using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Attributes;
+﻿using DocumentBuilder.Enumerations;
+using DocumentBuilder.Attributes;
 
-namespace DocumentBuilder.Domain.Test.Unit.TestHelpers
+namespace DocumentBuilder.Test.Unit.TestHelpers
 {
     internal class AlignedLeftColumn : AlignedColumn
     {

@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Domain.Extensions
+﻿namespace DocumentBuilder.Extensions
 {
     internal static class StringExtensions
     {

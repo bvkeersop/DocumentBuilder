@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Domain.Enumerations
+﻿namespace DocumentBuilder.Enumerations
 {
     public enum Formatting
     {

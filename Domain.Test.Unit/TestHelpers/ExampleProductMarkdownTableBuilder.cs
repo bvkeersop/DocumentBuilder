@@ -1,9 +1,9 @@
-﻿using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.Utilities;
+﻿using DocumentBuilder.Enumerations;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Options;
+using DocumentBuilder.Utilities;
 
-namespace DocumentBuilder.Domain.Test.Unit.TestHelpers
+namespace DocumentBuilder.Test.Unit.TestHelpers
 {
     internal static class ExampleProductMarkdownTableBuilder
     {

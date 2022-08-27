@@ -1,9 +1,9 @@
-﻿using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.Test.Unit.Model;
-using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Factories;
+using DocumentBuilder.Options;
+using DocumentBuilder.Test.Unit.Model;
+using DocumentBuilder.Test.Unit.TestHelpers;
 
-namespace DocumentBuilder.Domain.Test.Unit.Builders
+namespace DocumentBuilder.Test.Unit.Builders
 {
     [TestClass]
     public abstract class BuilderTestBase : TestBase

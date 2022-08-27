@@ -1,8 +1,8 @@
-﻿using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Model.Excel;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Extensions;
+using DocumentBuilder.Model.Excel;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Model
+namespace DocumentBuilder.Model
 {
     public partial class Table<TValue>
     {

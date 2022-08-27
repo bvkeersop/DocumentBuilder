@@ -1,11 +1,11 @@
-﻿using DocumentBuilder.Domain.DocumentWriters;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Interfaces;
-using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.Model;
-using DocumentBuilder.Domain.Model.Generic;
+﻿using DocumentBuilder.DocumentWriters;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Interfaces;
+using DocumentBuilder.Options;
+using DocumentBuilder.Model;
+using DocumentBuilder.Model.Generic;
 
-namespace DocumentBuilder.Domain.DocumentBuilders
+namespace DocumentBuilder.DocumentBuilders
 {
     public class HtmlDocumentBuilder
     {

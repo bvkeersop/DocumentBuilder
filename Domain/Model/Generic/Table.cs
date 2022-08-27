@@ -1,12 +1,12 @@
-﻿using DocumentBuilder.Domain.Attributes;
-using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Helpers;
-using DocumentBuilder.Domain.Interfaces;
-using DocumentBuilder.Domain.Model.Excel;
-using DocumentBuilder.Domain.Model.Generic;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Attributes;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Helpers;
+using DocumentBuilder.Interfaces;
+using DocumentBuilder.Model.Excel;
+using DocumentBuilder.Model.Generic;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Model
+namespace DocumentBuilder.Model
 {
     public partial class Table<TValue> : GenericElement, IExcelConvertable
     {

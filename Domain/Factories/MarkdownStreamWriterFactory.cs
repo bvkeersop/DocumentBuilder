@@ -1,8 +1,8 @@
-﻿using DocumentBuilder.Domain.Interfaces;
-using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.StreamWriters;
+﻿using DocumentBuilder.Interfaces;
+using DocumentBuilder.Options;
+using DocumentBuilder.StreamWriters;
 
-namespace DocumentBuilder.Domain.Factories
+namespace DocumentBuilder.Factories
 {
     internal static class MarkdownStreamWriterFactory
     {

@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Domain.Test.Unit.TestHelpers
+﻿namespace DocumentBuilder.Test.Unit.TestHelpers
 {
     internal class ExcelTableRow
     {

@@ -1,6 +1,6 @@
-﻿using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Interfaces
+namespace DocumentBuilder.Interfaces
 {
     public interface IHtmlConvertable
     {

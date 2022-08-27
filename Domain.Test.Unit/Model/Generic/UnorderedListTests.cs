@@ -1,10 +1,10 @@
-﻿using DocumentBuilder.Domain.Constants;
-using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Model.Generic;
-using DocumentBuilder.Domain.Test.Unit.TestHelpers;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Enumerations;
+using DocumentBuilder.Model.Generic;
+using DocumentBuilder.Test.Unit.TestHelpers;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
+namespace DocumentBuilder.Test.Unit.Model.Generic
 {
     [TestClass]
     public class UnorderedListTests : ListTestBase

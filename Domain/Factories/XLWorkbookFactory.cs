@@ -1,6 +1,6 @@
 ﻿using ClosedXML.Excel;
 
-namespace DocumentBuilder.Domain.Factories
+namespace DocumentBuilder.Factories
 {
     internal static class XLWorkbookFactory
     {

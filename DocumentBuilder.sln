@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{1F312C6D-04A2-47E7-9177-E4ECEDACF622}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentBuilder", "Domain\DocumentBuilder.csproj", "{1F312C6D-04A2-47E7-9177-E4ECEDACF622}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Test.Unit", "Domain.Test.Unit\Domain.Test.Unit.csproj", "{57C7651C-DB84-4418-9962-B1594934DA58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentBuilder.Tests", "Domain.Test.Unit\DocumentBuilder.Tests.csproj", "{57C7651C-DB84-4418-9962-B1594934DA58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,9 +1,9 @@
-﻿using DocumentBuilder.Domain.Model.Generic;
-using DocumentBuilder.Domain.Test.Unit.Model;
-using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Model.Generic;
+using DocumentBuilder.Test.Unit.Model;
+using DocumentBuilder.Test.Unit.TestHelpers;
 using FluentAssertions;
 
-namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
+namespace DocumentBuilder.Test.Unit.Model.Generic
 {
     [TestClass]
     public class MatrixTests : TableTestBase

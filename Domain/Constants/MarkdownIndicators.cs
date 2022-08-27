@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Domain.Constants
+﻿namespace DocumentBuilder.Constants
 {
     public static class MarkdownIndicators
     {

@@ -1,8 +1,8 @@
-﻿using DocumentBuilder.Domain.Constants;
-using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Model.Generic;
+﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Enumerations;
+using DocumentBuilder.Model.Generic;
 
-namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
+namespace DocumentBuilder.Test.Unit.Model.Generic
 {
     [TestClass]
     public class Header3Tests : HeaderTestBase

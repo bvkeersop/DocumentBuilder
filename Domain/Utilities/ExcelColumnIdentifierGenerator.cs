@@ -1,6 +1,6 @@
-﻿using DocumentBuilder.Domain.Exceptions;
+﻿using DocumentBuilder.Exceptions;
 
-namespace DocumentBuilder.Domain.Utilities
+namespace DocumentBuilder.Utilities
 {
     public static class ExcelColumnIdentifierGenerator
     {

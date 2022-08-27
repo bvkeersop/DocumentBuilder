@@ -1,7 +1,7 @@
-﻿using DocumentBuilder.Domain.Model.Excel;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Model.Excel;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Interfaces
+namespace DocumentBuilder.Interfaces
 {
     public interface IExcelConvertable
     {

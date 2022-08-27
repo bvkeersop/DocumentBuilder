@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace DocumentBuilder.Domain.Exceptions
+namespace DocumentBuilder.Exceptions
 {
     [Serializable]
     public sealed class DocumentBuilderException : Exception

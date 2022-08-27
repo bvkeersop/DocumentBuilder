@@ -1,8 +1,8 @@
-﻿using DocumentBuilder.Domain.Exceptions;
-using DocumentBuilder.Domain.Helpers;
+﻿using DocumentBuilder.Exceptions;
+using DocumentBuilder.Helpers;
 using System.Reflection;
 
-namespace DocumentBuilder.Domain.Model.Generic
+namespace DocumentBuilder.Model.Generic
 {
     public class Matrix<TValue>
     {
