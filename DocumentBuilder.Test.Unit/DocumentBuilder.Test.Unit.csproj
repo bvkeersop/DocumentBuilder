@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\DocumentBuilder.csproj" />
+    <ProjectReference Include="..\DocumentBuilder\DocumentBuilder.csproj" />
   </ItemGroup>
 
 </Project>
