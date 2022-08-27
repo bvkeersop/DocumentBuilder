@@ -30,7 +30,7 @@ namespace DocumentBuilder.Test.Unit.Builders
                 .AddParagraph(_paragraph)
                 .AddUnorderedList(_unorderedList)
                 .AddOrderedList(_orderedList)
-                .AddTable(_productTableRowsWithoutHeaders)
+                .AddTable(_productTableRowsWithoutAttributes)
                 .AddImage(_imageName, _imagePath, _imageCaption);
 
             // Act
@@ -66,7 +66,7 @@ namespace DocumentBuilder.Test.Unit.Builders
                 .AddParagraph(_paragraph)
                 .AddUnorderedList(_unorderedList)
                 .AddOrderedList(_orderedList)
-                .AddTable(_productTableRowsWithoutHeaders)
+                .AddTable(_productTableRowsWithoutAttributes)
                 .AddImage(_imageName, _imagePath, _imageCaption);
 
             // Act

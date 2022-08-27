@@ -9,12 +9,12 @@ namespace DocumentBuilder.Test.Unit.Model.Generic
     [TestClass]
     public class OrderedListTests : ListTestBase
     {
-        private OrderedList<ProductTableRowWithoutHeaders> _orderedList;
+        private OrderedList<ProductTableRowWithoutAttributes> _orderedList;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _orderedList = new OrderedList<ProductTableRowWithoutHeaders>(_exampleProducts);
+            _orderedList = new OrderedList<ProductTableRowWithoutAttributes>(_exampleProducts);
         }
 
         [DataTestMethod]

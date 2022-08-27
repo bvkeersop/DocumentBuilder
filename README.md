@@ -1,6 +1,6 @@
 # DocumentBuilder
 
-![Workflows: dotnet](https://github.com/bvkeersop/DocumentBuilder/actions/workflows/dotnet.yml/badge.svg)
+![Workflows: dotnet](https://github.com/bvkeersop/DocumentBuilder/actions/workflows/pipeline.yml/badge.svg)
 ![GitHub](https://img.shields.io/github/license/bvkeersop/DocumentBuilder)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bvkeersop_DocumentBuilder&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bvkeersop_DocumentBuilder)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=bvkeersop_DocumentBuilder&metric=coverage)](https://sonarcloud.io/summary/new_code?id=bvkeersop_DocumentBuilder)
@@ -252,6 +252,27 @@ public class ProductTableRow
     [Column(nameof(Description))] // Not specifying an order will default the value to int.Max
     public string Description { get; set; }
 
+    public string Price { get; set; }
+
+    [Column(alignment: Alignment.Center)] // Applies github style markdown to align the column
+    public string Amount { get; set; }
+}
+
+```
+
+You can annotate your POCO properties with the `IgnoreColumn` attribute. This will ignore the column when converting to a document.
+
+``` C#
+
+public class ProductTableRow
+{
+    [Column(name: "ProductId", order: 1)] // Overwrite the column name
+    public string Id { get; set; }
+
+    [Column(nameof(Description))] // Not specifying an order will default the value to int.Max
+    public string Description { get; set; }
+
+    [IgnoreColumn]
     public string Price { get; set; }
 
     [Column(alignment: Alignment.Center)] // Applies github style markdown to align the column

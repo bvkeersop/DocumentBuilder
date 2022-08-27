@@ -16,7 +16,7 @@ namespace DocumentBuilder.Model.Generic
 
         public override ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options)
         {
-            return ConvertToMarkdown(Value, options);
+            return AddNewLine(Value, options);
         }
 
         public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
@@ -26,7 +26,7 @@ namespace DocumentBuilder.Model.Generic
             stringBuilder.Append(Value);
             stringBuilder.Append(HtmlIndicators.Paragraph.ToHtmlEndTag());
             var value = stringBuilder.ToString();
-            return ConvertToHtml(value, options, indentationLevel);
+            return WrapWithIndentationAndNewLine(value, options, indentationLevel);
         }
     }
 }

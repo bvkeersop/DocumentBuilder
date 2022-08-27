@@ -1,6 +1,6 @@
 ﻿namespace DocumentBuilder.Test.Unit.TestHelpers
 {
-    public class ProductTableRowWithoutHeaders
+    public class ProductTableRowWithoutAttributes
     {
         public string Id { get; set; }
         public string Amount { get; set; }

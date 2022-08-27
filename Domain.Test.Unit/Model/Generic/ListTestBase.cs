@@ -9,15 +9,15 @@ namespace DocumentBuilder.Test.Unit.Model.Generic
 {
     public class ListTestBase : TestBase
     {
-        protected IEnumerable<ProductTableRowWithoutHeaders> _exampleProducts;
+        protected IEnumerable<ProductTableRowWithoutAttributes> _exampleProducts;
 
         [TestInitialize]
         public void TestBaseInitialize()
         {
-            _exampleProducts = ExampleProductsGenerator.CreateTableRowsWithoutHeaders();
+            _exampleProducts = ExampleProductsGenerator.CreateTableRowsWithoutAttributes();
         }
 
-        protected async Task AssertToHtmlReturnsCorrectHtmlList(ListBase<ProductTableRowWithoutHeaders> list, string htmlListIndicator, HtmlDocumentOptions options, int indentationLevel)
+        protected async Task AssertToHtmlReturnsCorrectHtmlList(ListBase<ProductTableRowWithoutAttributes> list, string htmlListIndicator, HtmlDocumentOptions options, int indentationLevel)
         {
             // Arrange
             var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
@@ -32,7 +32,7 @@ namespace DocumentBuilder.Test.Unit.Model.Generic
             htmlOrderedList.Should().Be(expectedHtmlOrderedList);
         }
 
-        protected async Task AssertToMarkdownReturnsCorrectMarkdownlList(ListBase<ProductTableRowWithoutHeaders> list, string markdownListIndicator, MarkdownDocumentOptions options)
+        protected async Task AssertToMarkdownReturnsCorrectMarkdownlList(ListBase<ProductTableRowWithoutAttributes> list, string markdownListIndicator, MarkdownDocumentOptions options)
         {
             // Arrange
             var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);

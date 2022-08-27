@@ -15,13 +15,13 @@ namespace DocumentBuilder.Model.Generic
         protected ValueTask<string> CreateMarkdownHeader(string headerIndicator, MarkdownDocumentOptions options)
         {
             var markdown = $"{headerIndicator} {Value}";
-            return ConvertToMarkdown(markdown, options);
+            return AddNewLine(markdown, options);
         }
 
         protected ValueTask<string> CreateHtmlHeader(string headerIndicator, HtmlDocumentOptions options, int indentationLevel = 0)
         {
             var html = $"{headerIndicator.ToHtmlStartTag()}{Value}{headerIndicator.ToHtmlEndTag()}";
-            return ConvertToHtml(html, options, indentationLevel);
+            return WrapWithIndentationAndNewLine(html, options, indentationLevel);
         }
     }
 }
