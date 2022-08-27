@@ -295,8 +295,6 @@ If there are any features that you would like to see implemented, please create 
 
 Currently, I'm still looking to implement the following (no deadline set):
 
-- Releasing an MVP on NuGet
-- Image support for Markdown and HTML
 - Raw insertions for Markdown and HTML
 - Word support
 - More insertables for Excel
