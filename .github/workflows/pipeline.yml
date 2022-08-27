@@ -40,7 +40,11 @@ jobs:
     needs: build_test_analyze
     if: github.ref == 'refs/heads/master'
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.7
       with:
@@ -53,13 +57,9 @@ jobs:
       uses: gittools/actions/gitversion/execute@v0.9.7
     - name: Display Version
       run: "echo SemVer: $GITVERSION_SEMVER"
-    - name: Publish to NuGet
-      id: publish_nuget
-      uses: alirezanet/publish-nuget@v3.0.4
-      with:
-        PACKAGE_NAME: DocumentBuilder
-        PROJECT_FILE_PATH: ./DocumentBuilder.sln
-        VERSION_STATIC: $GITVERSION_SEMVER
-        NUGET_KEY: ${{secrets.NUGET_KEY}}
-        NUGET_SOURCE: https://api.nuget.org
+    - name: Pack 
+      run: dotnet pack -c Release /p:Version=$GITVERSION_SEMVER
+    - name: Publish
+      run: dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
+
     

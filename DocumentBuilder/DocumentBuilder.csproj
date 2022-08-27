@@ -8,6 +8,16 @@
     <RootNamespace>DocumentBuilder</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>DocumentBuilder</PackageId>
+    <Authors>Bart van Keersop</Authors>
+    <Description>DocumentBuilder is a library that uses the Builder pattern to enable you to declaratively create different kinds of documents easily.</Description>
+    <Icon>.\icon.png</Icon>
+    <Language>en-US</Language>
+    <ProjectUrl>https://github.com/bvkeersop/DocumentBuilder</ProjectUrl>
+    <License>Apache-2.0</License>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.96.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
