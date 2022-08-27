@@ -1,11 +1,11 @@
-﻿using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Model.Generic;
-using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.Test.Unit.TestHelpers;
-using DocumentBuilder.Domain.Utilities;
+﻿using DocumentBuilder.Factories;
+using DocumentBuilder.Model.Generic;
+using DocumentBuilder.Options;
+using DocumentBuilder.Test.Unit.TestHelpers;
+using DocumentBuilder.Utilities;
 using FluentAssertions;
 
-namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
+namespace DocumentBuilder.Test.Unit.Model.Generic
 {
     public class ListTestBase : TestBase
     {

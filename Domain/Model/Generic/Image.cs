@@ -1,9 +1,9 @@
-﻿using DocumentBuilder.Domain.Constants;
-using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Model.Generic
+namespace DocumentBuilder.Model.Generic
 {
     public class Image : GenericElement
     {

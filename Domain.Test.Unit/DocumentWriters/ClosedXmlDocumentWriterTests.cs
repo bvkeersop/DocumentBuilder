@@ -1,13 +1,13 @@
 ﻿using ClosedXML.Excel;
-using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Test.Unit.TestHelpers;
-using DocumentBuilder.Domain.DocumentWriters;
-using DocumentBuilder.Domain.Model;
-using DocumentBuilder.Domain.Model.Excel;
-using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Test.Unit.TestHelpers;
+using DocumentBuilder.DocumentWriters;
+using DocumentBuilder.Model;
+using DocumentBuilder.Model.Excel;
+using DocumentBuilder.Options;
 using NSubstitute;
 
-namespace DocumentBuilder.Domain.Test.Unit.DocumentWriters
+namespace DocumentBuilder.Test.Unit.DocumentWriters
 {
     [TestClass]
     public class ClosedXmlDocumentWriterTests

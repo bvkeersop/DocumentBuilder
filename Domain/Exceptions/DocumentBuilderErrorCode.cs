@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Domain.Exceptions
+﻿namespace DocumentBuilder.Exceptions
 {
     public enum DocumentBuilderErrorCode
     {

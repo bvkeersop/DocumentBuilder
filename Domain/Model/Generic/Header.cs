@@ -1,7 +1,7 @@
-﻿using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Extensions;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Model.Generic
+namespace DocumentBuilder.Model.Generic
 {
     public abstract class Header : GenericElement
     {

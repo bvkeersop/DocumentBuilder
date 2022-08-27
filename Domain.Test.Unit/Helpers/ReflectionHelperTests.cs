@@ -1,8 +1,8 @@
-﻿using DocumentBuilder.Domain.Helpers;
-using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Helpers;
+using DocumentBuilder.Test.Unit.TestHelpers;
 using FluentAssertions;
 
-namespace DocumentBuilder.Domain.Test.Unit.Helpers
+namespace DocumentBuilder.Test.Unit.Helpers
 {
     [TestClass]
     public class ReflectionHelperTests

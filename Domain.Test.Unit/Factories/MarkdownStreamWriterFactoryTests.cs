@@ -1,8 +1,8 @@
-﻿using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Factories;
+using DocumentBuilder.Options;
 using FluentAssertions;
 
-namespace DocumentBuilder.Domain.Test.Unit.Factories
+namespace DocumentBuilder.Test.Unit.Factories
 {
     [TestClass]
     public class MarkdownStreamWriterFactoryTests

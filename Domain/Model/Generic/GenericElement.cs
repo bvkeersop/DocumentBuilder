@@ -1,8 +1,8 @@
-﻿using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Interfaces;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Factories;
+using DocumentBuilder.Interfaces;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Model.Generic
+namespace DocumentBuilder.Model.Generic
 {
     public abstract class GenericElement : IMarkdownConvertable, IHtmlConvertable
     {

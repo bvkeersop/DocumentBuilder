@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using DocumentBuilder.Domain.Attributes;
-using DocumentBuilder.Domain.Exceptions;
+using DocumentBuilder.Attributes;
+using DocumentBuilder.Exceptions;
 
-namespace DocumentBuilder.Domain.Helpers
+namespace DocumentBuilder.Helpers
 {
     public static class ReflectionHelper<T>
     {

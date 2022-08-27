@@ -1,7 +1,7 @@
-﻿using DocumentBuilder.Domain.Interfaces;
-using DocumentBuilder.Domain.Utilities;
+﻿using DocumentBuilder.Interfaces;
+using DocumentBuilder.Utilities;
 
-namespace DocumentBuilder.Domain.StreamWriters
+namespace DocumentBuilder.StreamWriters
 {
     internal class HtmlStreamWriter : IHtmlStreamWriter
     {

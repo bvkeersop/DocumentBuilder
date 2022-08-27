@@ -1,6 +1,6 @@
-﻿using DocumentBuilder.Domain.Enumerations;
+﻿using DocumentBuilder.Enumerations;
 
-namespace DocumentBuilder.Domain.Options
+namespace DocumentBuilder.Options
 {
     public class MarkdownTableOptions
     {

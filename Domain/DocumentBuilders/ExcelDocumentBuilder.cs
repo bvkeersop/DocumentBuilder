@@ -1,12 +1,12 @@
-﻿using DocumentBuilder.Domain.Exceptions;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Interfaces;
-using DocumentBuilder.Domain.Model.Excel;
-using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.DocumentWriters;
-using DocumentBuilder.Domain.Model;
+﻿using DocumentBuilder.Exceptions;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Interfaces;
+using DocumentBuilder.Model.Excel;
+using DocumentBuilder.Options;
+using DocumentBuilder.DocumentWriters;
+using DocumentBuilder.Model;
 
-namespace DocumentBuilder.Domain.DocumentBuilders
+namespace DocumentBuilder.DocumentBuilders
 {
     internal class ExcelDocumentBuilder
     {

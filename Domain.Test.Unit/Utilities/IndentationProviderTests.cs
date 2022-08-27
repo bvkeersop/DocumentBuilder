@@ -1,9 +1,9 @@
-﻿using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Factories;
+﻿using DocumentBuilder.Enumerations;
+using DocumentBuilder.Factories;
 using FluentAssertions;
 using System.Text;
 
-namespace DocumentBuilder.Domain.Test.Unit.Utilities
+namespace DocumentBuilder.Test.Unit.Utilities
 {
     [TestClass]
     public class IndentationProviderTests

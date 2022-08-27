@@ -1,12 +1,12 @@
-﻿using DocumentBuilder.Domain.Constants;
-using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Interfaces;
-using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.DocumentWriters;
-using DocumentBuilder.Domain.Model.Generic;
+﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Interfaces;
+using DocumentBuilder.Options;
+using DocumentBuilder.DocumentWriters;
+using DocumentBuilder.Model.Generic;
 using NSubstitute;
 
-namespace DocumentBuilder.Domain.Test.Unit.DocumentWriters
+namespace DocumentBuilder.Test.Unit.DocumentWriters
 {
     [TestClass]
     public class HtmlDocumentWriterTests

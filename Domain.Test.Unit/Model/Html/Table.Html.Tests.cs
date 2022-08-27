@@ -1,9 +1,9 @@
-﻿using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Enumerations;
+using DocumentBuilder.Options;
+using DocumentBuilder.Test.Unit.TestHelpers;
 using FluentAssertions;
 
-namespace DocumentBuilder.Domain.Test.Unit.Model.Html
+namespace DocumentBuilder.Test.Unit.Model.Html
 {
     [TestClass]
     public class TableHtmlTests : TableTestBase

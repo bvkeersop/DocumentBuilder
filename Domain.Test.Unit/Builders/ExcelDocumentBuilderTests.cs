@@ -1,11 +1,11 @@
 ﻿using ClosedXML.Excel;
-using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+using DocumentBuilder.Test.Unit.TestHelpers;
 using FluentAssertions;
-using DocumentBuilder.Domain.DocumentBuilders;
-using DocumentBuilder.Domain.Model;
-using DocumentBuilder.Domain.Options;
+using DocumentBuilder.DocumentBuilders;
+using DocumentBuilder.Model;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Test.Unit.Builders
+namespace DocumentBuilder.Test.Unit.Builders
 {
     [TestClass]
     public class ExcelDocumentBuilderTests

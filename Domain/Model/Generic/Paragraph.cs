@@ -1,9 +1,9 @@
-﻿using DocumentBuilder.Domain.Constants;
-using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Options;
 using System.Text;
 
-namespace DocumentBuilder.Domain.Model.Generic
+namespace DocumentBuilder.Model.Generic
 {
     public class Paragraph : GenericElement
     {

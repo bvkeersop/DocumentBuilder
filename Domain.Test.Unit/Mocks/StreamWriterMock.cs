@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Domain.Test.Unit.Mocks
+﻿namespace DocumentBuilder.Test.Unit.Mocks
 {
     internal class StreamWriterMock : StreamWriter
     {

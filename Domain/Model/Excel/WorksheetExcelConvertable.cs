@@ -1,6 +1,6 @@
-﻿using DocumentBuilder.Domain.Interfaces;
+﻿using DocumentBuilder.Interfaces;
 
-namespace DocumentBuilder.Domain.Model.Excel
+namespace DocumentBuilder.Model.Excel
 {
     public class WorksheetExcelConvertable
     {

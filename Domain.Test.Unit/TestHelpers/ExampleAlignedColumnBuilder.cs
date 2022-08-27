@@ -1,8 +1,8 @@
-﻿using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Enumerations;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Test.Unit.TestHelpers
+namespace DocumentBuilder.Test.Unit.TestHelpers
 {
     internal static class ExampleAlignedColumnBuilder
     {

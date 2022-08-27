@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Domain.Options
+﻿namespace DocumentBuilder.Options
 {
     public class ExcelDocumentOptions
     {

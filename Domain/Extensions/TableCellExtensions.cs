@@ -1,8 +1,8 @@
-﻿using DocumentBuilder.Domain.Model.Excel;
-using DocumentBuilder.Domain.Model.Generic;
-using DocumentBuilder.Domain.Utilities;
+﻿using DocumentBuilder.Model.Excel;
+using DocumentBuilder.Model.Generic;
+using DocumentBuilder.Utilities;
 
-namespace DocumentBuilder.Domain.Extensions
+namespace DocumentBuilder.Extensions
 {
     public static class TableCellExtensions
     {

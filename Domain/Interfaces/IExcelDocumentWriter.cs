@@ -1,6 +1,6 @@
-﻿using DocumentBuilder.Domain.Model.Excel;
+﻿using DocumentBuilder.Model.Excel;
 
-namespace DocumentBuilder.Domain.Interfaces
+namespace DocumentBuilder.Interfaces
 {
     public interface IExcelDocumentWriter
     {

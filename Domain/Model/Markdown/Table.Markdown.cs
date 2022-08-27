@@ -1,14 +1,14 @@
-﻿using DocumentBuilder.Domain.Attributes;
-using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Exceptions;
-using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Interfaces;
-using DocumentBuilder.Domain.Model.Generic;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Attributes;
+using DocumentBuilder.Enumerations;
+using DocumentBuilder.Exceptions;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Interfaces;
+using DocumentBuilder.Model.Generic;
+using DocumentBuilder.Options;
 using System.Text;
 
-namespace DocumentBuilder.Domain.Model
+namespace DocumentBuilder.Model
 {
     public partial class Table<TValue>
     {

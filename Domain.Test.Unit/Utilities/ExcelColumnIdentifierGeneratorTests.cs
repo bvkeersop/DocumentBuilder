@@ -1,7 +1,7 @@
-﻿using DocumentBuilder.Domain.Utilities;
+﻿using DocumentBuilder.Utilities;
 using FluentAssertions;
 
-namespace DocumentBuilder.Domain.Test.Unit.Utilities
+namespace DocumentBuilder.Test.Unit.Utilities
 {
     [TestClass]
     public class ExcelColumnIdentifierGeneratorTests

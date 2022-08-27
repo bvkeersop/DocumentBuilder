@@ -1,9 +1,9 @@
-﻿using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Utilities;
+﻿using DocumentBuilder.Enumerations;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Utilities;
 using FluentAssertions;
 
-namespace DocumentBuilder.Domain.Test.Unit.Factories
+namespace DocumentBuilder.Test.Unit.Factories
 {
     [TestClass]
     public class NewLineProviderFactoryTests

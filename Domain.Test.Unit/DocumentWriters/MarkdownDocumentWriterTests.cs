@@ -1,11 +1,11 @@
-﻿using DocumentBuilder.Domain.Interfaces;
-using DocumentBuilder.Domain.Options;
-using DocumentBuilder.Domain.DocumentWriters;
-using DocumentBuilder.Domain.Model.Generic;
-using DocumentBuilder.Domain.StreamWriters;
+﻿using DocumentBuilder.Interfaces;
+using DocumentBuilder.Options;
+using DocumentBuilder.DocumentWriters;
+using DocumentBuilder.Model.Generic;
+using DocumentBuilder.StreamWriters;
 using NSubstitute;
 
-namespace DocumentBuilder.Domain.Test.Unit.DocumentWriters
+namespace DocumentBuilder.Test.Unit.DocumentWriters
 {
     [TestClass]
     public class MarkdownDocumentWriterTests

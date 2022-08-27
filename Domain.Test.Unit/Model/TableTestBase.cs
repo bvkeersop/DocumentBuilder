@@ -1,7 +1,7 @@
-﻿using DocumentBuilder.Domain.Model;
-using DocumentBuilder.Domain.Test.Unit.TestHelpers;
+﻿using DocumentBuilder.Model;
+using DocumentBuilder.Test.Unit.TestHelpers;
 
-namespace DocumentBuilder.Domain.Test.Unit.Model
+namespace DocumentBuilder.Test.Unit.Model
 {
     public class TableTestBase
     {

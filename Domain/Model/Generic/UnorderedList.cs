@@ -1,8 +1,8 @@
-﻿using DocumentBuilder.Domain.Constants;
-using DocumentBuilder.Domain.Interfaces;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Interfaces;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Model.Generic
+namespace DocumentBuilder.Model.Generic
 {
     public class UnorderedList<T> : ListBase<T>, IMarkdownConvertable, IHtmlConvertable
     {

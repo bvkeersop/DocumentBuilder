@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Domain.Model.Generic
+﻿namespace DocumentBuilder.Model.Generic
 {
     public class TableCell
     {

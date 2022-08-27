@@ -1,10 +1,10 @@
-﻿using DocumentBuilder.Domain.Constants;
-using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Options;
 using System.Text;
 
-namespace DocumentBuilder.Domain.Model.Generic
+namespace DocumentBuilder.Model.Generic
 {
     public abstract class ListBase<TValue> : GenericElement
     {

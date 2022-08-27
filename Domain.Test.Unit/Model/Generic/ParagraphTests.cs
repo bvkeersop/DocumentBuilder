@@ -1,12 +1,12 @@
-﻿using DocumentBuilder.Domain.Constants;
-using DocumentBuilder.Domain.Enumerations;
-using DocumentBuilder.Domain.Extensions;
-using DocumentBuilder.Domain.Factories;
-using DocumentBuilder.Domain.Model.Generic;
+﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Enumerations;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Factories;
+using DocumentBuilder.Model.Generic;
 using FluentAssertions;
-using DocumentBuilder.Domain.Options;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
+namespace DocumentBuilder.Test.Unit.Model.Generic
 {
     [TestClass]
     public class ParagraphTests

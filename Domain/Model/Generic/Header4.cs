@@ -1,7 +1,7 @@
-﻿using DocumentBuilder.Domain.Constants;
-using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Model.Generic
+namespace DocumentBuilder.Model.Generic
 {
     public class Header4 : Header
     {

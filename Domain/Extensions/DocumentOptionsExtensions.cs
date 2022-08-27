@@ -1,6 +1,6 @@
-﻿using DocumentBuilder.Domain.Options;
+﻿using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Domain.Extensions
+namespace DocumentBuilder.Extensions
 {
     internal static class DocumentOptionsExtensions
     {
