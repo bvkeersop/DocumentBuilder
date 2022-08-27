@@ -68,5 +68,38 @@
                 productThree
             };
         }
+
+        public static IEnumerable<ProductTableRowWithIgnoreColumnAttribute> CreateTableRowsWithIgnoreColumnAttribute()
+        {
+            // Arrange
+            var productOne = new ProductTableRowWithIgnoreColumnAttribute
+            {
+                Id = "1",
+                Amount = "1",
+                Price = "1,11",
+                Description = "Description 1",
+            };
+            var productTwo = new ProductTableRowWithIgnoreColumnAttribute
+            {
+                Id = "2",
+                Amount = "2",
+                Price = "2,22",
+                Description = "Description 2",
+            };
+            var productThree = new ProductTableRowWithIgnoreColumnAttribute
+            {
+                Id = "3",
+                Amount = "3",
+                Price = "3,33",
+                Description = _longestDescription,
+            };
+
+            return new List<ProductTableRowWithIgnoreColumnAttribute>
+            {
+                productOne,
+                productTwo,
+                productThree
+            };
+        }
     }
 }

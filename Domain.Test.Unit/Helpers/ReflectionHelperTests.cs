@@ -17,6 +17,7 @@ namespace DocumentBuilder.Domain.Test.Unit.Helpers
             var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithHeaders>.GetOrderedTableRowPropertyInfos(productTableRowsWithHeaders);
 
             // Assert
+            orderedTableRowPropertyInfos.Count().Should().Be(4);
             orderedTableRowPropertyInfos.ElementAt(0).Name.Should().Be("Id");
             orderedTableRowPropertyInfos.ElementAt(1).Name.Should().Be("Amount");
             orderedTableRowPropertyInfos.ElementAt(2).Name.Should().Be("Price");
@@ -33,6 +34,7 @@ namespace DocumentBuilder.Domain.Test.Unit.Helpers
             var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithoutHeaders>.GetOrderedTableRowPropertyInfos(productTableRowsWithoutHeaders);
 
             // Assert
+            orderedTableRowPropertyInfos.Count().Should().Be(4);
             orderedTableRowPropertyInfos.ElementAt(0).Name.Should().Be("Id");
             orderedTableRowPropertyInfos.ElementAt(1).Name.Should().Be("Amount");
             orderedTableRowPropertyInfos.ElementAt(2).Name.Should().Be("Price");
@@ -49,6 +51,7 @@ namespace DocumentBuilder.Domain.Test.Unit.Helpers
             var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithHeaders>.GetOrderedTableRowPropertyInfos(productTableRowsWithHeaders);
 
             // Assert
+            orderedTableRowPropertyInfos.Count().Should().Be(4);
             orderedTableRowPropertyInfos.ElementAt(0).Name.Should().Be("Id");
             orderedTableRowPropertyInfos.ElementAt(1).Name.Should().Be("Amount");
             orderedTableRowPropertyInfos.ElementAt(2).Name.Should().Be("Price");
@@ -65,10 +68,26 @@ namespace DocumentBuilder.Domain.Test.Unit.Helpers
             var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithoutHeaders>.GetOrderedTableRowPropertyInfos(productTableRowsWithoutHeaders);
 
             // Assert
+            orderedTableRowPropertyInfos.Count().Should().Be(4);
             orderedTableRowPropertyInfos.ElementAt(0).Name.Should().Be("Id");
             orderedTableRowPropertyInfos.ElementAt(1).Name.Should().Be("Amount");
             orderedTableRowPropertyInfos.ElementAt(2).Name.Should().Be("Price");
             orderedTableRowPropertyInfos.ElementAt(3).Name.Should().Be("Description");
+        }
+
+        [TestMethod]
+        public void GetOrderedTableRowPropertyInfos_IgnoreColumnAttributesPresent_DoesntIncludeIgnoredProperties()
+        {
+            // Arrange
+            var productTableRowsWithHeaders = ExampleProductsGenerator.CreateTableRowsWithIgnoreColumnAttribute();
+
+            // Act
+            var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithIgnoreColumnAttribute>.GetOrderedTableRowPropertyInfos(productTableRowsWithHeaders);
+
+            // Assert
+            orderedTableRowPropertyInfos.Count().Should().Be(2);
+            orderedTableRowPropertyInfos.ElementAt(0).Name.Should().Be("Id");
+            orderedTableRowPropertyInfos.ElementAt(1).Name.Should().Be("Price");
         }
     }
 }
