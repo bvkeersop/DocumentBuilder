@@ -1,6 +1,6 @@
-﻿using DocumentBuilder.Domain.Attributes;
+﻿using DocumentBuilder.Attributes;
 
-namespace DocumentBuilder.Domain.Test.Unit.TestHelpers
+namespace DocumentBuilder.Test.Unit.TestHelpers
 {
     internal class ProductTableRowWithIgnoreColumnAttribute
     {
