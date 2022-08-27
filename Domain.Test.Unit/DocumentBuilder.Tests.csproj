@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>false</IsPackable>
-    <AssemblyName>DocumentBuilder.Domain.Test.Unit</AssemblyName>
-    <RootNamespace>DocumentBuilder.Domain.Test.Unit</RootNamespace>
+    <AssemblyName>DocumentBuilder.Test.Unit</AssemblyName>
+    <RootNamespace>DocumentBuilder.Test.Unit</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

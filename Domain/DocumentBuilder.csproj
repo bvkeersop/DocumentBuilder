@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyName>DocumentBuilder.Domain</AssemblyName>
-    <RootNamespace>DocumentBuilder.Domain</RootNamespace>
+    <AssemblyName>DocumentBuilder</AssemblyName>
+    <RootNamespace>DocumentBuilder</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
