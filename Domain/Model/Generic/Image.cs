@@ -25,11 +25,11 @@ namespace DocumentBuilder.Domain.Model.Generic
             if (Caption is null)
             {
                 var valueWithoutCaption = $"![{Name}]({Path})";
-                return ConvertToMarkdown(valueWithoutCaption, options);
+                return AddNewLine(valueWithoutCaption, options);
             }
 
             var valueWithCaption = $"![{Name}]({Path}){newLine}*{Caption}*";
-            return ConvertToMarkdown(valueWithCaption, options);
+            return AddNewLine(valueWithCaption, options);
         }
 
         public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)

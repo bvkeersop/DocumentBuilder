@@ -16,16 +16,16 @@ namespace DocumentBuilder.Domain.Test.Unit.Builders
         protected const string _imageName = "imageName";
         protected const string _imagePath = "./imagePath";
         protected const string _imageCaption = "this is an image";
-        protected IEnumerable<ProductTableRowWithHeaders> _productTableRowsWithHeaders;
-        protected IEnumerable<ProductTableRowWithoutHeaders> _productTableRowsWithoutHeaders;
+        protected IEnumerable<ProductTableRowWithColumnAttribute> _productTableRowsWithColumnAttribute;
+        protected IEnumerable<ProductTableRowWithoutAttributes> _productTableRowsWithoutAttributes;
         protected List<string> _orderedList;
         protected List<string> _unorderedList;
 
         [TestInitialize]
         public void TestBaseInitialize()
         {
-            _productTableRowsWithHeaders = ExampleProductsGenerator.CreateTableRowsWithHeaders();
-            _productTableRowsWithoutHeaders = ExampleProductsGenerator.CreateTableRowsWithoutHeaders();
+            _productTableRowsWithColumnAttribute = ExampleProductsGenerator.CreateTableRowsWithColumnAttribute();
+            _productTableRowsWithoutAttributes = ExampleProductsGenerator.CreateTableRowsWithoutAttributes();
 
             _orderedList = new List<string>
             {

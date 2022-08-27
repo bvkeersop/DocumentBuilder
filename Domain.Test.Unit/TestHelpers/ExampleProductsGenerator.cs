@@ -4,23 +4,23 @@
     {
         static string _longestDescription = "Very long description with most characters";
 
-        public static IEnumerable<ProductTableRowWithHeaders> CreateTableRowsWithHeaders()
+        public static IEnumerable<ProductTableRowWithColumnAttribute> CreateTableRowsWithColumnAttribute()
         {
-            var productOne = new ProductTableRowWithHeaders
+            var productOne = new ProductTableRowWithColumnAttribute
             {
                 Id = "1",
                 Description = "Description 1",
                 Amount = "1",
                 Price = "1,11"
             };
-            var productTwo = new ProductTableRowWithHeaders
+            var productTwo = new ProductTableRowWithColumnAttribute
             {
                 Id = "2",
                 Description = "Description 2",
                 Amount = "2",
                 Price = "2,22"
             };
-            var productThree = new ProductTableRowWithHeaders
+            var productThree = new ProductTableRowWithColumnAttribute
             {
                 Id = "3",
                 Description = _longestDescription,
@@ -28,7 +28,7 @@
                 Price = "3,33"
             };
 
-            return new List<ProductTableRowWithHeaders>
+            return new List<ProductTableRowWithColumnAttribute>
             {
                 productOne,
                 productTwo,
@@ -36,24 +36,24 @@
             };
         }
 
-        public static IEnumerable<ProductTableRowWithoutHeaders> CreateTableRowsWithoutHeaders()
+        public static IEnumerable<ProductTableRowWithoutAttributes> CreateTableRowsWithoutAttributes()
         {
             // Arrange
-            var productOne = new ProductTableRowWithoutHeaders
+            var productOne = new ProductTableRowWithoutAttributes
             {
                 Id = "1",
                 Amount = "1",
                 Price = "1,11",
                 Description = "Description 1",
             };
-            var productTwo = new ProductTableRowWithoutHeaders
+            var productTwo = new ProductTableRowWithoutAttributes
             {
                 Id = "2",
                 Amount = "2",
                 Price = "2,22",
                 Description = "Description 2",
             };
-            var productThree = new ProductTableRowWithoutHeaders
+            var productThree = new ProductTableRowWithoutAttributes
             {
                 Id = "3",
                 Amount = "3",
@@ -61,7 +61,7 @@
                 Description = _longestDescription,
             };
 
-            return new List<ProductTableRowWithoutHeaders>
+            return new List<ProductTableRowWithoutAttributes>
             {
                 productOne,
                 productTwo,

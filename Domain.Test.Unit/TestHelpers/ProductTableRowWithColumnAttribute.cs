@@ -3,7 +3,7 @@ using DocumentBuilder.Domain.Attributes;
 
 namespace DocumentBuilder.Domain.Test.Unit.TestHelpers
 {
-    public class ProductTableRowWithHeaders
+    public class ProductTableRowWithColumnAttribute
     {
         [Column(name: "ProductId", alignment: Alignment.Left, order: 1)] // Overwrite name
         public string Id { get; set; }

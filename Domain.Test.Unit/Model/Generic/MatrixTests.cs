@@ -8,12 +8,12 @@ namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
     [TestClass]
     public class MatrixTests : TableTestBase
     {
-        private Matrix<ProductTableRowWithHeaders> _matrix;
+        private Matrix<ProductTableRowWithColumnAttribute> _matrix;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _matrix = new Matrix<ProductTableRowWithHeaders>(_productTableRowsWithHeaders);
+            _matrix = new Matrix<ProductTableRowWithColumnAttribute>(_productTableRowsWithColumnAttribute);
         }
 
         [DataTestMethod]
@@ -37,7 +37,7 @@ namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
             var row = _matrix.GetRow(0);
 
             // Assert
-            var expectedRow = _productTableRowsWithHeaders.ElementAt(0);
+            var expectedRow = _productTableRowsWithColumnAttribute.ElementAt(0);
             row.Length.Should().Be(4); // amount of properties
             row[0].Value.Should().Be(expectedRow.Id);
             row[0].Type.Should().Be(expectedRow.Id.GetType());
@@ -56,11 +56,11 @@ namespace DocumentBuilder.Domain.Test.Unit.Model.Generic
             var column = _matrix.GetColumn(0);
 
             // Assert
-            var rowOne = _productTableRowsWithHeaders.ElementAt(0);
-            var rowTwo = _productTableRowsWithHeaders.ElementAt(1);
-            var rowThree = _productTableRowsWithHeaders.ElementAt(2);
+            var rowOne = _productTableRowsWithColumnAttribute.ElementAt(0);
+            var rowTwo = _productTableRowsWithColumnAttribute.ElementAt(1);
+            var rowThree = _productTableRowsWithColumnAttribute.ElementAt(2);
 
-            column.Length.Should().Be(_productTableRowsWithHeaders.Count());
+            column.Length.Should().Be(_productTableRowsWithColumnAttribute.Count());
             column[0].Value.Should().Be(rowOne.Id);
             column[0].Type.Should().Be(rowOne.Id.GetType());
             column[1].Value.Should().Be(rowTwo.Id);

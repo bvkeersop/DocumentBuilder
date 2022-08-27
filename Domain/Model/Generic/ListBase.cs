@@ -22,7 +22,7 @@ namespace DocumentBuilder.Domain.Model.Generic
             foreach (var item in Value)
             {
                 var value = $"{prepend} {item}";
-                var listItem = ConvertToMarkdown(value, options);
+                var listItem = AddNewLine(value, options);
                 stringBuilder.Append(listItem);
             }
 
@@ -59,7 +59,7 @@ namespace DocumentBuilder.Domain.Model.Generic
             stringBuilder.Append(item);
             stringBuilder.Append(HtmlIndicators.ListItem.ToHtmlEndTag());
             var listItem = stringBuilder.ToString();
-            return ConvertToHtml(listItem, options, indentationLevel);
+            return WrapWithIndentationAndNewLine(listItem, options, indentationLevel);
         }
     }
 }

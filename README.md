@@ -260,6 +260,27 @@ public class ProductTableRow
 
 ```
 
+You can annotate your POCO properties with the `IgnoreColumn` attribute. This will ignore the column when converting to a document.
+
+``` C#
+
+public class ProductTableRow
+{
+    [Column(name: "ProductId", order: 1)] // Overwrite the column name
+    public string Id { get; set; }
+
+    [Column(nameof(Description))] // Not specifying an order will default the value to int.Max
+    public string Description { get; set; }
+
+    [IgnoreColumn]
+    public string Price { get; set; }
+
+    [Column(alignment: Alignment.Center)] // Applies github style markdown to align the column
+    public string Amount { get; set; }
+}
+
+```
+
 ## Credits
 
 `DocumentBuilder` is made possible by the following projects:
