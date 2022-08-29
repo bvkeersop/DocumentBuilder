@@ -47,12 +47,14 @@ Below are examples of how you can use the document builders provided by `Documen
 ```C#
 
 // Given the following data:
-
 var header1 = "Header1";
 var header2 = "Header2";
 var header3 = "Header3";
 var header4 = "Header4";
 var paragraph = "An interesting paragraph";
+var imageName = "imageName";
+var imagePath = "./image";
+var imageCaption = "This is an image";
 
 var orderedList = new List<string>
 {
@@ -77,7 +79,6 @@ The generic document builder allows you to create generic documents that can eas
 ```C#
 
 // Create a document using the generic document builder
-
 var outputStream = new MemoryStream();
 
 var documentBuilder = new DocumentBuilder(options)
@@ -86,6 +87,7 @@ var documentBuilder = new DocumentBuilder(options)
     .AddHeader3(header3)
     .AddHeader4(header4)
     .AddParagraph(paragraph)
+    .AddImage(imageName, imagePath, imageCaption)
     .AddUnorderedList(unorderedList)
     .AddOrderedList(orderedList)
     .AddTable(productTableRows) // More on tables below
@@ -100,7 +102,6 @@ The `MarkdownDocumentBuilder` allows you to create Markdown documents, it is not
 ```C#
 
 // Create a document using the markdown document builder
-
 var outputStream = new MemoryStream();
 
 var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
@@ -109,6 +110,7 @@ var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
     .AddHeader3(header3)
     .AddHeader4(header4)
     .AddParagraph(paragraph)
+    .AddImage(imageName, imagePath, imageCaption)
     .AddUnorderedList(unorderedList)
     .AddOrderedList(orderedList)
     .AddTable(productTableRows) // More on tables below
@@ -123,7 +125,6 @@ The `HTMLDocumentBuilder` allows you to create Markdown documents, it is not yet
 ```C#
 
 // Create a document using the html document builder
-
 var outputStream = new MemoryStream();
 
 var htmlDocumentBuilder = new HtmlDocumentBuilder(options)
@@ -131,6 +132,7 @@ var htmlDocumentBuilder = new HtmlDocumentBuilder(options)
     .AddHeader2(header2)
     .AddHeader3(header3)
     .AddHeader4(header4)
+    .AddImage(imageName, imagePath, imageCaption)
     .AddParagraph(paragraph)
     .AddUnorderedList(unorderedList)
     .AddOrderedList(orderedList)
@@ -145,7 +147,6 @@ The Excel document builder allows you to create Excel documents. Since the struc
 ```C#
 
 // Create a document using the excel document builder
-
 var outputStream = new MemoryStream();
 
 var excelDocumentBuilder = new ExcelDocumentBuilder(options)
