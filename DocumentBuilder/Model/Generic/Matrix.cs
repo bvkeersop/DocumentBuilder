@@ -19,7 +19,7 @@ namespace DocumentBuilder.Model.Generic
 
         public Matrix(IEnumerable<TValue> tableRows)
         {
-            var orderedPropertyInfos = ReflectionHelper<TValue>.GetOrderedTableRowPropertyInfos(tableRows);
+            var orderedPropertyInfos = ReflectionHelper<TValue>.GetOrderedTableRowPropertyInfos();
 
             NumberOfRows = tableRows.Count();
             NumberOfColumns = orderedPropertyInfos.Count();

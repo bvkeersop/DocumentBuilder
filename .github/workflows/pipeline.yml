@@ -58,7 +58,7 @@ jobs:
     - name: Display Version
       run: "echo SemVer: $GITVERSION_SEMVER"
     - name: Pack 
-      run: dotnet pack -o . -c Release /p:Version=1.1.1
+      run: dotnet pack -o . -c Release /p:Version=2.0.0
     - name: Publish
       run: dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
 

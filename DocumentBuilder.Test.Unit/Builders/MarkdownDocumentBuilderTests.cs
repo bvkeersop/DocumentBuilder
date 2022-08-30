@@ -37,7 +37,7 @@ namespace DocumentBuilder.Test.Unit.Builders
                 .AddImage(_imageName, _imagePath, _imageCaption);
 
             // Act
-            await markdownDocumentBuilder.WriteToStreamAsync(outputStream);
+            await markdownDocumentBuilder.BuildAsync(outputStream);
 
             // Assert
             var expectedMarkdownDocument = GetExpectedMarkdownDocument(options);

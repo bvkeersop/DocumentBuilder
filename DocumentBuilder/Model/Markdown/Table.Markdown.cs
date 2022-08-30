@@ -10,7 +10,7 @@ using System.Text;
 
 namespace DocumentBuilder.Model
 {
-    public partial class Table<TValue>
+    public partial class Table<TRow>
     {
         private const char _columnDivider = '|';
         private const char _rowDivider = '-';

@@ -10,11 +10,8 @@ namespace DocumentBuilder.Test.Unit.Helpers
         [TestMethod]
         public void GetOrderedTableRowPropertyInfos_NoHeaders_ReturnedInOrderOfProperties()
         {
-            // Arrange
-            var productTableRowsWithColumnAttribute = ExampleProductsGenerator.CreateTableRowsWithColumnAttribute();
-
             // Act
-            var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithColumnAttribute>.GetOrderedTableRowPropertyInfos(productTableRowsWithColumnAttribute);
+            var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithColumnAttribute>.GetOrderedTableRowPropertyInfos();
 
             // Assert
             orderedTableRowPropertyInfos.Count().Should().Be(4);
@@ -27,11 +24,8 @@ namespace DocumentBuilder.Test.Unit.Helpers
         [TestMethod]
         public void GetOrderedTableRowPropertyInfos_Headers_ReturnedInOrderOfCountPropertyOnHeader()
         {
-            // Arrange
-            var productTableRowsWithoutAttributes = ExampleProductsGenerator.CreateTableRowsWithoutAttributes();
-
             // Act
-            var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithoutAttributes>.GetOrderedTableRowPropertyInfos(productTableRowsWithoutAttributes);
+            var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithoutAttributes>.GetOrderedTableRowPropertyInfos();
 
             // Assert
             orderedTableRowPropertyInfos.Count().Should().Be(4);
@@ -44,11 +38,8 @@ namespace DocumentBuilder.Test.Unit.Helpers
         [TestMethod]
         public void GetOrderedColumnNames_NoHeaders_ReturnedInOrderOfProperties()
         {
-            // Arrange
-            var productTableRowsWithColumnAttribute = ExampleProductsGenerator.CreateTableRowsWithColumnAttribute();
-
             // Act
-            var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithColumnAttribute>.GetOrderedTableRowPropertyInfos(productTableRowsWithColumnAttribute);
+            var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithColumnAttribute>.GetOrderedTableRowPropertyInfos();
 
             // Assert
             orderedTableRowPropertyInfos.Count().Should().Be(4);
@@ -61,11 +52,8 @@ namespace DocumentBuilder.Test.Unit.Helpers
         [TestMethod]
         public void GetOrderedColumnNames_Headers_ReturnedInOrderOfCountPropertyOnHeader()
         {
-            // Arrange
-            var productTableRowsWithoutAttributes = ExampleProductsGenerator.CreateTableRowsWithoutAttributes();
-
             // Act
-            var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithoutAttributes>.GetOrderedTableRowPropertyInfos(productTableRowsWithoutAttributes);
+            var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithoutAttributes>.GetOrderedTableRowPropertyInfos();
 
             // Assert
             orderedTableRowPropertyInfos.Count().Should().Be(4);
@@ -78,16 +66,27 @@ namespace DocumentBuilder.Test.Unit.Helpers
         [TestMethod]
         public void GetOrderedTableRowPropertyInfos_IgnoreColumnAttributesPresent_DoesntIncludeIgnoredProperties()
         {
-            // Arrange
-            var productTableRowsWithIgnoreAttribute = ExampleProductsGenerator.CreateTableRowsWithIgnoreColumnAttribute();
-
             // Act
-            var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithIgnoreColumnAttribute>.GetOrderedTableRowPropertyInfos(productTableRowsWithIgnoreAttribute);
+            var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithIgnoreColumnAttribute>.GetOrderedTableRowPropertyInfos();
 
             // Assert
             orderedTableRowPropertyInfos.Count().Should().Be(2);
             orderedTableRowPropertyInfos.ElementAt(0).Name.Should().Be("Id");
             orderedTableRowPropertyInfos.ElementAt(1).Name.Should().Be("Price");
+        }
+
+        [TestMethod]
+        public void GetOrderedTableRowPropertyInfos_EmptyTabelRow_ShouldStillReturnColumnNames()
+        {
+            // Act
+            var orderedTableRowPropertyInfos = ReflectionHelper<ProductTableRowWithoutAttributes>.GetOrderedTableRowPropertyInfos();
+
+            // Assert
+            orderedTableRowPropertyInfos.Count().Should().Be(4);
+            orderedTableRowPropertyInfos.ElementAt(0).Name.Should().Be("Id");
+            orderedTableRowPropertyInfos.ElementAt(1).Name.Should().Be("Amount");
+            orderedTableRowPropertyInfos.ElementAt(2).Name.Should().Be("Price");
+            orderedTableRowPropertyInfos.ElementAt(3).Name.Should().Be("Description");
         }
     }
 }

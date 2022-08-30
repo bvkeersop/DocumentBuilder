@@ -9,6 +9,8 @@
         CouldNotFindTableRowAtIndex,
         ColumnHasNoName,
         IdentifierMustBeGreaterThanZero,
-        NoWorksheetInstantiated
+        NoWorksheetInstantiated,
+        ProvidedEnumerableIsEmpty,
+        ProvidedGenericTypeForTableDoesNotEqualRunTimeType,
     }
 }

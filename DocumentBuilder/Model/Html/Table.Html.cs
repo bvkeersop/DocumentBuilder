@@ -9,7 +9,7 @@ using System.Text;
 
 namespace DocumentBuilder.Model
 {
-    public partial class Table<TValue>
+    public partial class Table<TRow>
     {
         private async Task<string> CreateHtmlTableAsync(HtmlDocumentOptions options, int indentationLevel)
         {

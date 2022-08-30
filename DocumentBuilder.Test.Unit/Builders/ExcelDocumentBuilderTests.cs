@@ -73,7 +73,7 @@ namespace DocumentBuilder.Test.Unit.Builders
                 .AddTable(_excelTableRowsTwo);
 
             // Act
-            excelDocumentBuilder.WriteToStream(memoryStream);
+            excelDocumentBuilder.Build(memoryStream);
 
             // Assert
             var workbook = new XLWorkbook(memoryStream);
