@@ -1,22 +1,20 @@
 ﻿using System.Reflection;
 using DocumentBuilder.Attributes;
-using DocumentBuilder.Exceptions;
 
 namespace DocumentBuilder.Helpers
 {
-    public static class ReflectionHelper<T>
+    public static class ReflectionHelper<TRow>
     {
-        public static IOrderedEnumerable<PropertyInfo> GetOrderedTableRowPropertyInfos(IEnumerable<T> tableRow)
+        public static IOrderedEnumerable<PropertyInfo> GetOrderedTableRowPropertyInfos()
         {
-            var tableRowProperties = GetTableRowPropertyInfos(tableRow);
+            var tableRowProperties = GetTableRowPropertyInfos();
             var filteredTableRowProperties = FilterPropertiesWithIgnoreColumnAttribute(tableRowProperties);
             return filteredTableRowProperties.OrderBy(t => GetColumnAttribute(t).Order);
         }
 
-        public static IEnumerable<ColumnAttribute> GetOrderedColumnAttributes(IEnumerable<T> tableRow)
+        public static IEnumerable<ColumnAttribute> GetOrderedColumnAttributes()
         {
-            var tableRowProperties = GetTableRowPropertyInfos(tableRow);
-
+            var tableRowProperties = GetTableRowPropertyInfos();
             var filteredTableRowProperties = FilterPropertiesWithIgnoreColumnAttribute(tableRowProperties);
 
             return filteredTableRowProperties
@@ -29,16 +27,9 @@ namespace DocumentBuilder.Helpers
             return tableRowProperties.Where(t => !HasIgnoreAttribute(t));
         }
 
-        private static IEnumerable<PropertyInfo> GetTableRowPropertyInfos(IEnumerable<T> tableRows)
+        private static IEnumerable<PropertyInfo> GetTableRowPropertyInfos()
         {
-            var tableRow = tableRows.ElementAt(0);
-
-            if (tableRow == null)
-            {
-                throw new DocumentBuilderException(DocumentBuilderErrorCode.ProvidedTableIsEmpty);
-            }
-
-            var tableRowType = tableRow.GetType();
+            var tableRowType = typeof(TRow);
             return tableRowType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
         }
 

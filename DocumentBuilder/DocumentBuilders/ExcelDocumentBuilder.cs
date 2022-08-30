@@ -8,29 +8,47 @@ using DocumentBuilder.Model;
 
 namespace DocumentBuilder.DocumentBuilders
 {
-    internal class ExcelDocumentBuilder
+    internal class ExcelDocumentBuilder : IExcelDocumentBuilder
     {
         private string? _currentWorksheet = string.Empty;
         public IEnumerable<WorksheetExcelConvertable> WorksheetExcelConvertables { get; private set; } = Enumerable.Empty<WorksheetExcelConvertable>();
         private readonly IExcelDocumentWriter _excelDocumentWriter;
+
+        public ExcelDocumentBuilder() : this(new ExcelDocumentOptions()) { }
 
         public ExcelDocumentBuilder(ExcelDocumentOptions options)
         {
             _excelDocumentWriter = new ClosedXmlDocumentWriter(XLWorkbookFactory.Create, options);
         }
 
-        public ExcelDocumentBuilder AddWorksheet(string worksheetName)
+        /// <summary>
+        /// Adds a new worksheet to the document
+        /// </summary>
+        /// <param name="worksheetName"></param>
+        /// <returns><see cref="IExcelDocumentBuilder"/></returns>
+        public IExcelDocumentBuilder AddWorksheet(string worksheetName)
         {
             _currentWorksheet = worksheetName;
             _excelDocumentWriter.AddWorksheet(worksheetName);
             return this;
         }
 
-        public ExcelDocumentBuilder AddTable<T>(IEnumerable<T> tableRows)
+        /// <summary>
+        /// Adds a table to the document at the current worksheet
+        /// </summary>
+        /// <typeparam name="TRow">The type of the row</typeparam>
+        /// <param name="tableRows">The values of the table rows</param>
+        /// <returns><see cref="IExcelDocumentBuilder"/></returns>
+        public IExcelDocumentBuilder AddTable<T>(IEnumerable<T> tableRows)
         {
             if (_currentWorksheet == null)
             {
                 throw new DocumentBuilderException(DocumentBuilderErrorCode.NoWorksheetInstantiated);
+            }
+
+            if (!tableRows.Any())
+            {
+                return this;
             }
 
             var worksheetExcelConvertable = new WorksheetExcelConvertable(_currentWorksheet, new Table<T>(tableRows));
@@ -38,13 +56,32 @@ namespace DocumentBuilder.DocumentBuilders
             return this;
         }
 
-        public void WriteToStream(Stream outputStream)
+        /// <summary>
+        /// Writes the document to the provided output stream
+        /// </summary>
+        /// <param name="outputStream">The output stream</param>
+        public void Build(Stream outputStream)
         {
             foreach (var worksheetExcelConvertable in WorksheetExcelConvertables)
             {
                 _excelDocumentWriter.Write(worksheetExcelConvertable);
             }
             _excelDocumentWriter.WriteToStream(outputStream);
+        }
+
+        /// <summary>
+        /// Writes the document to the provided path, will replace existing documents
+        /// </summary>
+        /// <param name="filePath">The path which the file should be written to</param>
+        /// <returns><see cref="Task"/></returns>
+        public void Build(string filePath)
+        {
+            using FileStream fileStream = File.Create(filePath);
+            foreach (var worksheetExcelConvertable in WorksheetExcelConvertables)
+            {
+                _excelDocumentWriter.Write(worksheetExcelConvertable);
+            }
+            _excelDocumentWriter.WriteToStream(fileStream);
         }
     }
 }

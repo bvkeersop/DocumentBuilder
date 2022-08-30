@@ -1,6 +1,6 @@
 ﻿namespace DocumentBuilder.Enumerations
 {
-    internal enum DocumentType
+    public enum DocumentType
     {
         Markdown,
         Html

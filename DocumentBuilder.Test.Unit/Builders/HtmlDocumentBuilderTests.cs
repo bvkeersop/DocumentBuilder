@@ -34,7 +34,7 @@ namespace DocumentBuilder.Test.Unit.Builders
                 .AddImage(_imageName, _imagePath, _imageCaption);
 
             // Act
-            await htmlDocumentBuilder.WriteToStreamAsync(outputStream);
+            await htmlDocumentBuilder.BuildAsync(outputStream);
 
             // Assert
             var expectedHtmlDocument = GetExpectedHtmlDocument(options);

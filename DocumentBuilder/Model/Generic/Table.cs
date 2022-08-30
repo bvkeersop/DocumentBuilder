@@ -1,4 +1,5 @@
 ﻿using DocumentBuilder.Attributes;
+using DocumentBuilder.Exceptions;
 using DocumentBuilder.Extensions;
 using DocumentBuilder.Helpers;
 using DocumentBuilder.Interfaces;
@@ -8,17 +9,32 @@ using DocumentBuilder.Options;
 
 namespace DocumentBuilder.Model
 {
-    public partial class Table<TValue> : GenericElement, IExcelConvertable
+    public partial class Table<TRow> : GenericElement, IExcelConvertable
     {
         public IEnumerable<ColumnAttribute> OrderedColumnAttributes { get; }
-        public Matrix<TValue> TableValues { get; }
+        public Matrix<TRow> TableValues { get; }
         public IEnumerable<TableCell> TableCells { get; }
 
-        public Table(IEnumerable<TValue> tableRows)
+        public Table(IEnumerable<TRow> tableRows)
         {
-            TableValues = new Matrix<TValue>(tableRows);
-            OrderedColumnAttributes = ReflectionHelper<TValue>.GetOrderedColumnAttributes(tableRows);
+            ValidateRows(tableRows);
+            TableValues = new Matrix<TRow>(tableRows);
+            OrderedColumnAttributes = ReflectionHelper<TRow>.GetOrderedColumnAttributes();
             TableCells = CreateEnumerableOfTableCells();
+        }
+
+        private static void ValidateRows(IEnumerable<TRow> tableRows)
+        {
+            var genericType = typeof(TRow);
+            foreach(var tableRow in tableRows)
+            {
+                var tableRowType = tableRow?.GetType();
+                if (tableRowType != genericType)
+                {
+                    var message = $"The type {tableRowType} does not equal the provided generic parameter {genericType}, base types are not supported";
+                    throw new DocumentBuilderException(DocumentBuilderErrorCode.ProvidedGenericTypeForTableDoesNotEqualRunTimeType, message);
+                }
+            }
         }
 
         public override async ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)

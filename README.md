@@ -31,7 +31,7 @@ The following formats are currently supported:
       - [2. Put your POCOs in an IEnumerable](#2-put-your-pocos-in-an-ienumerable)
       - [3. Use it inside a document builder to generate a table](#3-use-it-inside-a-document-builder-to-generate-a-table)
   - [Options](#options)
-  - [Generic](#generic-1)
+  - [DocumentOptions](#documentoptions)
   - [Markdown](#markdown-1)
       - [MarkdownTableOptions](#markdowntableoptions)
   - [HTML](#html-1)
@@ -42,7 +42,7 @@ The following formats are currently supported:
 
 ## Creating a document
 
-Below are examples of how you can use the document builders provided by `DocumentBuilder` to create markdown, HTML and Excel documents.
+Below are examples of how you can use the document builders provided by `DocumentBuilder` to create markdown, HTML and Excel documents. You can write your document to a stream by providing an output stream, or to a file by providing a file path.
 
 ```C#
 
@@ -91,7 +91,7 @@ var documentBuilder = new DocumentBuilder(options)
     .AddUnorderedList(unorderedList)
     .AddOrderedList(orderedList)
     .AddTable(productTableRows) // More on tables below
-    .WriteToStreamAsync(outputStream, DocumentType.Markdown); // Or HTML (DocumentType.HTML)
+    .BuildAsync(outputStream, DocumentType.Markdown); // Or HTML (DocumentType.HTML)
 
 ```
 
@@ -114,7 +114,7 @@ var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
     .AddUnorderedList(unorderedList)
     .AddOrderedList(orderedList)
     .AddTable(productTableRows) // More on tables below
-    .WriteToStreamAsync(outputStream);
+    .BuildAsync(outputStream); // Or file path
 
 ```
 
@@ -137,7 +137,7 @@ var htmlDocumentBuilder = new HtmlDocumentBuilder(options)
     .AddUnorderedList(unorderedList)
     .AddOrderedList(orderedList)
     .AddTable(productTableRows) // More on tables below
-    .WriteToStreamAsync(outputStream);
+    .BuildAsync(outputStream); // Or file path
 ```
 
 ### Excel
@@ -152,7 +152,7 @@ var outputStream = new MemoryStream();
 var excelDocumentBuilder = new ExcelDocumentBuilder(options)
     .AddWorksheet("my-worksheet-name")
     .AddTable(productTableRows) // More on tables below
-    .WriteToStreamAsync(outputStream);
+    .BuildAsync(outputStream);  // Or file path
 ```
 
 ## Tables
@@ -196,23 +196,27 @@ var outputStream = new MemoryStream();
 
 var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
     .AddTable(productTableRows)
-    .WriteToStream(outputStream);
+    .BuildAsync(outputStream);
 
 ```
 
 > NOTE: In case of using an object, the values written to the table cell will be the object's `ToString()` method.
 
+If the provided table row is an empty enumerable, it will be skipped.
+
 ## Options
 
-## Generic
+## DocumentOptions
 
 All document types have the following options:
 
-| Option                  | Type           | Description                                  | DefaultValue |
-| ----------------------- | ---------------|--------------------------------------------- | ------------ |
-| LineEnding              | LineEnding     | What line ending to use                      | Environment  |
+| Option                    | Type                    | Description                                                  | DefaultValue |
+| ------------------------- | ----------------------- |------------------------------------------------------------- | ------------ |
+| LineEnding                | LineEnding              | What line ending to use                                      | Environment  |
+| BehaviorOnEmptyEnumerable | EmptyEnumerableBehavior | What behavior to display when a provided enumerable is empty | SkipRender   |
 
 > **LineEndings**: *Environment, Windows, Linux*
+> **EmptyEnumerableBehavior**: *SkipRender, Render, ThrowException*
 
 ## Markdown
 

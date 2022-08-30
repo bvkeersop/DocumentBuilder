@@ -37,41 +37,86 @@ namespace DocumentBuilder.Test.Unit.Model.Markdown
             markdownTable.Should().Be(expectedTable);
         }
 
-        [DataTestMethod]
-        [DataRow(Alignment.Left)]
-        [DataRow(Alignment.Right)]
-        [DataRow(Alignment.Center)]
-        [DataRow(Alignment.None)]
-        public async Task ToMarkdownAsync_ProvideAlignmentInColumnAttribute_CreatesAlignedColumn(Alignment alignment)
+        [TestMethod]
+        public static async Task ToMarkdownAsync_ProvideAlignmentLeftInColumnAttribute_CreatesAlignedColumn()
         {
             // Arrange
             var options = new MarkdownDocumentOptions();
-            var alignedColumn = GetAlignedColumn(alignment);
-            var alignedTable = new Table<AlignedColumn>(alignedColumn);
+            var alignedColumn = new List<AlignedLeftColumn> { new AlignedLeftColumn() };
+            var alignedTable = new Table<AlignedLeftColumn>(alignedColumn);
 
             // Act
             var table = await alignedTable.ToMarkdownAsync(options);
 
             // Assert
-            var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(alignment, options);
+            var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(Alignment.Left, options);
             table.Should().Be(expectedTable);
         }
 
-        [DataTestMethod]
-        [DataRow(Alignment.Left)]
-        [DataRow(Alignment.Right)]
-        [DataRow(Alignment.Center)]
-        [DataRow(Alignment.None)]
-        public async Task ToMarkdownAsync_ProvideAlignmentInOptions_CreatesAlignedColumn(Alignment alignment)
+
+        [TestMethod]
+        public static async Task ToMarkdownAsync_ProvideAlignmentRightInColumnAttribute_CreatesAlignedColumn()
         {
             // Arrange
-            var alignedColumn = GetAlignedColumn(Alignment.Default);
-            var alignedTable = new Table<AlignedColumn>(alignedColumn);
+            var options = new MarkdownDocumentOptions();
+            var alignedColumn = new List<AlignedRightColumn> { new AlignedRightColumn() };
+            var alignedTable = new Table<AlignedRightColumn>(alignedColumn);
+
+            // Act
+            var table = await alignedTable.ToMarkdownAsync(options);
+
+            // Assert
+            var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(Alignment.Right, options);
+            table.Should().Be(expectedTable);
+        }
+
+
+        [TestMethod]
+        public static async Task ToMarkdownAsync_ProvideAlignmentCenterInColumnAttribute_CreatesAlignedColumn()
+        {
+            // Arrange
+            var options = new MarkdownDocumentOptions();
+            var alignedColumn = new List<AlignedCenterColumn> { new AlignedCenterColumn() };
+            var alignedTable = new Table<AlignedCenterColumn>(alignedColumn);
+
+            // Act
+            var table = await alignedTable.ToMarkdownAsync(options);
+
+            // Assert
+            var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(Alignment.Center, options);
+            table.Should().Be(expectedTable);
+        }
+
+
+        [TestMethod]
+        public static async Task ToMarkdownAsync_ProvideAlignmentNoneInColumnAttribute_CreatesAlignedColumn()
+        {
+            // Arrange
+            var options = new MarkdownDocumentOptions();
+            var alignedColumn = new List<AlignedNoneColumn> { new AlignedNoneColumn() };
+            var alignedTable = new Table<AlignedNoneColumn>(alignedColumn);
+
+            // Act
+            var table = await alignedTable.ToMarkdownAsync(options);
+
+            // Assert
+            var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(Alignment.None, options);
+            table.Should().Be(expectedTable);
+        }
+
+
+
+        [TestMethod]
+        public static async Task ToMarkdownAsync_ProvideAlignmentLeftInOptions_CreatesAlignedColumn()
+        {
+            // Arrange
+            var alignedColumn = new List<AlignedDefaultColumn> { new AlignedDefaultColumn() };
+            var alignedTable = new Table<AlignedDefaultColumn>(alignedColumn);
             var options = new MarkdownDocumentOptions
             {
                 MarkdownTableOptions = new MarkdownTableOptions
                 {
-                    DefaultAlignment = alignment
+                    DefaultAlignment = Alignment.Left,
                 }
             };
 
@@ -79,7 +124,80 @@ namespace DocumentBuilder.Test.Unit.Model.Markdown
             var table = await alignedTable.ToMarkdownAsync(options);
 
             // Assert
-            var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(alignment, options);
+            var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(Alignment.Left, options);
+            table.Should().Be(expectedTable);
+        }
+
+
+        [TestMethod]
+        public static async Task ToMarkdownAsync_ProvideAlignmentRightInOptions_CreatesAlignedColumn(Alignment alignment)
+        {
+            // Arrange
+            var alignedColumn = new List<AlignedDefaultColumn> { new AlignedDefaultColumn() };
+            var alignedTable = new Table<AlignedDefaultColumn>(alignedColumn);
+            var options = new MarkdownDocumentOptions
+            {
+                MarkdownTableOptions = new MarkdownTableOptions
+                {
+                    DefaultAlignment = Alignment.Right,
+                }
+            };
+
+            // Act
+            var table = await alignedTable.ToMarkdownAsync(options);
+
+            // Assert
+            var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(Alignment.Right, options);
+            table.Should().Be(expectedTable);
+        }
+
+
+
+        [TestMethod]
+        public static async Task ToMarkdownAsync_ProvideAlignmentCenterInOptions_CreatesAlignedColumn(Alignment alignment)
+        {
+            // Arrange
+            // Arrange
+            var alignedColumn = new List<AlignedDefaultColumn> { new AlignedDefaultColumn() };
+            var alignedTable = new Table<AlignedDefaultColumn>(alignedColumn);
+            var options = new MarkdownDocumentOptions
+            {
+                MarkdownTableOptions = new MarkdownTableOptions
+                {
+                    DefaultAlignment = Alignment.Center,
+                }
+            };
+
+            // Act
+            var table = await alignedTable.ToMarkdownAsync(options);
+
+            // Assert
+            var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(Alignment.Center, options);
+            table.Should().Be(expectedTable);
+        }
+
+
+
+        [TestMethod]
+        public static async Task ToMarkdownAsync_ProvideAlignmentNoneInOptions_CreatesAlignedColumn()
+        {
+            // Arrange
+            // Arrange
+            var alignedColumn = new List<AlignedDefaultColumn> { new AlignedDefaultColumn() };
+            var alignedTable = new Table<AlignedDefaultColumn>(alignedColumn);
+            var options = new MarkdownDocumentOptions
+            {
+                MarkdownTableOptions = new MarkdownTableOptions
+                {
+                    DefaultAlignment = Alignment.None,
+                }
+            };
+
+            // Act
+            var table = await alignedTable.ToMarkdownAsync(options);
+
+            // Assert
+            var expectedTable = ExampleAlignedColumnBuilder.BuildExpectedAlignedColumn(Alignment.None, options);
             table.Should().Be(expectedTable);
         }
 
@@ -87,13 +205,14 @@ namespace DocumentBuilder.Test.Unit.Model.Markdown
         public async Task ToMarkdownAsync_BoldColumnNames_CreatesTableWithBoldColumnNames()
         {
             // Arrange
-            var alignedColumn = GetAlignedColumn(Alignment.Default);
-            var alignedTable = new Table<AlignedColumn>(alignedColumn);
+            // Arrange
+            var alignedColumn = new List<AlignedDefaultColumn> { new AlignedDefaultColumn() };
+            var alignedTable = new Table<AlignedDefaultColumn>(alignedColumn);
             var options = new MarkdownDocumentOptions
             {
                 MarkdownTableOptions = new MarkdownTableOptions
                 {
-                    BoldColumnNames = true
+                    BoldColumnNames = true,
                 }
             };
 
@@ -107,19 +226,6 @@ namespace DocumentBuilder.Test.Unit.Model.Markdown
                 $"| -------------- |" + newLineProvider.GetNewLine() +
                 $"| ColumnValue    |" + newLineProvider.GetNewLine();
             table.Should().Be(expectedTable);
-        }
-
-        private static IEnumerable<AlignedColumn> GetAlignedColumn(Alignment alignment)
-        {
-            return alignment switch
-            {
-                Alignment.Center => new List<AlignedColumn>() { new AlignedCenterColumn() },
-                Alignment.Left => new List<AlignedColumn>() { new AlignedLeftColumn() },
-                Alignment.Right => new List<AlignedColumn>() { new AlignedRightColumn() },
-                Alignment.None => new List<AlignedColumn>() { new AlignedNoneColumn() },
-                Alignment.Default => new List<AlignedColumn>() { new AlignedDefaultColumn() },
-                _ => throw new NotSupportedException($"{alignment} is currently not supported")
-            };
         }
     }
 }

@@ -13,11 +13,10 @@ namespace DocumentBuilder.Test.Unit.Builders
         public async Task Build_CreatesHtmlDocument()
         {
             // Arrange
-            var options = new HtmlDocumentOptions()
+            var options = new GenericDocumentOptions()
             {
                 LineEndings = LineEndings.Environment,
-                IndentationType = IndentationType.Spaces,
-                IndentationSize = 2
+                DocumentType = DocumentType.Html
             };
 
             var outputStream = new MemoryStream();
@@ -34,10 +33,10 @@ namespace DocumentBuilder.Test.Unit.Builders
                 .AddImage(_imageName, _imagePath, _imageCaption);
 
             // Act
-            await htmlDocumentBuilder.WriteToStreamAsync(outputStream, DocumentType.Html);
+            await htmlDocumentBuilder.BuildAsync(outputStream, options.DocumentType);
 
             // Assert
-            var expectedHtmlDocument = GetExpectedHtmlDocument(options);
+            var expectedHtmlDocument = GetExpectedHtmlDocument(new HtmlDocumentOptions());
             var htmlDocument = StreamHelper.GetStreamContents(outputStream);
             htmlDocument.Should().Be(expectedHtmlDocument);
         }
@@ -46,14 +45,10 @@ namespace DocumentBuilder.Test.Unit.Builders
         public async Task Build_CreatesMarkdownDocument()
         {
             // Arrange
-            var options = new MarkdownDocumentOptions()
+            var options = new GenericDocumentOptions()
             {
                 LineEndings = LineEndings.Environment,
-                MarkdownTableOptions = new MarkdownTableOptions
-                {
-                    BoldColumnNames = false,
-                    Formatting = Formatting.AlignColumns
-                }
+                DocumentType = DocumentType.Markdown
             };
 
             var outputStream = new MemoryStream();
@@ -70,10 +65,10 @@ namespace DocumentBuilder.Test.Unit.Builders
                 .AddImage(_imageName, _imagePath, _imageCaption);
 
             // Act
-            await markdownDocumentBuilder.WriteToStreamAsync(outputStream, DocumentType.Markdown);
+            await markdownDocumentBuilder.BuildAsync(outputStream, options.DocumentType);
 
             // Assert
-            var expectedMarkdownDocument = GetExpectedMarkdownDocument(options);
+            var expectedMarkdownDocument = GetExpectedMarkdownDocument(new MarkdownDocumentOptions());
             var markdownDocument = StreamHelper.GetStreamContents(outputStream);
             markdownDocument.Should().Be(expectedMarkdownDocument);
         }
