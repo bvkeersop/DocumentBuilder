@@ -94,6 +94,12 @@ namespace DocumentBuilder.Model.Generic
 
         public int GetLongestCellSizeOfColumn(int columnIndex)
         {
+            // If there's no longest size cell size, there's no rows, thus the longest size is 0
+            if (_longestCellSizeOfColumn.Count == 0)
+            {
+                return 0;
+            }
+
             if (columnIndex < 0 || columnIndex > NumberOfColumns)
             {
                 throw new DocumentBuilderException(DocumentBuilderErrorCode.CouldNotFindColumnAtIndex);
