@@ -306,7 +306,6 @@ If there are any features that you would like to see implemented, please create 
 
 Currently, I'm still looking to implement the following (no deadline set):
 
-- Raw insertions for Markdown and HTML
 - Word support
 - More insertables for Excel
 - Better styling options for Excel
