@@ -58,6 +58,7 @@ var imageCaption = "This is an image";
 var blockquote = "blockquote";
 var lanuage = "C#";
 var codeblock = "codeblock";
+var raw = "raw";
 
 var orderedList = new List<string>
 {
@@ -118,8 +119,9 @@ var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
     .AddOrderedList(orderedList)
     .AddTable(productTableRows) // More on tables below
     .AddHorizontalRule()
-    .AddBlockquote(_blockquote)
-    .AddFencedCodeblock(_codeblock, _language);
+    .AddBlockquote(blockquote)
+    .AddFencedCodeblock(codeblock, language)
+    .AddRaw(raw)
     .BuildAsync(outputStream); // Or file path
 
 ```
@@ -143,6 +145,7 @@ var htmlDocumentBuilder = new HtmlDocumentBuilder(options)
     .AddUnorderedList(unorderedList)
     .AddOrderedList(orderedList)
     .AddTable(productTableRows) // More on tables below
+    .AddRaw(raw)
     .BuildAsync(outputStream); // Or file path
 ```
 
