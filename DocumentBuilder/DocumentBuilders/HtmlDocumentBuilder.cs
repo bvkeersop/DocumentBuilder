@@ -18,6 +18,7 @@ namespace DocumentBuilder.DocumentBuilders
 
         public HtmlDocumentBuilder(HtmlDocumentOptions options)
         {
+            _ = options ?? throw new ArgumentNullException(nameof(options));
             _enumerableValidator = EnumerableValidatorFactory.Create(options.BehaviorOnEmptyEnumerable);
             _htmlDocumentWriter = new HtmlDocumentWriter(HtmlStreamWriterFactory.Create, options);
         }
@@ -29,6 +30,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="Task"/></returns>
         public async Task BuildAsync(Stream outputStream)
         {
+            _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
             await _htmlDocumentWriter.WriteToStreamAsync(outputStream, HtmlConvertables).ConfigureAwait(false);
         }
 
@@ -40,6 +42,11 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="Task"/></returns>
         public async Task BuildAsync(string filePath)
         {
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
+                throw new ArgumentException("filePath cannot be null or empty");
+            }
+
             using FileStream fileStream = File.Create(filePath);
             await BuildAsync(fileStream);
         }
@@ -51,6 +58,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         public IHtmlDocumentBuilder AddHeader1(string header1)
         {
+            _ = header1 ?? throw new ArgumentNullException(nameof(header1));
             HtmlConvertables = HtmlConvertables.Append(new Header1(header1));
             return this;
         }
@@ -62,6 +70,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         public IHtmlDocumentBuilder AddHeader2(string header2)
         {
+            _ = header2 ?? throw new ArgumentNullException(nameof(header2));
             HtmlConvertables = HtmlConvertables.Append(new Header2(header2));
             return this;
         }
@@ -73,6 +82,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         public IHtmlDocumentBuilder AddHeader3(string header3)
         {
+            _ = header3 ?? throw new ArgumentNullException(nameof(header3));
             HtmlConvertables = HtmlConvertables.Append(new Header3(header3));
             return this;
         }
@@ -84,6 +94,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IHtmlDocumentBuilder"/></retu
         public IHtmlDocumentBuilder AddHeader4(string header4)
         {
+            _ = header4 ?? throw new ArgumentNullException(nameof(header4));
             HtmlConvertables = HtmlConvertables.Append(new Header4(header4));
             return this;
         }
@@ -95,6 +106,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         public IHtmlDocumentBuilder AddParagraph(string paragraph)
         {
+            _ = paragraph ?? throw new ArgumentNullException(nameof(paragraph));
             HtmlConvertables = HtmlConvertables.Append(new Paragraph(paragraph));
             return this;
         }
@@ -106,6 +118,8 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         public IHtmlDocumentBuilder AddOrderedList<T>(IEnumerable<T> orderedList)
         {
+            _ = orderedList ?? throw new ArgumentNullException(nameof(orderedList));
+
             if (!_enumerableValidator.ShouldRender(orderedList))
             {
                 return this;
@@ -122,6 +136,8 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         public IHtmlDocumentBuilder AddUnorderedList<T>(IEnumerable<T> unorderedList)
         {
+            _ = unorderedList ?? throw new ArgumentNullException(nameof(unorderedList));
+
             if (!_enumerableValidator.ShouldRender(unorderedList))
             {
                 return this;
@@ -139,6 +155,8 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         public IHtmlDocumentBuilder AddTable<T>(IEnumerable<T> tableRows)
         {
+            _ = tableRows ?? throw new ArgumentNullException(nameof(tableRows));
+
             if (!_enumerableValidator.ShouldRender(tableRows))
             {
                 return this;
@@ -156,7 +174,9 @@ namespace DocumentBuilder.DocumentBuilders
         /// <param name="caption">The caption of the image</param>
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         public IHtmlDocumentBuilder AddImage(string name, string path, string? caption = null)
-        {
+        {   
+            _ = name ?? throw new ArgumentNullException(nameof(name));
+            _ = path ?? throw new ArgumentNullException(nameof(path));
             HtmlConvertables = HtmlConvertables.Append(new Image(name, path, caption));
             return this;
         }
