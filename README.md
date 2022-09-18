@@ -14,7 +14,7 @@ The following formats are currently supported:
 - HTML
 - Excel
 
-`DocumentBuilder` exposes a `GenericDocumentBuilder` class that can be used to create a markdown or HTML document, it does not support Excel since its document structure is too different. `DocumentBuilder` also exposes a `MarkdownDocumentBuilder` and an `HTMLDocumentBuilder`, this is done so that in the future, these can be extended with Markdown or HTML-specific elements. For now, it's recommended to use the generic `GenericDocumentBuilder` as it has the same functionality.
+`DocumentBuilder` exposes a `GenericDocumentBuilder` class that can be used to create a markdown or HTML document, it does not support Excel since its document structure is too different. `DocumentBuilder` also exposes a `MarkdownDocumentBuilder` and an `HTMLDocumentBuilder`. These can be extended with Markdown or HTML-specific elements.
 
 # Table of Contents
 
@@ -55,6 +55,9 @@ var paragraph = "An interesting paragraph";
 var imageName = "imageName";
 var imagePath = "./image";
 var imageCaption = "This is an image";
+var blockquote = "blockquote";
+var lanuage = "C#";
+var codeblock = "codeblock";
 
 var orderedList = new List<string>
 {
@@ -114,6 +117,9 @@ var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
     .AddUnorderedList(unorderedList)
     .AddOrderedList(orderedList)
     .AddTable(productTableRows) // More on tables below
+    .AddHorizontalRule()
+    .AddBlockquote(_blockquote)
+    .AddFencedCodeblock(_codeblock, _language);
     .BuildAsync(outputStream); // Or file path
 
 ```
