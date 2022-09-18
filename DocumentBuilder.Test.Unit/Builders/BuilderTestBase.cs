@@ -1,4 +1,5 @@
-﻿using DocumentBuilder.Factories;
+﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Factories;
 using DocumentBuilder.Options;
 using DocumentBuilder.Test.Unit.Model;
 using DocumentBuilder.Test.Unit.TestHelpers;
@@ -16,6 +17,9 @@ namespace DocumentBuilder.Test.Unit.Builders
         protected const string _imageName = "imageName";
         protected const string _imagePath = "./imagePath";
         protected const string _imageCaption = "this is an image";
+        protected const string _codeblock = "codeblock";
+        protected const string _blockquote = "blockquote";
+        protected const string _language = "C#";
         protected IEnumerable<ProductTableRowWithColumnAttribute> _productTableRowsWithColumnAttribute;
         protected IEnumerable<ProductTableRowWithoutAttributes> _productTableRowsWithoutAttributes;
         protected List<string> _orderedList;
@@ -75,7 +79,7 @@ namespace DocumentBuilder.Test.Unit.Builders
                 "</html>" + GetNewLine(newLineProvider);
         }
 
-        protected string GetExpectedMarkdownDocument(MarkdownDocumentOptions options)
+        protected string GetExpectedGenericMarkdownDocument(MarkdownDocumentOptions options)
         {
             var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
 
@@ -101,6 +105,42 @@ namespace DocumentBuilder.Test.Unit.Builders
                 ExampleProductMarkdownTableBuilder.BuildExpectedFormattedProductTable(options) + newLineProvider.GetNewLine() +
                 "![imageName](./imagePath)" + newLineProvider.GetNewLine() +
                 "*this is an image*" + newLineProvider.GetNewLine();
+        }
+
+        protected string GetExpectedMarkdownDocument(MarkdownDocumentOptions options)
+        {
+            var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
+
+            return
+                $"# {_header1}" + newLineProvider.GetNewLine() +
+                newLineProvider.GetNewLine() +
+                $"## {_header2}" + newLineProvider.GetNewLine() +
+                newLineProvider.GetNewLine() +
+                $"### {_header3}" + newLineProvider.GetNewLine() +
+                newLineProvider.GetNewLine() +
+                $"#### {_header4}" + newLineProvider.GetNewLine() +
+                newLineProvider.GetNewLine() +
+                _paragraph + newLineProvider.GetNewLine() +
+                newLineProvider.GetNewLine() +
+                $"- {_unorderedList.ElementAt(0)}" + newLineProvider.GetNewLine() +
+                $"- {_unorderedList.ElementAt(1)}" + newLineProvider.GetNewLine() +
+                $"- {_unorderedList.ElementAt(2)}" + newLineProvider.GetNewLine() +
+                newLineProvider.GetNewLine() +
+                $"1. {_orderedList.ElementAt(0)}" + newLineProvider.GetNewLine() +
+                $"1. {_orderedList.ElementAt(1)}" + newLineProvider.GetNewLine() +
+                $"1. {_orderedList.ElementAt(2)}" + newLineProvider.GetNewLine() +
+                newLineProvider.GetNewLine() +
+                ExampleProductMarkdownTableBuilder.BuildExpectedFormattedProductTable(options) + newLineProvider.GetNewLine() +
+                "![imageName](./imagePath)" + newLineProvider.GetNewLine() +
+                "*this is an image*" + newLineProvider.GetNewLine() +
+                newLineProvider.GetNewLine() +
+                MarkdownIndicators.HorizontalRule + newLineProvider.GetNewLine() +
+                newLineProvider.GetNewLine() +
+                $"> {_blockquote}" + newLineProvider.GetNewLine() +
+                newLineProvider.GetNewLine() +
+                $"```{_language}" + newLineProvider.GetNewLine() +
+                $"{_codeblock}" + newLineProvider.GetNewLine() +
+                $"```" + newLineProvider.GetNewLine();
         }
     }
 }

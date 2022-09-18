@@ -68,7 +68,7 @@ namespace DocumentBuilder.Test.Unit.Builders
             await markdownDocumentBuilder.BuildAsync(outputStream, options.DocumentType);
 
             // Assert
-            var expectedMarkdownDocument = GetExpectedMarkdownDocument(new MarkdownDocumentOptions());
+            var expectedMarkdownDocument = GetExpectedGenericMarkdownDocument(new MarkdownDocumentOptions());
             var markdownDocument = StreamHelper.GetStreamContents(outputStream);
             markdownDocument.Should().Be(expectedMarkdownDocument);
         }

@@ -5,6 +5,8 @@ using DocumentBuilder.Options;
 using DocumentBuilder.Model;
 using DocumentBuilder.Model.Generic;
 using DocumentBuilder.Validators;
+using DocumentBuilder.Model.Markdown;
+using DocumentBuilder.Model.Shared;
 
 namespace DocumentBuilder.DocumentBuilders
 {
@@ -157,6 +159,50 @@ namespace DocumentBuilder.DocumentBuilders
         public IMarkdownDocumentBuilder AddImage(string name, string path, string? caption = null)
         {
             MarkdownConvertables = MarkdownConvertables.Append(new Image(name, path, caption));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a blockquote to the document
+        /// </summary>
+        /// <param name="quote">The blockquote</param>
+        /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
+        public IMarkdownDocumentBuilder AddBlockquote(string quote)
+        {
+            MarkdownConvertables = MarkdownConvertables.Append(new Blockquote(quote));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the provided content directly into the document
+        /// </summary>
+        /// <param name="content">The content</param>
+        /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
+        public IMarkdownDocumentBuilder AddRaw(string content)
+        {
+            MarkdownConvertables = MarkdownConvertables.Append(new Raw(content));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a codeblock to the document
+        /// </summary>
+        /// <param name="code">The codeblock</param>
+        /// <param name="language">The programming language the codeblock is written in</param>
+        /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
+        public IMarkdownDocumentBuilder AddFencedCodeblock(string code, string? language = null)
+        {
+            MarkdownConvertables = MarkdownConvertables.Append(new FencedCodeblock(code, language));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds an horizontal rule
+        /// </summary>
+        /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
+        public IMarkdownDocumentBuilder AddHorizontalRule()
+        {
+            MarkdownConvertables = MarkdownConvertables.Append(new HorizontalRule());
             return this;
         }
     }

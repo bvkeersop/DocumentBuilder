@@ -34,7 +34,10 @@ namespace DocumentBuilder.Test.Unit.Builders
                 .AddUnorderedList(_unorderedList)
                 .AddOrderedList(_orderedList)
                 .AddTable(_productTableRowsWithoutAttributes)
-                .AddImage(_imageName, _imagePath, _imageCaption);
+                .AddImage(_imageName, _imagePath, _imageCaption)
+                .AddHorizontalRule()
+                .AddBlockquote(_blockquote)
+                .AddFencedCodeblock(_codeblock, _language);
 
             // Act
             await markdownDocumentBuilder.BuildAsync(outputStream);
