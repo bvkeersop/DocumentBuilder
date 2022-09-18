@@ -201,6 +201,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
         public IMarkdownDocumentBuilder AddRaw(string content)
         {
+            _ = content ?? throw new ArgumentNullException(nameof(content));
             MarkdownConvertables = MarkdownConvertables.Append(new Raw(content));
             return this;
         }

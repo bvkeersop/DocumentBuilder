@@ -36,7 +36,7 @@ namespace DocumentBuilder.Test.Unit.Builders
             await htmlDocumentBuilder.BuildAsync(outputStream, options.DocumentType);
 
             // Assert
-            var expectedHtmlDocument = GetExpectedHtmlDocument(new HtmlDocumentOptions());
+            var expectedHtmlDocument = GetExpectedGenericHtmlDocument(new HtmlDocumentOptions());
             var htmlDocument = StreamHelper.GetStreamContents(outputStream);
             htmlDocument.Should().Be(expectedHtmlDocument);
         }

@@ -1,9 +1,10 @@
-﻿using DocumentBuilder.Interfaces;
+﻿using DocumentBuilder.Factories;
+using DocumentBuilder.Interfaces;
 using DocumentBuilder.Options;
 
 namespace DocumentBuilder.Model.Shared
 {
-    internal class Raw : IMarkdownConvertable
+    internal class Raw : IMarkdownConvertable, IHtmlConvertable
     {
         private readonly string _value;
 
@@ -12,9 +13,24 @@ namespace DocumentBuilder.Model.Shared
             _value = value;
         }
 
+        public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
+        {
+            return WrapWithIndentationAndNewLine(_value, options, indentationLevel);
+        }
+
         public ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options)
         {
-            return new ValueTask<string>(_value);
+            var newlineProvider = NewLineProviderFactory.Create(options.LineEndings);
+            var markdown = $"{_value}{newlineProvider.GetNewLine()}";
+            return new ValueTask<string>(markdown);
+        }
+
+        protected static ValueTask<string> WrapWithIndentationAndNewLine(string value, HtmlDocumentOptions options, int indentationLevel)
+        {
+            var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
+            var indenationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize, indentationLevel);
+            var html = $"{indenationProvider.GetIndentation(0)}{value}{newLineProvider.GetNewLine()}";
+            return new ValueTask<string>(html);
         }
     }
 }

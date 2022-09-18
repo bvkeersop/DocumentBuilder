@@ -81,5 +81,12 @@
         /// <param name="caption">The caption of the image</param>
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         IHtmlDocumentBuilder AddImage(string name, string path, string? caption = null);
+
+        /// <summary>
+        /// Adds the provided content directly into the document
+        /// </summary>
+        /// <param name="content">The content</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        IHtmlDocumentBuilder AddRaw(string content);
     }
 }

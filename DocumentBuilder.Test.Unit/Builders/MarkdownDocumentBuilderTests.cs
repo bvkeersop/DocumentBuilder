@@ -37,7 +37,8 @@ namespace DocumentBuilder.Test.Unit.Builders
                 .AddImage(_imageName, _imagePath, _imageCaption)
                 .AddHorizontalRule()
                 .AddBlockquote(_blockquote)
-                .AddFencedCodeblock(_codeblock, _language);
+                .AddFencedCodeblock(_codeblock, _language)
+                .AddRaw(_raw);
 
             // Act
             await markdownDocumentBuilder.BuildAsync(outputStream);

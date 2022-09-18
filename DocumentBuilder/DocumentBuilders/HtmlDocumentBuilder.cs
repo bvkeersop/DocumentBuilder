@@ -5,6 +5,7 @@ using DocumentBuilder.Options;
 using DocumentBuilder.Model;
 using DocumentBuilder.Model.Generic;
 using DocumentBuilder.Validators;
+using DocumentBuilder.Model.Shared;
 
 namespace DocumentBuilder.DocumentBuilders
 {
@@ -178,6 +179,18 @@ namespace DocumentBuilder.DocumentBuilders
             _ = name ?? throw new ArgumentNullException(nameof(name));
             _ = path ?? throw new ArgumentNullException(nameof(path));
             HtmlConvertables = HtmlConvertables.Append(new Image(name, path, caption));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the provided content directly into the document
+        /// </summary>
+        /// <param name="content">The content</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlDocumentBuilder AddRaw(string content)
+        {
+            _ = content ?? throw new ArgumentNullException(nameof(content));
+            HtmlConvertables = HtmlConvertables.Append(new Raw(content));
             return this;
         }
     }

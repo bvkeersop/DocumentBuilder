@@ -31,7 +31,8 @@ namespace DocumentBuilder.Test.Unit.Builders
                 .AddUnorderedList(_unorderedList)
                 .AddOrderedList(_orderedList)
                 .AddTable(_productTableRowsWithoutAttributes)
-                .AddImage(_imageName, _imagePath, _imageCaption);
+                .AddImage(_imageName, _imagePath, _imageCaption)
+                .AddRaw(_raw);
 
             // Act
             await htmlDocumentBuilder.BuildAsync(outputStream);
