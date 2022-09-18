@@ -30,9 +30,14 @@ namespace DocumentBuilder.DocumentBuilders
         /// </summary>
         /// <param name="outputStream">The stream to write to</param>
         /// <returns><see cref="Task"/></returns>
-        public async Task BuildAsync(Stream outputStream)
+        public Task BuildAsync(Stream outputStream)
         {
             _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
+            return BuildInternalAsync(outputStream);
+        }
+
+        private async Task BuildInternalAsync(Stream outputStream)
+        {
             await _markdownDocumentWriter.WriteToStreamAsync(outputStream, MarkdownConvertables).ConfigureAwait(false);
         }
 
@@ -185,7 +190,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <summary>
         /// Adds a blockquote to the document
         /// </summary>
-        /// <param name="quote">The blockquote</param>
+        /// <param name="quote">The quote</param>
         /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
         public IMarkdownDocumentBuilder AddBlockquote(string quote)
         {

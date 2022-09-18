@@ -18,6 +18,7 @@ namespace DocumentBuilder.DocumentBuilders
 
         public ExcelDocumentBuilder(ExcelDocumentOptions options)
         {
+            _ = options ?? throw new ArgumentNullException(nameof(options));
             _excelDocumentWriter = new ClosedXmlDocumentWriter(XLWorkbookFactory.Create, options);
         }
 
@@ -28,6 +29,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IExcelDocumentBuilder"/></returns>
         public IExcelDocumentBuilder AddWorksheet(string worksheetName)
         {
+            _ = worksheetName ?? throw new ArgumentNullException(nameof(worksheetName));
             _currentWorksheet = worksheetName;
             _excelDocumentWriter.AddWorksheet(worksheetName);
             return this;
@@ -41,6 +43,8 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IExcelDocumentBuilder"/></returns>
         public IExcelDocumentBuilder AddTable<T>(IEnumerable<T> tableRows)
         {
+            _ = tableRows ?? throw new ArgumentNullException(nameof(tableRows));
+
             if (_currentWorksheet == null)
             {
                 throw new DocumentBuilderException(DocumentBuilderErrorCode.NoWorksheetInstantiated);
@@ -62,6 +66,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <param name="outputStream">The output stream</param>
         public void Build(Stream outputStream)
         {
+            _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
             foreach (var worksheetExcelConvertable in WorksheetExcelConvertables)
             {
                 _excelDocumentWriter.Write(worksheetExcelConvertable);
@@ -76,6 +81,11 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="Task"/></returns>
         public void Build(string filePath)
         {
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
+                throw new ArgumentException("filePath cannot be null or empty");
+            }
+
             using FileStream fileStream = File.Create(filePath);
             foreach (var worksheetExcelConvertable in WorksheetExcelConvertables)
             {

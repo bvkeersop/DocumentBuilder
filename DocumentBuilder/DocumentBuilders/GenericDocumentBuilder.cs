@@ -31,9 +31,14 @@ namespace DocumentBuilder.DocumentBuilders
         /// <param name="outputStream">The stream to write to</param>
         /// <param name="documentType">In what format the document should be written</param>
         /// <returns><see cref="Task"/></returns>
-        public async Task BuildAsync(Stream outputStream, DocumentType documentType)
+        public Task BuildAsync(Stream outputStream, DocumentType documentType)
         {
             _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
+            return BuildInternalAsync(outputStream, documentType);
+        }
+
+        private async Task BuildInternalAsync(Stream outputStream, DocumentType documentType)
+        {
             _options.DocumentType = documentType;
             switch (_options.DocumentType)
             {
@@ -54,15 +59,21 @@ namespace DocumentBuilder.DocumentBuilders
         /// <param name="filePath">The path which the file should be written to</param>
         /// <param name="documentType">In what format the document should be written</param>
         /// <returns><see cref="Task"/></returns>
-        public async Task BuildAsync(string filePath, DocumentType documentType)
+        public Task BuildAsync(string filePath, DocumentType documentType)
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
                 throw new ArgumentException("filePath cannot be null or empty");
             }
 
-            using FileStream fileStream = File.Create(filePath);
+            return BuildInternalAsync(filePath, documentType);
+        }
+
+        private async Task<FileStream> BuildInternalAsync(string filePath, DocumentType documentType)
+        {
+            FileStream fileStream = File.Create(filePath);
             await BuildAsync(fileStream, documentType);
+            return fileStream;
         }
 
         /// <summary>

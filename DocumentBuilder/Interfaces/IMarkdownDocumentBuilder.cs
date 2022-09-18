@@ -85,9 +85,9 @@
         /// <summary>
         /// Adds a blockquote to the document
         /// </summary>
-        /// <param name="blockquote">The blockquote</param>
+        /// <param name="quote">The quote</param>
         /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
-        IMarkdownDocumentBuilder AddBlockquote(string blockquote);
+        IMarkdownDocumentBuilder AddBlockquote(string quote);
 
         /// <summary>
         /// Adds the provided content directly into the document

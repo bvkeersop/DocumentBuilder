@@ -41,15 +41,21 @@ namespace DocumentBuilder.DocumentBuilders
         /// </summary>
         /// <param name="filePath">The path which the file should be written to</param>
         /// <returns><see cref="Task"/></returns>
-        public async Task BuildAsync(string filePath)
+        public Task BuildAsync(string filePath)
         {
             if (string.IsNullOrWhiteSpace(filePath))
             {
                 throw new ArgumentException("filePath cannot be null or empty");
             }
 
-            using FileStream fileStream = File.Create(filePath);
-            await BuildAsync(fileStream);
+            return BuildInternalAsync(filePath);
+        }
+
+        private async Task<FileStream> BuildInternalAsync(string filePath)
+        {
+            FileStream fileStream = File.Create(filePath);
+            await BuildAsync(fileStream).ConfigureAwait(false);
+            return fileStream;
         }
 
         /// <summary>
