@@ -20,6 +20,7 @@ namespace DocumentBuilder.DocumentBuilders
 
         public GenericDocumentBuilder(GenericDocumentOptions options)
         {
+            _ = options ?? throw new ArgumentNullException(nameof(options));
             _options = options;
             _enumerableValidator = EnumerableValidatorFactory.Create(options.BehaviorOnEmptyEnumerable);
         }
@@ -32,6 +33,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="Task"/></returns>
         public async Task BuildAsync(Stream outputStream, DocumentType documentType)
         {
+            _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
             _options.DocumentType = documentType;
             switch (_options.DocumentType)
             {
@@ -54,6 +56,11 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="Task"/></returns>
         public async Task BuildAsync(string filePath, DocumentType documentType)
         {
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
+                throw new ArgumentException("filePath cannot be null or empty");
+            }
+
             using FileStream fileStream = File.Create(filePath);
             await BuildAsync(fileStream, documentType);
         }
@@ -65,6 +72,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IGenericDocumentBuilder"/></returns>
         public IGenericDocumentBuilder AddHeader1(string header1)
         {
+            _ = header1 ?? throw new ArgumentNullException(nameof(header1));
             Convertables = Convertables.Append(new Header1(header1));
             return this;
         }
@@ -76,6 +84,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IGenericDocumentBuilder"/></returns>
         public IGenericDocumentBuilder AddHeader2(string header2)
         {
+            _ = header2 ?? throw new ArgumentNullException(nameof(header2));
             Convertables = Convertables.Append(new Header2(header2));
             return this;
         }
@@ -87,6 +96,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IGenericDocumentBuilder"/></returns>
         public IGenericDocumentBuilder AddHeader3(string header3)
         {
+            _ = header3 ?? throw new ArgumentNullException(nameof(header3));
             Convertables = Convertables.Append(new Header3(header3));
             return this;
         }
@@ -98,6 +108,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IGenericDocumentBuilder"/></returns>
         public IGenericDocumentBuilder AddHeader4(string header4)
         {
+            _ = header4 ?? throw new ArgumentNullException(nameof(header4));
             Convertables = Convertables.Append(new Header4(header4));
             return this;
         }
@@ -109,6 +120,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IGenericDocumentBuilder"/></returns>
         public IGenericDocumentBuilder AddParagraph(string paragraph)
         {
+            _ = paragraph ?? throw new ArgumentNullException(nameof(paragraph));
             Convertables = Convertables.Append(new Paragraph(paragraph));
             return this;
         }
@@ -120,6 +132,8 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IGenericDocumentBuilder"/></returns>
         public IGenericDocumentBuilder AddOrderedList<T>(IEnumerable<T> orderedList)
         {
+            _ = orderedList ?? throw new ArgumentNullException(nameof(orderedList));
+
             if (!_enumerableValidator.ShouldRender(orderedList))
             {
                 return this;
@@ -136,6 +150,8 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IGenericDocumentBuilder"/></returns>
         public IGenericDocumentBuilder AddUnorderedList<T>(IEnumerable<T> unorderedList)
         {
+            _ = unorderedList ?? throw new ArgumentNullException(nameof(unorderedList));
+
             if (!_enumerableValidator.ShouldRender(unorderedList))
             {
                 return this;
@@ -153,6 +169,8 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IGenericDocumentBuilder"/></returns>
         public IGenericDocumentBuilder AddTable<T>(IEnumerable<T> tableRows)
         {
+            _ = tableRows ?? throw new ArgumentNullException(nameof(tableRows));
+
             if (!_enumerableValidator.ShouldRender(tableRows))
             {
                 return this;
@@ -171,12 +189,15 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IGenericDocumentBuilder"/></returns>
         public IGenericDocumentBuilder AddImage(string name, string path, string? caption = null)
         {
+            _ = name ?? throw new ArgumentNullException(nameof(name));
+            _ = path ?? throw new ArgumentNullException(nameof(path));
             Convertables = Convertables.Append(new Image(name, path, caption));
             return this;
         }
 
         private async Task WriteToStreamAsMarkdownAsync(Stream outputStream)
         {
+            _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
             var options = _options.ToMarkdownDocumentOptions();
             var markdownDocumentWriter = new MarkdownDocumentWriter(MarkdownStreamWriterFactory.Create, options);
             await markdownDocumentWriter.WriteToStreamAsync(outputStream, Convertables);
@@ -184,6 +205,7 @@ namespace DocumentBuilder.DocumentBuilders
 
         private async Task WriteToStreamAsHtmlAsync(Stream outputStream)
         {
+            _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
             var options = _options.ToHtmlDocumentOptions();
             var htmlDocumentWriter = new HtmlDocumentWriter(HtmlStreamWriterFactory.Create, options);
             await htmlDocumentWriter.WriteToStreamAsync(outputStream, Convertables);

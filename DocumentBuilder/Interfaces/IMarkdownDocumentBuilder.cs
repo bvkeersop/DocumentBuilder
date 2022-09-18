@@ -81,5 +81,33 @@
         /// <param name="caption">The caption of the image</param>
         /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
         IMarkdownDocumentBuilder AddImage(string name, string path, string? caption = null);
+
+        /// <summary>
+        /// Adds a blockquote to the document
+        /// </summary>
+        /// <param name="blockquote">The blockquote</param>
+        /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
+        IMarkdownDocumentBuilder AddBlockquote(string blockquote);
+
+        /// <summary>
+        /// Adds the provided content directly into the document
+        /// </summary>
+        /// <param name="content">The content</param>
+        /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
+        IMarkdownDocumentBuilder AddRaw(string content);
+
+        /// <summary>
+        /// Adds a codeblock to the document
+        /// </summary>
+        /// <param name="codeblock">The codeblock</param>
+        /// <param name="language">The programming language the codeblock is written in</param>
+        /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
+        IMarkdownDocumentBuilder AddFencedCodeblock(string codeblock, string? language = null);
+
+        /// <summary>
+        /// Adds an horizontal rule
+        /// </summary>
+        /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
+        IMarkdownDocumentBuilder AddHorizontalRule();
     }
 }
