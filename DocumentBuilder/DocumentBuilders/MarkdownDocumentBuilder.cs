@@ -12,9 +12,10 @@ namespace DocumentBuilder.DocumentBuilders
 {
     public class MarkdownDocumentBuilder : IMarkdownDocumentBuilder
     {
-        public IEnumerable<IMarkdownConvertable> MarkdownConvertables { get; private set; } = new List<IMarkdownConvertable>();
+        public IList<IMarkdownConvertable> MarkdownConvertables { get; private set; } = new List<IMarkdownConvertable>();
         private readonly MarkdownDocumentWriter _markdownDocumentWriter;
         private readonly IEnumerableValidator _enumerableValidator;
+        private TableOfContentsDetails _tableOfContentsSettings = new();
 
         public MarkdownDocumentBuilder() : this(new MarkdownDocumentOptions()) { }
 
@@ -33,6 +34,12 @@ namespace DocumentBuilder.DocumentBuilders
         public Task BuildAsync(Stream outputStream)
         {
             _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
+
+            if (_tableOfContentsSettings.ShouldAdd)
+            {
+                ActuallyAddTableOfContents(_tableOfContentsSettings.IsNumbered);
+            }
+
             return BuildInternalAsync(outputStream);
         }
 
@@ -65,7 +72,7 @@ namespace DocumentBuilder.DocumentBuilders
         public IMarkdownDocumentBuilder AddHeader1(string header1)
         {
             _ = header1 ?? throw new ArgumentNullException(nameof(header1));
-            MarkdownConvertables = MarkdownConvertables.Append(new Header1(header1));
+            MarkdownConvertables.Add(new Header1(header1));
             return this;
         }
 
@@ -77,7 +84,7 @@ namespace DocumentBuilder.DocumentBuilders
         public IMarkdownDocumentBuilder AddHeader2(string header2)
         {
             _ = header2 ?? throw new ArgumentNullException(nameof(header2));
-            MarkdownConvertables = MarkdownConvertables.Append(new Header2(header2));
+            MarkdownConvertables.Add(new Header2(header2));
             return this;
         }
 
@@ -89,7 +96,7 @@ namespace DocumentBuilder.DocumentBuilders
         public IMarkdownDocumentBuilder AddHeader3(string header3)
         {
             _ = header3 ?? throw new ArgumentNullException(nameof(header3));
-            MarkdownConvertables = MarkdownConvertables.Append(new Header3(header3));
+            MarkdownConvertables.Add(new Header3(header3));
             return this;
         }
 
@@ -101,7 +108,7 @@ namespace DocumentBuilder.DocumentBuilders
         public IMarkdownDocumentBuilder AddHeader4(string header4)
         {
             _ = header4 ?? throw new ArgumentNullException(nameof(header4));
-            MarkdownConvertables = MarkdownConvertables.Append(new Header4(header4));
+            MarkdownConvertables.Add(new Header4(header4));
             return this;
         }
 
@@ -113,7 +120,7 @@ namespace DocumentBuilder.DocumentBuilders
         public IMarkdownDocumentBuilder AddParagraph(string paragraph)
         {
             _ = paragraph ?? throw new ArgumentNullException(nameof(paragraph));
-            MarkdownConvertables = MarkdownConvertables.Append(new Paragraph(paragraph));
+            MarkdownConvertables.Add(new Paragraph(paragraph));
             return this;
         }
 
@@ -131,7 +138,7 @@ namespace DocumentBuilder.DocumentBuilders
                 return this;
             }
 
-            MarkdownConvertables = MarkdownConvertables.Append(new OrderedList<T>(orderedList));
+            MarkdownConvertables.Add(new OrderedList<T>(orderedList));
             return this;
         }
 
@@ -149,7 +156,7 @@ namespace DocumentBuilder.DocumentBuilders
                 return this;
             }
 
-            MarkdownConvertables = MarkdownConvertables.Append(new UnorderedList<T>(unorderedList));
+            MarkdownConvertables.Add(new UnorderedList<T>(unorderedList));
             return this;
         }
 
@@ -168,7 +175,7 @@ namespace DocumentBuilder.DocumentBuilders
                 return this;
             }
 
-            MarkdownConvertables = MarkdownConvertables.Append(new Table<T>(tableRows));
+            MarkdownConvertables.Add(new Table<T>(tableRows));
             return this;
         }
 
@@ -183,7 +190,7 @@ namespace DocumentBuilder.DocumentBuilders
         {
             _ = name ?? throw new ArgumentNullException(nameof(name));
             _ = path ?? throw new ArgumentNullException(nameof(path));
-            MarkdownConvertables = MarkdownConvertables.Append(new Image(name, path, caption));
+            MarkdownConvertables.Add(new Image(name, path, caption));
             return this;
         }
 
@@ -195,7 +202,7 @@ namespace DocumentBuilder.DocumentBuilders
         public IMarkdownDocumentBuilder AddBlockquote(string quote)
         {
             _ = quote ?? throw new ArgumentNullException(nameof(quote));
-            MarkdownConvertables = MarkdownConvertables.Append(new Blockquote(quote));
+            MarkdownConvertables.Add(new Blockquote(quote));
             return this;
         }
 
@@ -207,7 +214,7 @@ namespace DocumentBuilder.DocumentBuilders
         public IMarkdownDocumentBuilder AddRaw(string content)
         {
             _ = content ?? throw new ArgumentNullException(nameof(content));
-            MarkdownConvertables = MarkdownConvertables.Append(new Raw(content));
+            MarkdownConvertables.Add(new Raw(content));
             return this;
         }
 
@@ -221,7 +228,7 @@ namespace DocumentBuilder.DocumentBuilders
         {
             _ = code ?? throw new ArgumentNullException(nameof(code));
             _ = language ?? throw new ArgumentNullException(nameof(language));
-            MarkdownConvertables = MarkdownConvertables.Append(new FencedCodeblock(code, language));
+            MarkdownConvertables.Add(new FencedCodeblock(code, language));
             return this;
         }
 
@@ -231,8 +238,40 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
         public IMarkdownDocumentBuilder AddHorizontalRule()
         {
-            MarkdownConvertables = MarkdownConvertables.Append(new HorizontalRule());
+            MarkdownConvertables.Add(new HorizontalRule());
             return this;
+        }
+
+        /// <summary>
+        /// Adds a table of contents
+        /// </summary>
+        /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
+        public IMarkdownDocumentBuilder AddTableOfContents(bool isNumbered = true)
+        {
+            _tableOfContentsSettings = new TableOfContentsDetails
+            {
+                ShouldAdd = true,
+                AtIndex = MarkdownConvertables.Count,
+                IsNumbered = isNumbered
+            };
+
+            return this;
+        }
+
+        private void ActuallyAddTableOfContents(bool isNumbered = true)
+        {
+            var headers = Enumerable.Empty<Header>();
+
+            foreach (var markdownConvertable in MarkdownConvertables)
+            {
+                if (markdownConvertable is Header header)
+                {
+                    headers = headers.Append(header);
+                }
+            }
+
+            var tableOfContents = new TableOfContents(headers, isNumbered);
+            MarkdownConvertables.Insert(_tableOfContentsSettings.AtIndex, tableOfContents);
         }
     }
 }

@@ -26,6 +26,7 @@ namespace DocumentBuilder.Test.Unit.Builders
             var outputStream = new MemoryStream();
 
             var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
+                .AddTableOfContents()
                 .AddHeader1(_header1)
                 .AddHeader2(_header2)
                 .AddHeader3(_header3)

@@ -18,5 +18,10 @@ namespace DocumentBuilder.Model.Generic
         {
             return CreateHtmlHeader(HtmlIndicators.Header1, options, indentationLevel);
         }
+
+        public override ValueTask<string> ToMarkdownTableOfContentsEntry(bool isNumbered, MarkdownDocumentOptions options)
+        {
+            return CreateMarkdownTableOfContentsEntry(isNumbered, 1, options);
+        }
     }
 }
