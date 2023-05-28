@@ -1,6 +1,7 @@
 ﻿using DocumentBuilder.Constants;
 using DocumentBuilder.Extensions;
 using DocumentBuilder.Interfaces;
+using DocumentBuilder.Model.Html;
 using DocumentBuilder.Options;
 
 namespace DocumentBuilder.DocumentWriters
@@ -16,12 +17,22 @@ namespace DocumentBuilder.DocumentWriters
             _options = options;
         }
 
-        public async Task WriteToStreamAsync(Stream outputStream, IEnumerable<IHtmlConvertable> htmlConvertables)
+        public async Task WriteToStreamAsync(Stream outputStream, IEnumerable<IHtmlConvertable> htmlConvertables, IEnumerable<Link> links)
         {
             using var htmlStreamWriter = _htmlStreamWriterFactory(outputStream, _options);
 
             await htmlStreamWriter.WriteLineAsync(HtmlIndicators.DocType).ConfigureAwait(false);
             await htmlStreamWriter.WriteLineAsync(HtmlIndicators.Html.ToHtmlStartTag()).ConfigureAwait(false);
+
+            await htmlStreamWriter.WriteLineAsync(HtmlIndicators.Head.ToHtmlStartTag()).ConfigureAwait(false);
+            foreach (var link in links)
+            {
+                var linkAsHtmlElement = await link.ToHtmlAsync(_options);
+                await htmlStreamWriter.WriteLineAsync(linkAsHtmlElement).ConfigureAwait(false);
+            }
+
+            await htmlStreamWriter.WriteLineAsync(HtmlIndicators.Head.ToHtmlEndTag()).ConfigureAwait(false);
+
             await htmlStreamWriter.WriteLineAsync(HtmlIndicators.Body.ToHtmlStartTag(), 1).ConfigureAwait(false);
 
             for (var i = 0; i < htmlConvertables.Count(); i++)

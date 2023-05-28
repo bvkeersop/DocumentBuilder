@@ -14,6 +14,7 @@ namespace DocumentBuilder.DocumentBuilders
 {
     public class HtmlDocumentBuilder : IHtmlDocumentBuilder
     {
+        public IEnumerable<Link> Links { get; private set; } = new List<Link>();
         public IEnumerable<IHtmlConvertable> HtmlConvertables { get; private set; } = new List<IHtmlConvertable>();
         private readonly HtmlDocumentWriter _htmlDocumentWriter;
         private readonly IEnumerableValidator _enumerableValidator;
@@ -35,7 +36,7 @@ namespace DocumentBuilder.DocumentBuilders
         public async Task BuildAsync(Stream outputStream)
         {
             _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
-            await _htmlDocumentWriter.WriteToStreamAsync(outputStream, HtmlConvertables).ConfigureAwait(false);
+            await _htmlDocumentWriter.WriteToStreamAsync(outputStream, HtmlConvertables, Links).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         public IHtmlDocumentBuilder WithClass(string @class)
         {
-            if (HtmlConvertables.IsNullOrEmpty()) throw new DocumentBuilderException(DocumentBuilderErrorCode.NoHtmlElementAdded, 
+            if (HtmlConvertables.IsNullOrEmpty()) throw new DocumentBuilderException(DocumentBuilderErrorCode.NoHtmlElementAdded,
                 $"Trying to add class '{@class}' to an html element, but no element has been added yet");
             HtmlConvertables.Last().Attributes.Add(HtmlAttributes.Class, @class);
             return this;
@@ -236,7 +237,7 @@ namespace DocumentBuilder.DocumentBuilders
         /// <param name="caption">The caption of the image</param>
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         public IHtmlDocumentBuilder AddImage(string name, string path, string? caption = null)
-        {   
+        {
             _ = name ?? throw new ArgumentNullException(nameof(name));
             _ = path ?? throw new ArgumentNullException(nameof(path));
             HtmlConvertables = HtmlConvertables.Append(new Image(name, path, caption));
@@ -252,6 +253,18 @@ namespace DocumentBuilder.DocumentBuilders
         {
             _ = content ?? throw new ArgumentNullException(nameof(content));
             HtmlConvertables = HtmlConvertables.Append(new Raw(content));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a stylesheet by reference
+        /// </summary>
+        /// <param name="href">The file path of the style sheet</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlDocumentBuilder AddStylesheetByRef(string href, string type = "text/css")
+        {
+            var link = new Link("stylesheet", href, type);
+            Links = Links.Append(link);
             return this;
         }
     }

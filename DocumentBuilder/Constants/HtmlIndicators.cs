@@ -4,6 +4,8 @@
     {
         public const string DocType = "<!DOCTYPE html>";
         public const string Html = "html";
+        public const string Head = "head";
+        public const string Link = "link";
         public const string Body = "body";
         public const string Header1 = "h1";
         public const string Header2 = "h2";
@@ -20,5 +22,6 @@
         public const string Figure = "figure";
         public const string FigCaption = "figcaption";
         public const string Image = "img";
+        public const string Style = "style";
     }
 }
