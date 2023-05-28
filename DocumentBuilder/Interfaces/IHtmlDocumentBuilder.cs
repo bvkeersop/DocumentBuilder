@@ -88,5 +88,34 @@
         /// <param name="content">The content</param>
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         IHtmlDocumentBuilder AddRaw(string content);
+
+        /// <summary>
+        /// Adds a class attribute to the current html element
+        /// </summary>
+        /// <param name="class">The class to add</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlDocumentBuilder WithClass(string @class);
+
+        /// <summary>
+        /// Adds an id attribute to the current html element
+        /// </summary>
+        /// <param name="id">The unique id to add</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlDocumentBuilder WithId(string id);
+
+        /// <summary>
+        /// Adds an inline style to the current html element
+        /// </summary>
+        /// <param name="style">The inline style to add</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlDocumentBuilder WithStyle(string style);
+
+        /// <summary>
+        /// Adds an attribute to the current html element
+        /// </summary>
+        /// <param name="key">The name of the attribute to add</param>
+        /// <param name="value">The value of the attribute to add</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlDocumentBuilder WithAttribute(string key, string value);
     }
 }

@@ -20,7 +20,7 @@ namespace DocumentBuilder.Model.Generic
 
         protected ValueTask<string> CreateHtmlHeader(string headerIndicator, HtmlDocumentOptions options, int indentationLevel = 0)
         {
-            var html = $"{headerIndicator.ToHtmlStartTag()}{Value}{headerIndicator.ToHtmlEndTag()}";
+            var html = $"{GetHtmlStartTagWithAttributes(headerIndicator)}{Value}{headerIndicator.ToHtmlEndTag()}";
             return WrapWithIndentationAndNewLine(html, options, indentationLevel);
         }
     }

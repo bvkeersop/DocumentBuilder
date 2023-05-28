@@ -22,7 +22,7 @@ namespace DocumentBuilder.Model.Generic
         public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append(HtmlIndicators.Paragraph.ToHtmlStartTag());
+            stringBuilder.Append(GetHtmlStartTagWithAttributes(HtmlIndicators.Paragraph));
             stringBuilder.Append(Value);
             stringBuilder.Append(HtmlIndicators.Paragraph.ToHtmlEndTag());
             var value = stringBuilder.ToString();

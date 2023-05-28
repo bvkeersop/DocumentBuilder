@@ -1,5 +1,6 @@
 ﻿using DocumentBuilder.Factories;
 using DocumentBuilder.Interfaces;
+using DocumentBuilder.Model.Html;
 using DocumentBuilder.Options;
 
 namespace DocumentBuilder.Model.Shared
@@ -7,6 +8,8 @@ namespace DocumentBuilder.Model.Shared
     internal class Raw : IMarkdownConvertable, IHtmlConvertable
     {
         private readonly string _value;
+
+        public HtmlAttributes Attributes { get; } = new();
 
         public Raw(string value)
         {

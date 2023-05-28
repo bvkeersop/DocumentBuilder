@@ -37,7 +37,7 @@ namespace DocumentBuilder.Model.Generic
             var stringBuilder = new StringBuilder();
 
             stringBuilder.Append(indentationProvider.GetIndentation(0));
-            stringBuilder.Append(listIndicator.ToHtmlStartTag());
+            stringBuilder.Append(GetHtmlStartTagWithAttributes(listIndicator));
             stringBuilder.Append(newLineProvider.GetNewLine());
 
             foreach (var item in Value)
@@ -52,10 +52,10 @@ namespace DocumentBuilder.Model.Generic
             return stringBuilder.ToString();
         }
 
-        private static ValueTask<string> CreateHtmlListItem(TValue? item, HtmlDocumentOptions options, int indentationLevel)
+        private ValueTask<string> CreateHtmlListItem(TValue? item, HtmlDocumentOptions options, int indentationLevel)
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append(HtmlIndicators.ListItem.ToHtmlStartTag());
+            stringBuilder.Append(GetHtmlStartTagWithAttributes(HtmlIndicators.ListItem));
             stringBuilder.Append(item);
             stringBuilder.Append(HtmlIndicators.ListItem.ToHtmlEndTag());
             var listItem = stringBuilder.ToString();

@@ -6,6 +6,9 @@ using DocumentBuilder.Model;
 using DocumentBuilder.Model.Generic;
 using DocumentBuilder.Validators;
 using DocumentBuilder.Model.Shared;
+using DocumentBuilder.Model.Html;
+using DocumentBuilder.Extensions;
+using DocumentBuilder.Exceptions;
 
 namespace DocumentBuilder.DocumentBuilders
 {
@@ -35,7 +38,6 @@ namespace DocumentBuilder.DocumentBuilders
             await _htmlDocumentWriter.WriteToStreamAsync(outputStream, HtmlConvertables).ConfigureAwait(false);
         }
 
-
         /// <summary>
         /// Writes the document to the provided path, will replace existing documents
         /// </summary>
@@ -56,6 +58,59 @@ namespace DocumentBuilder.DocumentBuilders
             FileStream fileStream = File.Create(filePath);
             await BuildAsync(fileStream).ConfigureAwait(false);
             return fileStream;
+        }
+
+        /// <summary>
+        /// Adds a class attribute to the current html element
+        /// </summary>
+        /// <param name="class">The class to add</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlDocumentBuilder WithClass(string @class)
+        {
+            if (HtmlConvertables.IsNullOrEmpty()) throw new DocumentBuilderException(DocumentBuilderErrorCode.NoHtmlElementAdded, 
+                $"Trying to add class '{@class}' to an html element, but no element has been added yet");
+            HtmlConvertables.Last().Attributes.Add(HtmlAttributes.Class, @class);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds an id attribute to the current html element
+        /// </summary>
+        /// <param name="id">The unique id to add</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlDocumentBuilder WithId(string id)
+        {
+            if (HtmlConvertables.IsNullOrEmpty()) throw new DocumentBuilderException(DocumentBuilderErrorCode.NoHtmlElementAdded,
+                $"Trying to add id '{id}' to an html element, but no element has been added yet");
+            HtmlConvertables.Last().Attributes.Add(HtmlAttributes.Id, id);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds an inline style to the current html element
+        /// </summary>
+        /// <param name="style">The inline style to add</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlDocumentBuilder WithStyle(string style)
+        {
+            if (HtmlConvertables.IsNullOrEmpty()) throw new DocumentBuilderException(DocumentBuilderErrorCode.NoHtmlElementAdded,
+                $"Trying to add style '{style}' to an html element, but no element has been added yet");
+            HtmlConvertables.Last().Attributes.Add(HtmlAttributes.Style, style);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds an attribute to the current html element
+        /// </summary>
+        /// <param name="key">The name of the attribute to add</param>
+        /// <param name="value">The value of the attribute to add</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlDocumentBuilder WithAttribute(string key, string value)
+        {
+            if (HtmlConvertables.IsNullOrEmpty()) throw new DocumentBuilderException(DocumentBuilderErrorCode.NoHtmlElementAdded,
+                $"Trying to add attribute '{key}' with value '{value}' to an html element, but no element has been added yet");
+            HtmlConvertables.Last().Attributes.Add(key, value);
+            return this;
         }
 
         /// <summary>

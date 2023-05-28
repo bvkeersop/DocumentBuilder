@@ -12,5 +12,7 @@
         NoWorksheetInstantiated,
         ProvidedEnumerableIsEmpty,
         ProvidedGenericTypeForTableDoesNotEqualRunTimeType,
+        AttemptedToAddDuplicateUniqueHtmlAttribute,
+        NoHtmlElementAdded,
     }
 }

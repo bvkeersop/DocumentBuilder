@@ -56,7 +56,7 @@ namespace DocumentBuilder.Test.Unit.Model.Generic
 
             // Assert
             var expectedIndentation = indenationProvider.GetIndentation(indentationLevel);
-            var expectedHtmlHeader1 = $"{expectedIndentation}{headerIndicator.ToHtmlStartTag()}{header.Value}{headerIndicator.ToHtmlEndTag()}" + newLineProvider.GetNewLine();
+            var expectedHtmlHeader1 = $"{expectedIndentation}{header.GetHtmlStartTagWithAttributes(headerIndicator)}{header.Value}{headerIndicator.ToHtmlEndTag()}" + newLineProvider.GetNewLine();
             htmlHeader.Should().Be(expectedHtmlHeader1);
         }
     }

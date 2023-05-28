@@ -39,7 +39,7 @@ namespace DocumentBuilder.Model.Generic
             var indentation0 = indentationProvider.GetIndentation(0);
             var indentation1 = indentationProvider.GetIndentation(1);
             var imageHtml = $"<{HtmlIndicators.Image} src=\"{Path}\" alt=\"{Name}\" />";
-            var figureStartTag = HtmlIndicators.Figure.ToHtmlStartTag();
+            var figureStartTag = GetHtmlStartTagWithAttributes(HtmlIndicators.Figure);
             var figureEndTag = HtmlIndicators.Figure.ToHtmlEndTag();
 
             if (Caption is null)
@@ -52,7 +52,7 @@ namespace DocumentBuilder.Model.Generic
                 return new ValueTask<string>(valueWithoutCaption);
             }
 
-            var figCaptionStartTag = HtmlIndicators.FigCaption.ToHtmlStartTag();
+            var figCaptionStartTag = GetHtmlStartTagWithAttributes(HtmlIndicators.FigCaption);
             var figCaptionEndTag = HtmlIndicators.FigCaption.ToHtmlEndTag();
 
             var valueWithCaption = 
