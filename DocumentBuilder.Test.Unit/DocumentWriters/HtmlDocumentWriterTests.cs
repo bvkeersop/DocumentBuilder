@@ -5,6 +5,7 @@ using DocumentBuilder.Options;
 using DocumentBuilder.DocumentWriters;
 using DocumentBuilder.Model.Generic;
 using NSubstitute;
+using DocumentBuilder.Model.Html;
 
 namespace DocumentBuilder.Test.Unit.DocumentWriters
 {
@@ -30,7 +31,7 @@ namespace DocumentBuilder.Test.Unit.DocumentWriters
             var htmlDocumentWriter = new HtmlDocumentWriter(factory, options);
 
             // Act
-            await htmlDocumentWriter.WriteToStreamAsync(memoryStream, htmlConvertibles);
+            await htmlDocumentWriter.WriteToStreamAsync(memoryStream, htmlConvertibles, Enumerable.Empty<Link>());
 
             // Assert
             var header1Value = await header1.ToHtmlAsync(options, 2);
@@ -64,7 +65,7 @@ namespace DocumentBuilder.Test.Unit.DocumentWriters
             var HtmlDocumentWriter = new HtmlDocumentWriter(factory, options);
 
             // Act
-            await HtmlDocumentWriter.WriteToStreamAsync(memoryStream, htmlConvertibles);
+            await HtmlDocumentWriter.WriteToStreamAsync(memoryStream, htmlConvertibles, Enumerable.Empty<Link>());
 
             // Assert
             var header1Value = await header1.ToHtmlAsync(options, 2);

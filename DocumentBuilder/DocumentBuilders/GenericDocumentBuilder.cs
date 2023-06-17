@@ -7,9 +7,11 @@ using DocumentBuilder.DocumentWriters;
 using DocumentBuilder.Model;
 using DocumentBuilder.Validators;
 using DocumentBuilder.Interfaces;
+using DocumentBuilder.Model.Html;
 
 namespace DocumentBuilder.DocumentBuilders
 {
+    [Obsolete($"{nameof(GenericDocumentBuilder)} is obsolete, use specific implementations instead of the generic builder")]
     public class GenericDocumentBuilder : IGenericDocumentBuilder
     {
         public IEnumerable<GenericElement> Convertables { get; private set; } = new List<GenericElement>();
@@ -219,7 +221,7 @@ namespace DocumentBuilder.DocumentBuilders
             _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
             var options = _options.ToHtmlDocumentOptions();
             var htmlDocumentWriter = new HtmlDocumentWriter(HtmlStreamWriterFactory.Create, options);
-            await htmlDocumentWriter.WriteToStreamAsync(outputStream, Convertables);
+            await htmlDocumentWriter.WriteToStreamAsync(outputStream, Convertables, Enumerable.Empty<Link>());
         }
     }
 }
