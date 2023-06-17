@@ -3,6 +3,7 @@ using DocumentBuilder.Enumerations;
 using DocumentBuilder.Exceptions;
 using DocumentBuilder.Extensions;
 using DocumentBuilder.Factories;
+using DocumentBuilder.Helpers;
 using DocumentBuilder.Interfaces;
 using DocumentBuilder.Model.Generic;
 using DocumentBuilder.Options;
@@ -22,9 +23,7 @@ namespace DocumentBuilder.Model
         {
             var outputStream = new MemoryStream();
             await CreateMarkdownTableAsync(outputStream, options);
-            outputStream.Seek(0, SeekOrigin.Begin);
-            using var streamReader = new StreamReader(outputStream);
-            return await streamReader.ReadToEndAsync();
+            return StreamHelper.GetStreamContents(outputStream);
         }
 
         private async Task CreateMarkdownTableAsync(Stream outputStream, MarkdownDocumentOptions options)

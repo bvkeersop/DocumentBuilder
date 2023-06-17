@@ -1,39 +1,86 @@
-﻿using DocumentBuilder.DocumentBuilders;
+﻿using DocumentBuilder.Helpers;
 using DocumentBuilder.Interfaces;
-using DocumentBuilder.Model.Html;
 using System.Text;
+using TheArtOfDev.HtmlRenderer.Core;
 using TheArtOfDev.HtmlRenderer.PdfSharp;
 
 namespace DocumentBuilder.Pdf
 {
+    // Copyright(c) 2009, José Manuel Menéndez Poo
+    // Copyright(c) 2013, Arthur Teplitzki
+    // All rights reserved.
+
+    // Redistribution and use in source and binary forms, with or without modification,
+    // are permitted provided that the following conditions are met:
+
+    //  Redistributions of source code must retain the above copyright notice, this
+    //  list of conditions and the following disclaimer.
+
+    //  Redistributions in binary form must reproduce the above copyright notice, this
+    //  list of conditions and the following disclaimer in the documentation and/or
+    //  other materials provided with the distribution.
+
+    //  Neither the name of the menendezpoo.com, ArthurHub nor the names of its
+    //  contributors may be used to endorse or promote products derived from
+    //  this software without specific prior written permission.
+
+    // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    // ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    // WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    // DISCLAIMED.IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+    // ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+    // (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+    //    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+    // ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+    // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+    // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+    /// <summary>
+    /// Extension methods for the <see cref="IHtmlDocumentBuilder"/> to convert HTML documents to PDF.
+    /// These extension methods rely on <see cref="TheArtOfDev.HtmlRenderer.PdfSharp"/>, which uses the BSD-3-Clause license.
+    /// see https://github.com/ArthurHub/HTML-Renderer for more information.
+    /// </summary>
     public static class HtmlDocumentBuilderExtensions
     {
         /// <summary>
-        /// Writes the document to the provided output stream
+        /// Extension method to build the HTML document as a PDF document, uses <see cref="TheArtOfDev.HtmlRenderer.PdfSharp"/>
         /// </summary>
-        /// <param name="outputStream">The stream to write to</param>
-        /// <returns><see cref="Task"/></returns>
-        public static async Task BuildAsPdfAsync(this IHtmlDocumentBuilder htmlDocumentBuilder, Stream outputStream, Stream styleSheetStream)
+        /// <param name="htmlDocumentBuilder">The <see cref="IHtmlDocumentBuilder"/> used to build the HTML document</param>
+        /// <param name="outputStream">The stream to write the pdf document to</param>
+        /// <param name="styleSheetStream">The stream that contains the stylesheet for the pdf document</param>
+        /// <param name="pageSize">The pagesize of the PDF document</param>
+        /// <param name="margin">The margin of the PDF document</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static async Task BuildAsPdfAsync(
+            this IHtmlDocumentBuilder htmlDocumentBuilder,
+            Stream outputStream,
+            Stream? styleSheetStream = null,
+            PdfSharp.PageSize pageSize = PdfSharp.PageSize.A4,
+            int margin = 20)
         {
             _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
-            var styleSheet = GetStreamContents(styleSheetStream);
-            var cssData = PdfGenerator.ParseStyleSheet(styleSheet);
+
+            var cssData = GetCssDataFromStream(styleSheetStream);
+
+            using var htmlDocumentStream = new MemoryStream();
+            await htmlDocumentBuilder.BuildAsync(htmlDocumentStream);
+            var html = StreamHelper.GetStreamContents(htmlDocumentStream);
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-
-            using var temporaryStream = new MemoryStream();
-            await htmlDocumentBuilder.BuildAsync(temporaryStream);
-            var html = GetStreamContents(temporaryStream);
-
-            var pdf = PdfGenerator.GeneratePdf(html, PdfSharp.PageSize.A4, 20, cssData);
+            var pdf = PdfGenerator.GeneratePdf(html, pageSize, margin, cssData);
             pdf.Save(outputStream);
         }
 
-        public static string GetStreamContents(Stream stream)
+        private static CssData? GetCssDataFromStream(Stream? styleSheetStream)
         {
-            stream.Seek(0, SeekOrigin.Begin);
-            using var streamReader = new StreamReader(stream);
-            return streamReader.ReadToEnd();
+            if (styleSheetStream == null)
+            {
+                return null;
+            }
+
+            var styleSheet = StreamHelper.GetStreamContents(styleSheetStream);
+            return PdfGenerator.ParseStyleSheet(styleSheet);
         }
     }
 }
