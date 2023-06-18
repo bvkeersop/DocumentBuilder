@@ -64,11 +64,12 @@ namespace DocumentBuilder.Model.Html
                 sb.Append('"');
                 sb.Append(GetAttributeValuesAsString(kvp.Value));
                 sb.Append('"');
+                sb.Append(' ');
             }
-            return sb.ToString();
+            return sb.ToString().TrimEnd(' ');
         }
 
-        private string GetAttributeValuesAsString(HashSet<string> attributeValues) 
+        private static string GetAttributeValuesAsString(HashSet<string> attributeValues) 
         {
             var sb = new StringBuilder();
             foreach (var attributeValue in attributeValues)

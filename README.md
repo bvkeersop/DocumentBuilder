@@ -12,9 +12,10 @@ The following formats are currently supported:
 
 - Markdown
 - HTML
+- PDF
 - Excel
 
-`DocumentBuilder` exposes a `GenericDocumentBuilder` class that can be used to create a markdown or HTML document, it does not support Excel since its document structure is too different. `DocumentBuilder` also exposes a `MarkdownDocumentBuilder` and an `HTMLDocumentBuilder`. These can be extended with Markdown or HTML-specific elements.
+`DocumentBuilder` API exposes a stream and a filepath based API.
 
 # Table of Contents
 
@@ -24,6 +25,8 @@ The following formats are currently supported:
     - [Generic](#generic)
     - [Markdown](#markdown)
     - [HTML](#html)
+      - [Styles](#styles)
+    - [PDF](#pdf)
     - [Excel](#excel)
   - [Tables](#tables)
     - [Creating a Table](#creating-a-table)
@@ -79,6 +82,7 @@ var unorderedList = new List<string>
 ### Generic
 
 The generic document builder allows you to create generic documents that can easily be written to a stream as either Markdown or HTML.
+The generic document builder is marked as deprecated/obsolete. It's recommended to use the specific builders instead. 
 
 ```C#
 
@@ -94,14 +98,15 @@ var documentBuilder = new DocumentBuilder(options)
     .AddImage(imageName, imagePath, imageCaption)
     .AddUnorderedList(unorderedList)
     .AddOrderedList(orderedList)
-    .AddTable(productTableRows) // More on tables below
-    .BuildAsync(outputStream, DocumentType.Markdown); // Or HTML (DocumentType.HTML)
-
+    .AddTable(productTableRows); // More on tables below
+    
+    
+await documentBuilder.BuildAsync(outputStream, DocumentType.Markdown); // Or HTML (DocumentType.HTML)
 ```
 
 ### Markdown
 
-The `MarkdownDocumentBuilder` allows you to create Markdown documents, it is not yet different from the `GenericDocumentBuilder`, but might include Markdown-specific functionality in the future.
+The `MarkdownDocumentBuilder` allows you to create Markdown documents.
 
 ```C#
 
@@ -121,14 +126,15 @@ var markdownDocumentBuilder = new MarkdownDocumentBuilder(options)
     .AddHorizontalRule()
     .AddBlockquote(blockquote)
     .AddFencedCodeblock(codeblock, language)
-    .AddRaw(raw)
-    .BuildAsync(outputStream); // Or file path
+    .AddRaw(raw);
+    
+await markdownDocumentBuilder.BuildAsync(outputStream); // Or file path
 
 ```
 
 ### HTML
 
-The `HTMLDocumentBuilder` allows you to create Markdown documents, it is not yet different from the `GenericDocumentBuilder`, but might include HTML-specific functionality in the future.
+The `HTMLDocumentBuilder` allows you to create Markdown documents.
 
 ```C#
 
@@ -145,8 +151,73 @@ var htmlDocumentBuilder = new HtmlDocumentBuilder(options)
     .AddUnorderedList(unorderedList)
     .AddOrderedList(orderedList)
     .AddTable(productTableRows) // More on tables below
-    .AddRaw(raw)
-    .BuildAsync(outputStream); // Or file path
+    .AddRaw(raw);
+
+await htmlDocumentBuilder.BuildAsync(outputStream); // Or file path
+```
+
+#### Styles
+
+It's also possible to add styles to your HTML document. This can be done by adding attributes, and referencing a stylesheet, or by placing the styles inline.
+
+
+##### Stylesheet
+
+```C#
+var htmlDocumentBuilder = new HtmlDocumentBuilder()
+    .AddHeader1("A Large header")
+        .WithClass("large")
+        .WithId("header-large-1")
+        .WithAttribute("my-custom-attribute", "a specific value")
+        .AddStylesheetByRef("mystyle.css");
+
+htmlDocumentBuilder.BuildAsync(htmlFileStream);
+```
+
+which will render to:
+
+```HTML
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="mystyle.css" />
+</head>
+  <body>
+    <h1 class="large" id="header-large-1" my-custom-attribute="a specific value">A Large header</h1>
+  </body>
+</html>
+```
+
+##### Inline styles
+
+
+
+### PDF
+
+There's no specific builder for PDF documents, however the `DocumentBuilder.Pdf` NuGet package contains an extension method for the `HTMLDocumentBuilder` named `BuildAsPdfAsync`. This extension method converts your HTMLDocument to a PDF document.
+Since this extension method relies on [TheArtOfDev.HtmlRenderer.PdfSharp](https://github.com/ArthurHub/HTML-Renderer) for the conversion, the `BSD-3-Clause` implicitly applies to `DocumentBuilder.Pdf`.
+
+```C#
+
+// Create a document using the html document builder
+var styleSheet = "h1 {\r\n  color: blue;\r\n}\r\np {\r\n  color: red;\r\n}";
+var outputStream = new MemoryStream();
+
+var htmlDocumentBuilder = new HtmlDocumentBuilder(options)
+    .AddHeader1(header1)
+    .AddHeader2(header2)
+    .AddHeader3(header3)
+    .AddHeader4(header4)
+    .AddImage(imageName, imagePath, imageCaption)
+    .AddParagraph(paragraph)
+    .AddUnorderedList(unorderedList)
+    .AddOrderedList(orderedList)
+    .AddTable(productTableRows) // More on tables below
+    .AddRaw(raw);
+
+var pageSize = PdfSharp.PageSize.A4,
+var margin = 20
+await htmlDocumentBuilder.BuildAsPdfAsync(outputStream, styleSheet, pageSize, margin); // Or file path
 ```
 
 ### Excel
@@ -160,8 +231,9 @@ var outputStream = new MemoryStream();
 
 var excelDocumentBuilder = new ExcelDocumentBuilder(options)
     .AddWorksheet("my-worksheet-name")
-    .AddTable(productTableRows) // More on tables below
-    .BuildAsync(outputStream);  // Or file path
+    .AddTable(productTableRows); // More on tables below
+
+await excelDocumentBuilder.BuildAsync(outputStream);  // Or file path
 ```
 
 ## Tables
@@ -300,8 +372,13 @@ public class ProductTableRow
 `DocumentBuilder` is made possible by the following projects:
 
 - [ClosedXML](https://github.com/ClosedXML/ClosedXML)
+  - Used for creating Excel documents.
+- [TheArtOfDev.HtmlRenderer.PdfSharp](https://github.com/ArthurHub/HTML-Renderer)
+  - Used for converting HTML documents to PDF documents.
 - [FluentAssertions](https://fluentassertions.com/)
+  - Used for testing.
 - [NSubstitute](https://nsubstitute.github.io/)
+   - Used for testing.
 
 ## Future work
 
@@ -312,3 +389,16 @@ Currently, I'm still looking to implement the following (no deadline set):
 - Word support
 - More insertables for Excel
 - Better styling options for Excel
+
+## Issues
+
+I've learn things about programming and the structure of the project along the way, and would've done things differently with the insights I have now. This is however a big refactor, so I don't know if I'll get around to doing that.
+Some improvements would be:
+
+- Getting rid of the `GenericDocumentBuilder`.
+  - It serves no use as it's limited by generic concepts that do not cross multiple builders. The flexibility is not needed.
+- Splitting different document types in different assemblies.
+  - When the `GenericDocumentBuilder` is gone, generic base classing can be abandoned. This means the NuGet packages could be made more light weight.
+- Indenting and creating newlines should not be the responsiblity of the element, but rather the document/writer.
+  - This is now arranged in the element classes, but it doesn't belong there.
+- Building should lead to a `Document` representation, which in turn can be Saved.

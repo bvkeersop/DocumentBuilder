@@ -117,5 +117,12 @@
         /// <param name="value">The value of the attribute to add</param>
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         public IHtmlDocumentBuilder WithAttribute(string key, string value);
+
+        /// <summary>
+        /// Adds a stylesheet by reference
+        /// </summary>
+        /// <param name="href">The file path of the style sheet</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlDocumentBuilder AddStylesheetByRef(string href, string type = "text/css");
     }
 }

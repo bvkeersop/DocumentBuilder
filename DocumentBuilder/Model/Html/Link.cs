@@ -1,5 +1,4 @@
 ﻿using DocumentBuilder.Constants;
-using DocumentBuilder.Extensions;
 using DocumentBuilder.Factories;
 using DocumentBuilder.Interfaces;
 using DocumentBuilder.Options;
