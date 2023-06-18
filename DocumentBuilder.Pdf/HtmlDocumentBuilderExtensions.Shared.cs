@@ -1,6 +1,5 @@
 ﻿using DocumentBuilder.Helpers;
 using DocumentBuilder.Interfaces;
-using System.Text;
 using TheArtOfDev.HtmlRenderer.Core;
 using TheArtOfDev.HtmlRenderer.PdfSharp;
 
@@ -40,38 +39,8 @@ namespace DocumentBuilder.Pdf
     /// These extension methods rely on <see cref="TheArtOfDev.HtmlRenderer.PdfSharp"/>, which uses the BSD-3-Clause license.
     /// see https://github.com/ArthurHub/HTML-Renderer for more information.
     /// </summary>
-    public static class HtmlDocumentBuilderExtensions
+    public static partial class HtmlDocumentBuilderExtensions
     {
-        /// <summary>
-        /// Extension method to build the HTML document as a PDF document, uses <see cref="TheArtOfDev.HtmlRenderer.PdfSharp"/>
-        /// </summary>
-        /// <param name="htmlDocumentBuilder">The <see cref="IHtmlDocumentBuilder"/> used to build the HTML document</param>
-        /// <param name="outputStream">The stream to write the pdf document to</param>
-        /// <param name="styleSheetStream">The stream that contains the stylesheet for the pdf document</param>
-        /// <param name="pageSize">The pagesize of the PDF document</param>
-        /// <param name="margin">The margin of the PDF document</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public static async Task BuildAsPdfAsync(
-            this IHtmlDocumentBuilder htmlDocumentBuilder,
-            Stream outputStream,
-            Stream? styleSheetStream = null,
-            PdfSharp.PageSize pageSize = PdfSharp.PageSize.A4,
-            int margin = 20)
-        {
-            _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
-
-            var cssData = GetCssDataFromStream(styleSheetStream);
-
-            using var htmlDocumentStream = new MemoryStream();
-            await htmlDocumentBuilder.BuildAsync(htmlDocumentStream);
-            var html = StreamHelper.GetStreamContents(htmlDocumentStream);
-
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            var pdf = PdfGenerator.GeneratePdf(html, pageSize, margin, cssData);
-            pdf.Save(outputStream);
-        }
-
         private static CssData? GetCssDataFromStream(Stream? styleSheetStream)
         {
             if (styleSheetStream == null)
@@ -81,6 +50,13 @@ namespace DocumentBuilder.Pdf
 
             var styleSheet = StreamHelper.GetStreamContents(styleSheetStream);
             return PdfGenerator.ParseStyleSheet(styleSheet);
+        }
+
+        private static async Task<string> GetHtml(IHtmlDocumentBuilder htmlDocumentBuilder)
+        {
+            var htmlDocumentStream = new MemoryStream();
+            await htmlDocumentBuilder.BuildAsync(htmlDocumentStream);
+            return StreamHelper.GetStreamContents(htmlDocumentStream);
         }
     }
 }
