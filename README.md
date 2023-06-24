@@ -158,8 +158,7 @@ await htmlDocumentBuilder.BuildAsync(outputStream); // Or file path
 
 #### Styles
 
-It's also possible to add styles to your HTML document. This can be done by adding attributes, and referencing a stylesheet, or by placing the styles inline.
-
+It's also possible to add styles to your HTML document. This can be done by adding attributes and referencing a stylesheet, or by placing the styles inline.
 
 ##### Stylesheet
 
@@ -402,3 +401,6 @@ Some improvements would be:
 - Indenting and creating newlines should not be the responsiblity of the element, but rather the document/writer.
   - This is now arranged in the element classes, but it doesn't belong there.
 - Building should lead to a `Document` representation, which in turn can be Saved.
+
+// TODO:
+(inline) Styles are not yet fully supported
