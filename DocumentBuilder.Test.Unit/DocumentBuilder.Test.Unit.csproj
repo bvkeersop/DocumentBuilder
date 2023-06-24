@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DocumentBuilder\DocumentBuilder.csproj" />
+    <ProjectReference Include="..\DocumentBuilder\DocumentBuilder.Shared.csproj" />
   </ItemGroup>
 
 </Project>

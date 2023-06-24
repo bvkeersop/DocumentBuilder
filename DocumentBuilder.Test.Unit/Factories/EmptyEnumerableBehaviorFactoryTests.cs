@@ -8,10 +8,10 @@ namespace DocumentBuilder.Test.Unit.Factories
     public class EmptyEnumerableBehaviorFactoryTests
     {
         [DataTestMethod]
-        [DataRow(EmptyEnumerableBehavior.Render)]
-        [DataRow(EmptyEnumerableBehavior.SkipRender)]
-        [DataRow(EmptyEnumerableBehavior.ThrowException)]
-        public void Create_CreatesCorrectEnumerableValidator(EmptyEnumerableBehavior emptyEnumerableBehavior)
+        [DataRow(EmptyRenderingStrategy.Render)]
+        [DataRow(EmptyRenderingStrategy.SkipRender)]
+        [DataRow(EmptyRenderingStrategy.ThrowException)]
+        public void Create_CreatesCorrectEnumerableValidator(EmptyRenderingStrategy emptyEnumerableBehavior)
         {
             // Act
             var enumerableValidator = EnumerableValidatorFactory.Create(emptyEnumerableBehavior);

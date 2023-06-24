@@ -1,18 +1,14 @@
-﻿using DocumentBuilder.Enumerations;
+﻿using DocumentBuilder.Shared.Enumerations;
 using DocumentBuilder.Utilities;
 
-namespace DocumentBuilder.Factories
+namespace DocumentBuilder.Factories;
+
+public static class IndentationProviderFactory
 {
-    internal static class IndentationProviderFactory
+    public static IIndentationProvider Create(IndentationType indentationType, int indentationSize, int rootIndentationLevel = 0) => indentationType switch
     {
-        public static IIndentationProvider Create(IndentationType indentationType, int indentationSize, int rootIndentationLevel = 0)
-        {
-            return indentationType switch
-            {
-                IndentationType.Spaces => new SpaceIdentationProvider(indentationSize, rootIndentationLevel),
-                IndentationType.Tabs => new TabIdentationProvider(indentationSize, rootIndentationLevel),
-                _ => throw new NotSupportedException($"{indentationType} is currently not supported")
-            };
-        }
-    }
+        IndentationType.Spaces => new SpaceIdentationProvider(indentationSize, rootIndentationLevel),
+        IndentationType.Tabs => new TabIdentationProvider(indentationSize, rootIndentationLevel),
+        _ => throw new NotSupportedException($"{indentationType} is currently not supported")
+    };
 }

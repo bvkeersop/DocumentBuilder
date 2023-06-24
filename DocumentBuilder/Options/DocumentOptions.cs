@@ -12,6 +12,6 @@ namespace DocumentBuilder.Options
         /// <summary>
         /// What behavior to display when a builder gets passed an empty enumerable
         /// </summary>
-        public EmptyEnumerableBehavior BehaviorOnEmptyEnumerable { get; set; }
+        public EmptyRenderingStrategy BehaviorOnEmptyEnumerable { get; set; }
     }
 }

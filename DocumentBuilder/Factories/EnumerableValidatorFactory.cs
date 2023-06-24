@@ -1,13 +1,14 @@
-﻿using DocumentBuilder.Enumerations;
-using DocumentBuilder.Validators;
+﻿using DocumentBuilder.Shared.Enumerations;
+using DocumentBuilder.Shared.Utilities;
 
-namespace DocumentBuilder.Factories
+namespace DocumentBuilder.Factories;
+public static class EnumerableValidatorFactory
 {
-    internal static class EnumerableValidatorFactory
+    public static IEnumerableRenderingStrategy Create(NullOrEmptyEnumerableRenderingStrategy strategy) => strategy switch
     {
-        public static IEnumerableValidator Create(EmptyEnumerableBehavior behavior)
-        {
-            return new EnumerableValidator(behavior);
-        }
-    }
+        NullOrEmptyEnumerableRenderingStrategy.SkipRender => new SkipRenderOnNullOrEmptyRenderingStrategy(),
+        NullOrEmptyEnumerableRenderingStrategy.Render => new AlwaysRenderRenderingStrategy(),
+        NullOrEmptyEnumerableRenderingStrategy.ThrowException => new ThrowOnNullOrEmptyEnumerableRenderingStrategy(),
+        _ => throw new NotSupportedException($"{strategy} is currently not supported")
+    };
 }

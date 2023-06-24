@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DocumentBuilder.Pdf\DocumentBuilder.Pdf.csproj" />
-    <ProjectReference Include="..\DocumentBuilder\DocumentBuilder.csproj" />
+    <ProjectReference Include="..\DocumentBuilder\DocumentBuilder.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@ namespace DocumentBuilder.Test.Unit.Validators
         {
             // Arrange
             var emptyEnumerable = Enumerable.Empty<string>();
-            var enumerableValidator = new EnumerableValidator(EmptyEnumerableBehavior.SkipRender);
+            var enumerableValidator = new EnumerableValidator(EmptyRenderingStrategy.SkipRender);
 
             // Act
             var shouldRender = enumerableValidator.ShouldRender(emptyEnumerable);
@@ -27,7 +27,7 @@ namespace DocumentBuilder.Test.Unit.Validators
         {
             // Arrange
             var emptyEnumerable = Enumerable.Empty<string>();
-            var enumerableValidator = new EnumerableValidator(EmptyEnumerableBehavior.Render);
+            var enumerableValidator = new EnumerableValidator(EmptyRenderingStrategy.Render);
 
             // Act
             var shouldRender = enumerableValidator.ShouldRender(emptyEnumerable);
@@ -41,7 +41,7 @@ namespace DocumentBuilder.Test.Unit.Validators
         {
             // Arrange
             var emptyEnumerable = Enumerable.Empty<string>();
-            var enumerableValidator = new EnumerableValidator(EmptyEnumerableBehavior.ThrowException);
+            var enumerableValidator = new EnumerableValidator(EmptyRenderingStrategy.ThrowException);
 
             // Act
             var action = () => enumerableValidator.ShouldRender(emptyEnumerable);
