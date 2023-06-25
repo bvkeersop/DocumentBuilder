@@ -11,7 +11,7 @@ internal class Blockquote : IMarkdownElement
         Value = value;
     }
 
-    public ValueTask<string> ToMarkdownAsync(ToMarkdownArgs args)
+    public ValueTask<string> ToMarkdownAsync(MarkdownConversionArgs args)
     {
         var markdown = $"{Indicators.Blockquote} {Value}{args.NewLineProvider.GetNewLine()}";
         return new ValueTask<string>(markdown);

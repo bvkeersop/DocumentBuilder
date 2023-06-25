@@ -36,7 +36,7 @@ public class Table<TRow> : IMarkdownElement
         TableCells = CreateEnumerableOfTableCells();
     }
 
-    public async ValueTask<string> ToMarkdownAsync(ToMarkdownArgs args)
+    public async ValueTask<string> ToMarkdownAsync(MarkdownConversionArgs args)
     {
         _newLineProvider = args.NewLineProvider;
         _indentationProvider = args.IndentationProvider;

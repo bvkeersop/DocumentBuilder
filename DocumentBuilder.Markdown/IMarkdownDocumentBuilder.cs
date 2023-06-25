@@ -1,4 +1,6 @@
-﻿namespace DocumentBuilder.Interfaces
+﻿using DocumentBuilder.Markdown.Model;
+
+namespace DocumentBuilder.Interfaces
 {
     public interface IMarkdownDocumentBuilder
     {
@@ -51,6 +53,15 @@
         /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
         IMarkdownDocumentBuilder AddUnorderedList<T>(IEnumerable<T> unorderedList);
 
+
+        /// <summary>
+        /// Adds a table to the document
+        /// </summary>
+        /// <typeparam name="TRow">The type of the row</typeparam>
+        /// <param name="tableRows">The values of the table rows</param>
+        /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
+        public IMarkdownDocumentBuilder AddTable<T>(T tableRow);
+
         /// <summary>
         /// Adds a table to the document
         /// </summary>
@@ -95,5 +106,11 @@
         /// </summary>
         /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
         IMarkdownDocumentBuilder AddHorizontalRule();
+
+        /// <summary>
+        /// Builds the markdown document
+        /// </summary>
+        /// <returns>The <see cref="MarkdownDocument"/></returns>
+        public MarkdownDocument Build();
     }
 }

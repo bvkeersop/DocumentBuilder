@@ -1,9 +1,8 @@
-﻿using DocumentBuilder.Utilities;
-using System.Text;
+﻿using System.Text;
 
 namespace DocumentBuilder.Markdown.Model;
 
-public class OrderedList<TValue> : List<TValue>
+public class OrderedList<TValue> : List<TValue>, IMarkdownElement
 {
     public IEnumerable<TValue> Value { get; }
 
@@ -12,7 +11,7 @@ public class OrderedList<TValue> : List<TValue>
         Value = value;
     }
 
-    public ValueTask<string> ToMarkdownAsync(INewLineProvider newLineProvider, IIndentationProvider indentationProvider)
+    public ValueTask<string> ToMarkdownAsync(MarkdownConversionArgs args)
     {
         var sb = new StringBuilder();
         var newLine = args.NewLineProvider.GetNewLine();

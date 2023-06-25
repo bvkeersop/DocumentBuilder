@@ -1,6 +1,5 @@
 ﻿using DocumentBuilder.Factories;
 using DocumentBuilder.Interfaces;
-using DocumentBuilder.Markdown;
 using DocumentBuilder.Markdown.Model;
 using DocumentBuilder.Markdown.Options;
 using DocumentBuilder.Shared.Utilities;
@@ -12,14 +11,13 @@ namespace DocumentBuilder.DocumentBuilders
         private readonly MarkdownDocument _markdownDocument;
         private readonly IEnumerableRenderingStrategy _enumerableValidator;
 
-        public MarkdownDocumentBuilder() : this(new MarkdownDocumentBuilderOptions()) { }
+        public MarkdownDocumentBuilder() : this(new MarkdownDocumentOptions()) { }
 
-        public MarkdownDocumentBuilder(MarkdownDocumentBuilderOptions options)
+        public MarkdownDocumentBuilder(MarkdownDocumentOptions options)
         {
             _ = options ?? throw new ArgumentNullException(nameof(options));
             _enumerableValidator = EnumerableValidatorFactory.Create(options.NullOrEmptyEnumerableRenderingStrategy);
-            var markdownDocumentWriter = MarkdownStreamWriterFactory.Create()
-            _markdownDocument = new MarkdownDocument(markdownDocumentWriter);
+            _markdownDocument = new MarkdownDocument(options);
         }
 
         /// <summary>
@@ -124,6 +122,20 @@ namespace DocumentBuilder.DocumentBuilders
         /// <typeparam name="TRow">The type of the row</typeparam>
         /// <param name="tableRows">The values of the table rows</param>
         /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
+        public IMarkdownDocumentBuilder AddTable<T>(T tableRow)
+        {
+            _ = tableRow ?? throw new ArgumentNullException(nameof(tableRow));
+            var tableRows = new T[] { tableRow };
+            AddTable(tableRows);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a table to the document
+        /// </summary>
+        /// <typeparam name="TRow">The type of the row</typeparam>
+        /// <param name="tableRows">The values of the table rows</param>
+        /// <returns><see cref="IMarkdownDocumentBuilder"/></returns>
         public IMarkdownDocumentBuilder AddTable<T>(IEnumerable<T> tableRows)
         {
             _ = tableRows ?? throw new ArgumentNullException(nameof(tableRows));
@@ -199,5 +211,11 @@ namespace DocumentBuilder.DocumentBuilders
             _markdownDocument.AddElement(new HorizontalRule());
             return this;
         }
+
+        /// <summary>
+        /// Builds the markdown document
+        /// </summary>
+        /// <returns>The <see cref="MarkdownDocument"/></returns>
+        public MarkdownDocument Build() => _markdownDocument;
     }
 }

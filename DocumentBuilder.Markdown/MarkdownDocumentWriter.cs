@@ -1,15 +1,15 @@
 ﻿using DocumentBuilder.Markdown.Options;
-using DocumentBuilder.Utilities;
 
 namespace DocumentBuilder.Markdown;
 
 public interface IMarkdownDocumentWriter
 {
-    Task WriteToStreamAsync(Stream outputStream, IEnumerable<IMarkdownElement> markdownConvertables);
+    Task WriteToStreamAsync(Stream outputStream, IEnumerable<IMarkdownElement> markdownConvertables, MarkdownDocumentOptions options);
 }
 
 internal class MarkdownDocumentWriter : IMarkdownDocumentWriter, IDisposable
 {
+    private bool _disposedValue;
     private readonly IMarkdownStreamWriter _markdownStreamWriter;
 
     public MarkdownDocumentWriter(IMarkdownStreamWriter markdownStreamWriter)
@@ -17,16 +17,14 @@ internal class MarkdownDocumentWriter : IMarkdownDocumentWriter, IDisposable
         _markdownStreamWriter = markdownStreamWriter;
     }
 
-    public void Dispose()
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task WriteToStreamAsync(Stream outputStream, IEnumerable<IMarkdownElement> markdownConvertables)
+    public async Task WriteToStreamAsync(
+        Stream outputStream,
+        IEnumerable<IMarkdownElement> markdownConvertables,
+        MarkdownDocumentOptions options)
     {
         for (var i = 0; i < markdownConvertables.Count(); i++)
         {
-            var markdown = await markdownConvertables.ElementAt(i).ToMarkdownAsync();
+            var markdown = await markdownConvertables.ElementAt(i).ToMarkdownAsync(options);
 
             if (i < markdownConvertables.Count() - 1)
             {
@@ -38,5 +36,30 @@ internal class MarkdownDocumentWriter : IMarkdownDocumentWriter, IDisposable
         }
 
         await _markdownStreamWriter.FlushAsync().ConfigureAwait(false);
+    }
+
+    public void Dispose()
+    {
+        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposedValue)
+        {
+            if (disposing)
+            {
+                _markdownStreamWriter.Dispose();
+            }
+
+            _disposedValue = true;
+        }
+    }
+
+    ~MarkdownDocumentWriter()
+    {
+        Dispose(disposing: false);
     }
 }

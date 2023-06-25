@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DocumentBuilder.Markdown\DocumentBuilder.Markdown.csproj" />
     <ProjectReference Include="..\DocumentBuilder.Pdf\DocumentBuilder.Pdf.csproj" />
     <ProjectReference Include="..\DocumentBuilder\DocumentBuilder.Shared.csproj" />
   </ItemGroup>

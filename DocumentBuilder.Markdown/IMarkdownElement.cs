@@ -1,8 +1,9 @@
 ﻿using DocumentBuilder.Markdown.Model;
+using DocumentBuilder.Markdown.Options;
 
 namespace DocumentBuilder.Markdown;
 
 public interface IMarkdownElement
 {
-    ValueTask<string> ToMarkdownAsync(ToMarkdownArgs args);
+    ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions args);
 }

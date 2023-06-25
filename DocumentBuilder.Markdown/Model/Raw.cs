@@ -11,7 +11,7 @@ internal class Raw : IMarkdownElement
         Value = value;
     }
 
-    public ValueTask<string> ToMarkdownAsync(ToMarkdownArgs args)
+    public ValueTask<string> ToMarkdownAsync(MarkdownConversionArgs args)
     {
         var sb = new StringBuilder();
         sb.Append(Value);
