@@ -3,9 +3,9 @@ using DocumentBuilder.Exceptions;
 using DocumentBuilder.Extensions;
 using DocumentBuilder.Factories;
 using DocumentBuilder.Helpers;
+using DocumentBuilder.Html;
 using DocumentBuilder.Model.Generic;
 using DocumentBuilder.Options;
-using DocumentBuilder.StreamWriters;
 using System.Text;
 
 namespace DocumentBuilder.Model

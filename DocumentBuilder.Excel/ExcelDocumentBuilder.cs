@@ -1,18 +1,19 @@
 ﻿using DocumentBuilder.Exceptions;
-using DocumentBuilder.Factories;
 using DocumentBuilder.Interfaces;
 using DocumentBuilder.Model.Excel;
-using DocumentBuilder.DocumentWriters;
 using DocumentBuilder.Model;
 using DocumentBuilder.Excel.Options;
+using DocumentBuilder.Excel;
+using DocumentBuilder.Excel.Model;
 
 namespace DocumentBuilder.DocumentBuilders
 {
     internal class ExcelDocumentBuilder : IExcelDocumentBuilder
     {
         private string? _currentWorksheet = string.Empty;
-        public IEnumerable<WorksheetExcelConvertable> WorksheetExcelConvertables { get; private set; } = Enumerable.Empty<WorksheetExcelConvertable>();
         private readonly IExcelDocumentWriter _excelDocumentWriter;
+
+        private readonly ExcelDocument _excelDocument;
 
         public ExcelDocumentBuilder() : this(new ExcelDocumentOptions()) { }
 
@@ -20,6 +21,7 @@ namespace DocumentBuilder.DocumentBuilders
         {
             _ = options ?? throw new ArgumentNullException(nameof(options));
             _excelDocumentWriter = new ClosedXmlDocumentWriter(XLWorkbookFactory.Create, options);
+            _excelDocument = new ExcelDocument();
         }
 
         /// <summary>

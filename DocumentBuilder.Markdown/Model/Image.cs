@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using DocumentBuilder.Markdown.Options;
 
 namespace DocumentBuilder.Markdown.Model;
 
@@ -15,7 +16,7 @@ internal class Image : IMarkdownElement
         Caption = caption;
     }
 
-    public ValueTask<string> ToMarkdownAsync(MarkdownConversionArgs args)
+    public ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions args)
     {
         var sb = new StringBuilder();
         var newLine = args.NewLineProvider.GetNewLine();

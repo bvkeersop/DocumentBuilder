@@ -5,7 +5,7 @@ using DocumentBuilder.Options;
 
 namespace DocumentBuilder.Shared.Model
 {
-    internal class Raw : IMarkdownConvertable, IHtmlConvertable
+    internal class Raw : IMarkdownConvertable, IHtmlElement
     {
         private readonly string _value;
 

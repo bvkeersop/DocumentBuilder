@@ -14,5 +14,8 @@
         ProvidedGenericTypeForTableDoesNotEqualRunTimeType,
         AttemptedToAddDuplicateUniqueHtmlAttribute,
         NoHtmlElementAdded,
+        MultipleWorksheetsFound,
+        WorksheetNotFound,
+        WorksheetNameAlreadyExists,
     }
 }

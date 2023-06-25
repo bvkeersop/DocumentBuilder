@@ -1,7 +1,7 @@
 ﻿using DocumentBuilder.Interfaces;
 using DocumentBuilder.Utilities;
 
-namespace DocumentBuilder.StreamWriters
+namespace DocumentBuilder.Html
 {
     internal class HtmlStreamWriter : IHtmlStreamWriter
     {

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using DocumentBuilder.Markdown.Options;
+using System.Text;
 
 namespace DocumentBuilder.Markdown.Model;
 
@@ -11,7 +12,7 @@ public class OrderedList<TValue> : List<TValue>, IMarkdownElement
         Value = value;
     }
 
-    public ValueTask<string> ToMarkdownAsync(MarkdownConversionArgs args)
+    public ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions args)
     {
         var sb = new StringBuilder();
         var newLine = args.NewLineProvider.GetNewLine();

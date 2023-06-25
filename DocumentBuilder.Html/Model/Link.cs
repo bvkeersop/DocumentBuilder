@@ -5,7 +5,7 @@ using DocumentBuilder.Options;
 
 namespace DocumentBuilder.Model.Html
 {
-    public class Link : IHtmlConvertable
+    public class Link : IHtmlElement
     {
         public string Rel { get; }
         public string Href { get; }

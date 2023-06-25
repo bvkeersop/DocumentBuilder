@@ -6,7 +6,7 @@ using DocumentBuilder.Options;
 
 namespace DocumentBuilder.Model.Generic
 {
-    public abstract class GenericElement : IMarkdownConvertable, IHtmlConvertable
+    public abstract class GenericElement : IMarkdownConvertable, IHtmlElement
     {
         public HtmlAttributes Attributes { get; } = new();
 

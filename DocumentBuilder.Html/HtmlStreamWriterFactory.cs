@@ -1,8 +1,9 @@
-﻿using DocumentBuilder.Interfaces;
+﻿using DocumentBuilder.Factories;
+using DocumentBuilder.Interfaces;
 using DocumentBuilder.Options;
 using DocumentBuilder.StreamWriters;
 
-namespace DocumentBuilder.Factories
+namespace DocumentBuilder.Html
 {
     internal static class HtmlStreamWriterFactory
     {

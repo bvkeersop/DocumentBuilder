@@ -20,7 +20,6 @@ public class Table<TRow> : IMarkdownElement
     private const char _alignmentChar = ':';
     private const int _minimumNumberOfDividerCharacters = 3;
 
-    private IIndentationProvider _indentationProvider;
     private INewLineProvider _newLineProvider;
     private MarkdownTableOptions _options;
 
@@ -36,11 +35,10 @@ public class Table<TRow> : IMarkdownElement
         TableCells = CreateEnumerableOfTableCells();
     }
 
-    public async ValueTask<string> ToMarkdownAsync(MarkdownConversionArgs args)
+    public async ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options)
     {
-        _newLineProvider = args.NewLineProvider;
-        _indentationProvider = args.IndentationProvider;
-        _options = args.MarkdownDocumentOptions.MarkdownTableOptions;
+        _newLineProvider = options.NewLineProvider;
+        _options = options.MarkdownTableOptions;
         return await CreateMarkdownTableAsync().ConfigureAwait(false);
     }
 

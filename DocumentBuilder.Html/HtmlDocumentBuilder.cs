@@ -1,5 +1,4 @@
-﻿using DocumentBuilder.DocumentWriters;
-using DocumentBuilder.Factories;
+﻿using DocumentBuilder.Factories;
 using DocumentBuilder.Interfaces;
 using DocumentBuilder.Options;
 using DocumentBuilder.Model;
@@ -9,13 +8,14 @@ using DocumentBuilder.Model.Shared;
 using DocumentBuilder.Model.Html;
 using DocumentBuilder.Extensions;
 using DocumentBuilder.Exceptions;
+using DocumentBuilder.Html;
 
 namespace DocumentBuilder.DocumentBuilders
 {
     public class HtmlDocumentBuilder : IHtmlDocumentBuilder
     {
         public IEnumerable<Link> Links { get; private set; } = new List<Link>();
-        public IEnumerable<IHtmlConvertable> HtmlConvertables { get; private set; } = new List<IHtmlConvertable>();
+        public IEnumerable<IHtmlElement> HtmlConvertables { get; private set; } = new List<IHtmlElement>();
         private readonly HtmlDocumentWriter _htmlDocumentWriter;
         private readonly IEnumerableValidator _enumerableValidator;
 
@@ -26,39 +26,6 @@ namespace DocumentBuilder.DocumentBuilders
             _ = options ?? throw new ArgumentNullException(nameof(options));
             _enumerableValidator = EnumerableValidatorFactory.Create(options.BehaviorOnEmptyEnumerable);
             _htmlDocumentWriter = new HtmlDocumentWriter(HtmlStreamWriterFactory.Create, options);
-        }
-
-        /// <summary>
-        /// Writes the document to the provided output stream
-        /// </summary>
-        /// <param name="outputStream">The stream to write to</param>
-        /// <returns><see cref="Task"/></returns>
-        public async Task BuildAsync(Stream outputStream)
-        {
-            _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
-            await _htmlDocumentWriter.WriteToStreamAsync(outputStream, HtmlConvertables, Links).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Writes the document to the provided path, will replace existing documents
-        /// </summary>
-        /// <param name="filePath">The path which the file should be written to</param>
-        /// <returns><see cref="Task"/></returns>
-        public Task BuildAsync(string filePath)
-        {
-            if (string.IsNullOrWhiteSpace(filePath))
-            {
-                throw new ArgumentException("filePath cannot be null or empty");
-            }
-
-            return BuildInternalAsync(filePath);
-        }
-
-        private async Task<FileStream> BuildInternalAsync(string filePath)
-        {
-            FileStream fileStream = File.Create(filePath);
-            await BuildAsync(fileStream).ConfigureAwait(false);
-            return fileStream;
         }
 
         /// <summary>

@@ -1,7 +1,6 @@
-﻿namespace DocumentBuilder.Extensions
+﻿namespace DocumentBuilder.Shared.Extensions;
+
+public static class EnumerableExtensions
 {
-    internal static class EnumerableExtensions
-    {
-        public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumerable) => (enumerable == null || !enumerable.Any());
-    }
+    public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumerable) => (enumerable == null || !enumerable.Any());
 }

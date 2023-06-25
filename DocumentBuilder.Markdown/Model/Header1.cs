@@ -1,4 +1,5 @@
 ﻿using DocumentBuilder.Constants;
+using DocumentBuilder.Markdown.Options;
 
 namespace DocumentBuilder.Markdown.Model;
 
@@ -8,5 +9,5 @@ internal class Header1 : Header, IMarkdownElement
     {
     }
 
-    public ValueTask<string> ToMarkdownAsync(MarkdownConversionArgs args) => CreateMarkdownHeader();
+    public ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions args) => CreateMarkdownHeader();
 }

@@ -4,7 +4,7 @@ using DocumentBuilder.Options;
 
 namespace DocumentBuilder.Model.Generic
 {
-    public class UnorderedList<T> : ListBase<T>, IMarkdownConvertable, IHtmlConvertable
+    public class UnorderedList<T> : ListBase<T>, IMarkdownConvertable, IHtmlElement
     {
         public UnorderedList(IEnumerable<T> value) : base(value)
         {
