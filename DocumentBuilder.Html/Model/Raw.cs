@@ -3,13 +3,13 @@ using DocumentBuilder.Interfaces;
 using DocumentBuilder.Model.Html;
 using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Shared.Model
+namespace DocumentBuilder.Core.Model
 {
     internal class Raw : IMarkdownConvertable, IHtmlElement
     {
         private readonly string _value;
 
-        public HtmlAttributes Attributes { get; } = new();
+        public DocumentBuilder.Model.Html.Attributes Attributes { get; } = new();
 
         public Raw(string value)
         {

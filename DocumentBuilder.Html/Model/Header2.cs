@@ -1,22 +1,10 @@
 ﻿using DocumentBuilder.Constants;
-using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Model.Generic
+namespace DocumentBuilder.Html.Model;
+
+public class Header2 : Header
 {
-    public class Header2 : Header
+    public Header2(string value) : base(Indicators.Header2, value)
     {
-        public Header2(string value) : base(value)
-        {
-        }
-
-        public override ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options)
-        {
-            return CreateMarkdownHeader(MarkdownIndicators.Header2, options);
-        }
-
-        public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
-        {
-            return CreateHtmlHeader(HtmlIndicators.Header2, options, indentationLevel);
-        }
     }
 }

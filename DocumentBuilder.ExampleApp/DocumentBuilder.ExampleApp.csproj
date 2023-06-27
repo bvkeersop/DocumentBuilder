@@ -8,9 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DocumentBuilder.Excel\DocumentBuilder.Excel.csproj" />
     <ProjectReference Include="..\DocumentBuilder.Markdown\DocumentBuilder.Markdown.csproj" />
     <ProjectReference Include="..\DocumentBuilder.Pdf\DocumentBuilder.Pdf.csproj" />
-    <ProjectReference Include="..\DocumentBuilder\DocumentBuilder.Shared.csproj" />
+    <ProjectReference Include="..\DocumentBuilder\DocumentBuilder.Core.csproj" />
   </ItemGroup>
 
 </Project>

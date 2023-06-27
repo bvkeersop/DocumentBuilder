@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DocumentBuilder\DocumentBuilder.Shared.csproj" />
+    <ProjectReference Include="..\DocumentBuilder\DocumentBuilder.Core.csproj" />
   </ItemGroup>
 
 </Project>

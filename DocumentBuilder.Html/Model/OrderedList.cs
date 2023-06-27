@@ -16,7 +16,7 @@ namespace DocumentBuilder.Model.Generic
 
         public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
         {
-            return CreateHtmlListAsync(HtmlIndicators.OrderedList, options, indentationLevel);
+            return CreateHtmlListAsync(Indicators.OrderedList, options, indentationLevel);
         }
     }
 }

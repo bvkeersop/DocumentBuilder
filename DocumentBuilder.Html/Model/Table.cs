@@ -1,99 +1,93 @@
-﻿using DocumentBuilder.Attributes;
+﻿using DocumentBuilder.Constants;
 using DocumentBuilder.Exceptions;
-using DocumentBuilder.Extensions;
+using DocumentBuilder.Factories;
 using DocumentBuilder.Helpers;
-using DocumentBuilder.Interfaces;
-using DocumentBuilder.Model.Excel;
-using DocumentBuilder.Model.Generic;
 using DocumentBuilder.Options;
+using System.Text;
 
-namespace DocumentBuilder.Model
+namespace DocumentBuilder.Html.Model;
+public class Table<TRow>
 {
-    public partial class Table<TRow> : GenericElement, IExcelConvertable
+    private async Task<string> CreateHtmlTableAsync(HtmlDocumentOptions options, int indentationLevel)
     {
-        public IEnumerable<ColumnAttribute> OrderedColumnAttributes { get; }
-        public Matrix<TRow> TableValues { get; }
-        public IEnumerable<TableCell> TableCells { get; }
+        var outputStream = new MemoryStream();
+        await CreateHtmlTableAsync(outputStream, options, indentationLevel);
+        return StreamHelper.GetStreamContents(outputStream);
+    }
 
-        public Table(IEnumerable<TRow> tableRows)
+    private async Task CreateHtmlTableAsync(Stream outputStream, HtmlDocumentOptions options, int indentationLevel)
+    {
+        if (!outputStream.CanWrite)
         {
-            ValidateRows(tableRows);
-            TableValues = new Matrix<TRow>(tableRows);
-            OrderedColumnAttributes = ReflectionHelper<TRow>.GetOrderedColumnAttributes();
-            TableCells = CreateEnumerableOfTableCells();
+            throw new DocumentBuilderException(DocumentBuilderErrorCode.StreamIsNotWriteable, nameof(outputStream));
         }
 
-        private static void ValidateRows(IEnumerable<TRow> tableRows)
+        var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
+        var indentationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize, indentationLevel);
+
+        var streamWriter = new StreamWriter(outputStream, leaveOpen: true);
+        using var htmlStreamWriter = new HtmlStreamWriter(streamWriter, newLineProvider, indentationProvider);
+
+        await htmlStreamWriter.WriteLineAsync(Indicators.Table.ToHtmlStartTag()).ConfigureAwait(false);
+
+        await CreateHtmlTableHeaderAsync(htmlStreamWriter).ConfigureAwait(false);
+        await CreateHtmlTableRowsAsync(htmlStreamWriter).ConfigureAwait(false);
+
+        await htmlStreamWriter.WriteLineAsync(Indicators.Table.ToHtmlEndTag()).ConfigureAwait(false);
+        await htmlStreamWriter.FlushAsync().ConfigureAwait(false);
+    }
+
+    private async Task CreateHtmlTableHeaderAsync(HtmlStreamWriter htmlStreamWriter)
+    {
+        var numberOfColumns = TableValues.NumberOfColumns;
+
+        await htmlStreamWriter.WriteLineAsync(Indicators.TableRow.ToHtmlStartTag(), 1).ConfigureAwait(false);
+
+        for (var i = 0; i < numberOfColumns; i++)
         {
-            var genericType = typeof(TRow);
-            foreach(var tableRow in tableRows)
-            {
-                var tableRowType = tableRow?.GetType();
-                if (tableRowType != genericType)
-                {
-                    var message = $"The type {tableRowType} does not equal the provided generic parameter {genericType}, base types are not supported";
-                    throw new DocumentBuilderException(DocumentBuilderErrorCode.ProvidedGenericTypeForTableDoesNotEqualRunTimeType, message);
-                }
-            }
+            var columnName = OrderedColumnAttributes.ElementAt(i).Name.Value;
+            await CreateHtmlTableCellAsync(htmlStreamWriter, columnName, Indicators.TableHeader, 2).ConfigureAwait(false);
         }
 
-        public override async ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
+        await htmlStreamWriter.WriteLineAsync(Indicators.TableRow.ToHtmlEndTag(), 1).ConfigureAwait(false);
+    }
+
+    private async Task CreateHtmlTableRowsAsync(HtmlStreamWriter htmlStreamWriter)
+    {
+        var numberOfRows = TableValues.NumberOfRows;
+
+        for (var i = 0; i < numberOfRows; i++)
         {
-            return await CreateHtmlTableAsync(options, indentationLevel).ConfigureAwait(false);
+            var currentRow = TableValues.GetRow(i);
+            await CreateHtmlTableRowAsync(htmlStreamWriter, currentRow).ConfigureAwait(false);
+            await htmlStreamWriter.WriteNewLineAsync().ConfigureAwait(false);
+        }
+    }
+
+    private static async Task CreateHtmlTableRowAsync(HtmlStreamWriter htmlStreamWriter, TableCell[] tableRow)
+    {
+        await htmlStreamWriter.WriteLineAsync(Indicators.TableRow.ToHtmlStartTag(), 1).ConfigureAwait(false);
+
+        for (var i = 0; i < tableRow.Length; i++)
+        {
+            var cellValue = tableRow[i].Value;
+            await CreateHtmlTableCellAsync(htmlStreamWriter, cellValue, Indicators.TableData, 2).ConfigureAwait(false);
         }
 
-        public override async ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options)
-        {
-            return await CreateMarkdownTableAsync(options).ConfigureAwait(false);
-        }
+        await htmlStreamWriter.WriteAsync(Indicators.TableRow.ToHtmlEndTag(), 1).ConfigureAwait(false);
+    }
 
-        public IEnumerable<ExcelTableCell> ToExcel(ExcelDocumentOptions options)
-        {
-            return CreateExcelTable(options);
-        }
-
-        private int GetLongestCellSizeForColumn(int columnIndex, bool isBold)
-        {
-            var longestTableValue = TableValues.GetLongestCellSizeOfColumn(columnIndex);
-            var columnNameLength = OrderedColumnAttributes.ElementAt(columnIndex).Name.Value.Length;
-
-            if (isBold)
-            {
-                columnNameLength += 4;
-            }
-            
-            return Math.Max(longestTableValue, columnNameLength);
-        }
-
-        private string GetColumnName(int index, bool isBold)
-        {
-            var columnName = OrderedColumnAttributes.ElementAt(index).Name.Value;
-
-            if (isBold)
-            {
-                return $"**{columnName}**";
-            }
-
-            return columnName;
-        }
-
-        private IEnumerable<TableCell> CreateEnumerableOfTableCells()
-        {
-            var columnTableCells = Enumerable.Empty<TableCell>();
-            for (var i = 0; i < OrderedColumnAttributes.Count(); i++)
-            {
-                var currentOrderedColumnAttribute = OrderedColumnAttributes.ElementAt(i);
-                var tableCell = new TableCell(
-                    currentOrderedColumnAttribute.Name.Value,
-                    currentOrderedColumnAttribute.Name.GetType(),
-                    0,
-                    i);
-                columnTableCells = columnTableCells.Append(tableCell);
-            }
-
-            var shiftedTableCells = TableValues.TableCells.Select(t => t.ShiftRow());
-
-            return columnTableCells.Concat(shiftedTableCells);
-        }
+    private static async Task CreateHtmlTableCellAsync(
+        HtmlStreamWriter htmlStreamWriter,
+        string cellValue,
+        string htmlIndicator,
+        int indentation)
+    {
+        var stringBuilder = new StringBuilder();
+        stringBuilder
+            .Append(htmlIndicator.ToHtmlStartTag())
+            .Append(cellValue)
+            .Append(htmlIndicator.ToHtmlEndTag());
+        await htmlStreamWriter.WriteLineAsync(stringBuilder.ToString(), indentation).ConfigureAwait(false);
     }
 }

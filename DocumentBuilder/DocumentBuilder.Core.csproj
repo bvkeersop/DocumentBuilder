@@ -4,8 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyName>DocumentBuilder.Shared</AssemblyName>
-    <RootNamespace>DocumentBuilder.Shared</RootNamespace>
+    <AssemblyName>DocumentBuilder.Core</AssemblyName>
+    <RootNamespace>DocumentBuilder.Core</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>

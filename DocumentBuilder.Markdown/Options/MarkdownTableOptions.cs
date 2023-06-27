@@ -1,4 +1,4 @@
-﻿using DocumentBuilder.Shared.Enumerations;
+﻿using DocumentBuilder.Core.Enumerations;
 
 namespace DocumentBuilder.Markdown.Options;
 

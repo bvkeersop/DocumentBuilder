@@ -1,5 +1,5 @@
-﻿using DocumentBuilder.Shared.Enumerations;
-using DocumentBuilder.Shared.Utilities;
+﻿using DocumentBuilder.Core.Enumerations;
+using DocumentBuilder.Core.Utilities;
 
 namespace DocumentBuilder.Factories;
 public static class EnumerableValidatorFactory

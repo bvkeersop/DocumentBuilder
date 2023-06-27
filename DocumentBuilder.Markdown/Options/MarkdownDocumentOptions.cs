@@ -1,5 +1,5 @@
 ﻿using DocumentBuilder.Factories;
-using DocumentBuilder.Shared.Enumerations;
+using DocumentBuilder.Core.Enumerations;
 using DocumentBuilder.Utilities;
 
 namespace DocumentBuilder.Markdown.Options;

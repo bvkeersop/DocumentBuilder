@@ -47,6 +47,6 @@ public class MarkdownDocument
     {
         var markdownStreamWriter = MarkdownStreamWriterFactory.Create(outputStream, _options.NewLineProvider);
         var markdownDocumentWriter = new MarkdownDocumentWriter(markdownStreamWriter);
-        await markdownDocumentWriter.WriteToStreamAsync(outputStream, Elements).ConfigureAwait(false);
+        await markdownDocumentWriter.WriteToStreamAsync(outputStream, Elements, _options).ConfigureAwait(false);
     }
 }

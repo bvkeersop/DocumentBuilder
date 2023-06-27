@@ -1,6 +1,6 @@
 ﻿using DocumentBuilder.Factories;
+using DocumentBuilder.Html.Options;
 using DocumentBuilder.Interfaces;
-using DocumentBuilder.Options;
 using DocumentBuilder.StreamWriters;
 
 namespace DocumentBuilder.Html

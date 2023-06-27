@@ -1,37 +1,33 @@
 ﻿using DocumentBuilder.Constants;
 using DocumentBuilder.Factories;
-using DocumentBuilder.Interfaces;
 using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Model.Html
+namespace DocumentBuilder.Html.Model;
+
+public class Link
 {
-    public class Link : IHtmlElement
+    public string Rel { get; }
+    public string Href { get; }
+    public string Type { get; }
+
+    public Link(string rel, string href, string type)
     {
-        public string Rel { get; }
-        public string Href { get; }
-        public string Type { get; }
+        Rel = rel;
+        Href = href;
+        Type = type;
+    }
 
-        public HtmlAttributes Attributes => throw new NotImplementedException();
+    public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
+    {
+        var value = $"<{Indicators.Link} rel=\"{Rel}\" type=\"{Type}\" href=\"{Href}\" />";
+        return WrapWithIndentationAndNewLine(value, options, indentationLevel);
+    }
 
-        public Link(string rel, string href, string type)
-        {
-            Rel = rel;
-            Href = href;
-            Type = type;
-        }
-
-        public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
-        {
-            var value = $"<{HtmlIndicators.Link} rel=\"{Rel}\" type=\"{Type}\" href=\"{Href}\" />";
-            return WrapWithIndentationAndNewLine(value, options, indentationLevel);
-        }
-
-        protected static ValueTask<string> WrapWithIndentationAndNewLine(string value, HtmlDocumentOptions options, int indentationLevel)
-        {
-            var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
-            var indenationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize, indentationLevel);
-            var html = $"{indenationProvider.GetIndentation(0)}{value}{newLineProvider.GetNewLine()}";
-            return new ValueTask<string>(html);
-        }
+    protected static ValueTask<string> WrapWithIndentationAndNewLine(string value, HtmlDocumentOptions options, int indentationLevel)
+    {
+        var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
+        var indenationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize, indentationLevel);
+        var html = $"{indenationProvider.GetIndentation(0)}{value}{newLineProvider.GetNewLine()}";
+        return new ValueTask<string>(html);
     }
 }

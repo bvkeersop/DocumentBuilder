@@ -1,6 +1,6 @@
 ﻿namespace DocumentBuilder.Constants
 {
-    public static class HtmlIndicators
+    public static class Indicators
     {
         public const string DocType = "<!DOCTYPE html>";
         public const string Html = "html";

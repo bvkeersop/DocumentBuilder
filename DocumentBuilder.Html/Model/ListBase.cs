@@ -1,33 +1,17 @@
 ﻿using DocumentBuilder.Constants;
-using DocumentBuilder.Extensions;
 using DocumentBuilder.Factories;
 using DocumentBuilder.Options;
 using System.Text;
 
-namespace DocumentBuilder.Model.Generic
+namespace DocumentBuilder.Html.Model
 {
-    public abstract class ListBase<TValue> : GenericElement
+    public abstract class ListBase<TValue>
     {
         protected IEnumerable<TValue> Value { get; }
 
         protected ListBase(IEnumerable<TValue> value)
         {
             Value = value;
-        }
-
-        protected ValueTask<string> CreateMarkdownList(string prepend, MarkdownDocumentOptions options)
-        {
-            var stringBuilder = new StringBuilder();
-
-            foreach (var item in Value)
-            {
-                var value = $"{prepend} {item}";
-                var listItem = AddNewLine(value, options);
-                stringBuilder.Append(listItem);
-            }
-
-            var list = stringBuilder.ToString();
-            return new ValueTask<string>(list); // Already has a new line
         }
 
         protected async ValueTask<string> CreateHtmlListAsync(string listIndicator, HtmlDocumentOptions options, int indentationLevel = 0)
@@ -55,9 +39,9 @@ namespace DocumentBuilder.Model.Generic
         private ValueTask<string> CreateHtmlListItem(TValue? item, HtmlDocumentOptions options, int indentationLevel)
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append(GetHtmlStartTagWithAttributes(HtmlIndicators.ListItem));
+            stringBuilder.Append(GetHtmlStartTagWithAttributes(Indicators.ListItem));
             stringBuilder.Append(item);
-            stringBuilder.Append(HtmlIndicators.ListItem.ToHtmlEndTag());
+            stringBuilder.Append(Indicators.ListItem.ToHtmlEndTag());
             var listItem = stringBuilder.ToString();
             return WrapWithIndentationAndNewLine(listItem, options, indentationLevel);
         }

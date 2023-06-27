@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Shared.Model;
+﻿namespace DocumentBuilder.Core.Model;
 
 public class TableCell
 {

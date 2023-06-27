@@ -1,5 +1,5 @@
 ﻿using DocumentBuilder.Attributes;
-using DocumentBuilder.Shared.Attributes;
+using DocumentBuilder.Core.Attributes;
 using System.Reflection;
 
 namespace DocumentBuilder.Helpers;

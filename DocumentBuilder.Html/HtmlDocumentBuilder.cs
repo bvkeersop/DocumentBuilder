@@ -37,7 +37,7 @@ namespace DocumentBuilder.DocumentBuilders
         {
             if (HtmlConvertables.IsNullOrEmpty()) throw new DocumentBuilderException(DocumentBuilderErrorCode.NoHtmlElementAdded,
                 $"Trying to add class '{@class}' to an html element, but no element has been added yet");
-            HtmlConvertables.Last().Attributes.Add(HtmlAttributes.Class, @class);
+            HtmlConvertables.Last().Attributes.Add(Model.Html.Attributes.Class, @class);
             return this;
         }
 
@@ -50,7 +50,7 @@ namespace DocumentBuilder.DocumentBuilders
         {
             if (HtmlConvertables.IsNullOrEmpty()) throw new DocumentBuilderException(DocumentBuilderErrorCode.NoHtmlElementAdded,
                 $"Trying to add id '{id}' to an html element, but no element has been added yet");
-            HtmlConvertables.Last().Attributes.Add(HtmlAttributes.Id, id);
+            HtmlConvertables.Last().Attributes.Add(Model.Html.Attributes.Id, id);
             return this;
         }
 
@@ -63,7 +63,7 @@ namespace DocumentBuilder.DocumentBuilders
         {
             if (HtmlConvertables.IsNullOrEmpty()) throw new DocumentBuilderException(DocumentBuilderErrorCode.NoHtmlElementAdded,
                 $"Trying to add style '{style}' to an html element, but no element has been added yet");
-            HtmlConvertables.Last().Attributes.Add(HtmlAttributes.Style, style);
+            HtmlConvertables.Last().Attributes.Add(Model.Html.Attributes.Style, style);
             return this;
         }
 

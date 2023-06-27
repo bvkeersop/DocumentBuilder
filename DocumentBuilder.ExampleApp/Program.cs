@@ -1,7 +1,8 @@
 ﻿using DocumentBuilder.DocumentBuilders;
 using DocumentBuilder.ExampleApp;
+using DocumentBuilder.Excel.Options;
 using DocumentBuilder.Markdown.Options;
-using DocumentBuilder.Shared.Enumerations;
+using DocumentBuilder.Core.Enumerations;
 
 Console.WriteLine("DocumentBuilder - Example Program");
 Console.WriteLine("Running this program will build some example documents, displaying how this library can be used");
@@ -9,6 +10,11 @@ Console.WriteLine("Running this program will build some example documents, displ
 var markdownDocumentFilePath = ".\\rick-astley-never-gonna-give-you-up.md";
 Console.WriteLine($"Creating an example markdown document at {markdownDocumentFilePath}");
 await CreateExampleMarkdownDocument(markdownDocumentFilePath);
+
+var excelDocumentFilePath = ".\\my-favorite-songs.xlsx";
+Console.WriteLine($"Creating an example excel document at {excelDocumentFilePath}");
+CreateExampleExcelDocument(excelDocumentFilePath);
+
 
 async static Task CreateExampleMarkdownDocument(string filePath)
 {
@@ -45,6 +51,43 @@ async static Task CreateExampleMarkdownDocument(string filePath)
     using var fileStream = File.Create(filePath);
     await markdownDocument.SaveAsync(fileStream);
 }
+
+
+static void CreateExampleExcelDocument(string filePath)
+{
+    // (Optional) Create a MarkdownDocumentOptions instance for configuring specifics
+    var options = new ExcelDocumentOptions();
+
+    // Example of how you can use a POCO to create tables
+    var songDetails = new List<SongDetails>
+    {
+        new SongDetails
+        {
+            Artist = "Rick Astley",
+            Title = "Never gonna give you up",
+            Album = "Whenever You Need Somebody",
+            Released = new DateOnly(1987, 7, 27),
+        },
+        new SongDetails
+        {
+            Artist = "Eduard Khil",
+            Title =  "I am Glad, 'cause I'm Finally Returning Back Home",
+            Album = "Single",
+            Released = new DateOnly(1976, 1, 1)
+        }
+    };
+
+    // Create the excel document
+    var excelDocument = new ExcelDocumentBuilder()
+        .AddWorksheet("My favorite songs")
+        .AddTable(songDetails)
+        .Build();
+
+    // Save the excel document (either by stream, or by providing a filepath directly)
+    excelDocument.Save(filePath);
+}
+
+
 
 //var styleSheet = "h1 {\r\n  color: blue;\r\n}\r\np {\r\n  color: red;\r\n}";
 //using var cssStream = new MemoryStream();

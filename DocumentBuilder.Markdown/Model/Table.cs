@@ -2,13 +2,13 @@
 using DocumentBuilder.Helpers;
 using DocumentBuilder.Markdown.Extensions;
 using DocumentBuilder.Markdown.Options;
-using DocumentBuilder.Shared.Attributes;
-using DocumentBuilder.Shared.Enumerations;
-using DocumentBuilder.Shared.Extensions;
-using DocumentBuilder.Shared.Model;
+using DocumentBuilder.Core.Attributes;
+using DocumentBuilder.Core.Enumerations;
+using DocumentBuilder.Core.Extensions;
+using DocumentBuilder.Core.Model;
 using DocumentBuilder.Utilities;
 using System.Text;
-using Alignment = DocumentBuilder.Shared.Enumerations.Alignment;
+using Alignment = DocumentBuilder.Core.Enumerations.Alignment;
 
 namespace DocumentBuilder.Markdown.Model;
 

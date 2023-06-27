@@ -1,6 +1,6 @@
-﻿using DocumentBuilder.Shared.Model;
+﻿using DocumentBuilder.Core.Model;
 
-namespace DocumentBuilder.Shared.Extensions;
+namespace DocumentBuilder.Core.Extensions;
 
 public static class TableCellExtensions
 {

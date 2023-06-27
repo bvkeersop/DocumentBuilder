@@ -2,9 +2,9 @@
 using DocumentBuilder.Interfaces;
 using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Model.Generic
+namespace DocumentBuilder.Html.Model;
 {
-    public class UnorderedList<T> : ListBase<T>, IMarkdownConvertable, IHtmlElement
+    public class UnorderedList<T> : ListBase<T>, IHtmlElement
     {
         public UnorderedList(IEnumerable<T> value) : base(value)
         {
@@ -17,7 +17,7 @@ namespace DocumentBuilder.Model.Generic
 
         public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
         {
-            return CreateHtmlListAsync(HtmlIndicators.UnorderedList, options, indentationLevel);
+            return CreateHtmlListAsync(Indicators.UnorderedList, options, indentationLevel);
         }
     }
 }

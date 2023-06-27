@@ -5,6 +5,6 @@ namespace DocumentBuilder.Interfaces
 {
     public interface IExcelElement
     {
-        IEnumerable<ExcelTableCell> ToExcel(ExcelDocumentOptions options);
+        IEnumerable<TableCell> ToExcel(ExcelDocumentOptions options);
     }
 }

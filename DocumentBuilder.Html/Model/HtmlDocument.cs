@@ -1,16 +1,17 @@
 ﻿using DocumentBuilder.DocumentWriters;
-using DocumentBuilder.Options;
+using DocumentBuilder.Html.Options;
 
-namespace DocumentBuilder.Html;
+namespace DocumentBuilder.Html.Model;
 
 public class HtmlDocument
 {
     private readonly IHtmlDocumentWriter _htmlDocumentWriterwriter;
     private readonly HtmlDocumentOptions _options;
 
+    public IList<Link> Links { get; private set; }
     public IList<IHtmlElement> Elements { get; private set; }
 
-    public HtmlDocument(HtmlDocumentOptions options)
+    public HtmlDocument(HtmlDocumentOptions options, IHtmlDocumentWriter htmlDocumentWriter)
     {
         Elements = new List<IHtmlElement>();
         _options = options;

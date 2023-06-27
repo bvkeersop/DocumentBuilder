@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Shared.Enumerations
+﻿namespace DocumentBuilder.Core.Enumerations
 {
     public enum Alignment
     {

@@ -1,15 +1,13 @@
 ﻿using ClosedXML.Excel;
+using DocumentBuilder.Excel.Model;
 using DocumentBuilder.Excel.Options;
-using DocumentBuilder.Exceptions;
 using DocumentBuilder.Model.Excel;
 
 namespace DocumentBuilder.Excel
 {
     public interface IExcelDocumentWriter
     {
-        public void AddWorksheet(string worksheetName);
-        public void Write(WorksheetExcelConvertable worksheetExcelConvertable);
-        public void WriteToStream(Stream outputStream);
+        public void WriteToStream(ExcelDocument excelDocument, Stream outputStream);
     }
 
     internal class ClosedXmlDocumentWriter : IExcelDocumentWriter, IDisposable
@@ -17,7 +15,6 @@ namespace DocumentBuilder.Excel
         private bool _disposedValue;
         private readonly IXLWorkbook _workbook;
         private readonly ExcelDocumentOptions _options;
-        private IXLWorksheet? _currentWorksheet;
 
         public ClosedXmlDocumentWriter(Func<IXLWorkbook> factory, ExcelDocumentOptions options)
         {
@@ -25,26 +22,21 @@ namespace DocumentBuilder.Excel
             _options = options;
         }
 
-        public void AddWorksheet(string worksheetName)
+        public void Write(ExcelDocument excelDocument)
         {
-            _currentWorksheet = _workbook.Worksheets.Add(worksheetName);
-        }
-
-        public void Write(WorksheetExcelConvertable worksheetExcelConvertable)
-        {
-            if (_currentWorksheet == null)
+            foreach (var worksheet in excelDocument.Worksheets)
             {
-                throw new DocumentBuilderException(DocumentBuilderErrorCode.NoWorksheetInstantiated);
+                var closedXmlWorksheet = _workbook.Worksheet(worksheet.Name);
+                foreach (var element in worksheet.ExcelElements)
+                {
+                    var excelTableCells = element.ToExcel(_options);
+                    WriteExcelTableCells(closedXmlWorksheet, excelTableCells);
+                }
             }
-
-            var excelTableCells = worksheetExcelConvertable.ExcelConvertable.ToExcel(_options);
-            WriteExcelTableCells(worksheetExcelConvertable.WorksheetName, excelTableCells);
         }
 
-        private void WriteExcelTableCells(string worksheetName, IEnumerable<ExcelTableCell> excelTableCells)
+        private static void WriteExcelTableCells(IXLWorksheet worksheet, IEnumerable<TableCell> excelTableCells)
         {
-            var worksheet = _workbook.Worksheet(worksheetName);
-
             foreach (var excelTableCell in excelTableCells)
             {
                 var currentCell = worksheet.Cell(excelTableCell.ExcelRowIdentifier, excelTableCell.ExcelColumnIdentifier);
@@ -52,8 +44,9 @@ namespace DocumentBuilder.Excel
             }
         }
 
-        public void WriteToStream(Stream outputStream)
+        public void WriteToStream(ExcelDocument excelDocument, Stream outputStream)
         {
+            Write(excelDocument);
             _workbook.SaveAs(outputStream);
         }
 
@@ -63,7 +56,6 @@ namespace DocumentBuilder.Excel
             {
                 if (disposing)
                 {
-                    _currentWorksheet = null;
                     _workbook.Dispose();
                 }
 

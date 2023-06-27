@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Shared.Extensions;
+﻿namespace DocumentBuilder.Core.Extensions;
 
 public static class EnumerableExtensions
 {

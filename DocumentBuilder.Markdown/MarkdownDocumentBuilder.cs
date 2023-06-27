@@ -2,7 +2,7 @@
 using DocumentBuilder.Interfaces;
 using DocumentBuilder.Markdown.Model;
 using DocumentBuilder.Markdown.Options;
-using DocumentBuilder.Shared.Utilities;
+using DocumentBuilder.Core.Utilities;
 
 namespace DocumentBuilder.DocumentBuilders
 {

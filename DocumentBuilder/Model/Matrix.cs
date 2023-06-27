@@ -2,7 +2,7 @@
 using DocumentBuilder.Helpers;
 using System.Reflection;
 
-namespace DocumentBuilder.Shared.Model;
+namespace DocumentBuilder.Core.Model;
 
 public class Matrix<TValue>
 {

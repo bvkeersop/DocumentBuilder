@@ -1,6 +1,6 @@
 ﻿using DocumentBuilder.Exceptions;
 
-namespace DocumentBuilder.Shared.Utilities;
+namespace DocumentBuilder.Core.Utilities;
 
 public interface IEnumerableRenderingStrategy
 {

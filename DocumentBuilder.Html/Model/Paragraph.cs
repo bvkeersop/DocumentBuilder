@@ -22,9 +22,9 @@ namespace DocumentBuilder.Model.Generic
         public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append(GetHtmlStartTagWithAttributes(HtmlIndicators.Paragraph));
+            stringBuilder.Append(GetHtmlStartTagWithAttributes(Indicators.Paragraph));
             stringBuilder.Append(Value);
-            stringBuilder.Append(HtmlIndicators.Paragraph.ToHtmlEndTag());
+            stringBuilder.Append(Indicators.Paragraph.ToHtmlEndTag());
             var value = stringBuilder.ToString();
             return WrapWithIndentationAndNewLine(value, options, indentationLevel);
         }

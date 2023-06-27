@@ -1,6 +1,6 @@
-﻿using DocumentBuilder.Shared.Enumerations;
+﻿using DocumentBuilder.Core.Enumerations;
 
-namespace DocumentBuilder.Shared.Attributes;
+namespace DocumentBuilder.Core.Attributes;
 
 [AttributeUsage(AttributeTargets.Property)]
 public class ColumnAttribute : Attribute
