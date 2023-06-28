@@ -1,32 +1,16 @@
 ﻿using DocumentBuilder.Constants;
-using DocumentBuilder.Extensions;
-using DocumentBuilder.Options;
-using System.Text;
+using DocumentBuilder.Html.Options;
 
-namespace DocumentBuilder.Model.Generic
+namespace DocumentBuilder.Html.Model;
+public class Paragraph : HtmlElement
 {
-    public class Paragraph : GenericElement
+
+    public Paragraph(string value) : base(Indicators.Paragraph, value)
     {
-        public string Value { get; }
+    }
 
-        public Paragraph(string value)
-        {
-            Value = value;
-        }
-
-        public override ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options)
-        {
-            return AddNewLine(Value, options);
-        }
-
-        public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
-        {
-            var stringBuilder = new StringBuilder();
-            stringBuilder.Append(GetHtmlStartTagWithAttributes(Indicators.Paragraph));
-            stringBuilder.Append(Value);
-            stringBuilder.Append(Indicators.Paragraph.ToHtmlEndTag());
-            var value = stringBuilder.ToString();
-            return WrapWithIndentationAndNewLine(value, options, indentationLevel);
-        }
+    public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
+    {
+        throw new NotImplementedException();
     }
 }

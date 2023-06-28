@@ -7,6 +7,7 @@
         public const string Head = "head";
         public const string Link = "link";
         public const string Body = "body";
+        public const string Div = "div";
         public const string Header1 = "h1";
         public const string Header2 = "h2";
         public const string Header3 = "h3";

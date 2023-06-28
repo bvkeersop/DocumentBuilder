@@ -1,5 +1,4 @@
-﻿using DocumentBuilder.DocumentWriters;
-using DocumentBuilder.Html.Options;
+﻿using DocumentBuilder.Html.Options;
 
 namespace DocumentBuilder.Html.Model;
 
@@ -8,14 +7,16 @@ public class HtmlDocument
     private readonly IHtmlDocumentWriter _htmlDocumentWriterwriter;
     private readonly HtmlDocumentOptions _options;
 
-    public IList<Link> Links { get; private set; }
-    public IList<IHtmlElement> Elements { get; private set; }
+    public IList<Link> Links { get; } = new List<Link>();
+    public IList<IHtmlElement> Elements { get; } = new List<IHtmlElement>();
 
     public HtmlDocument(HtmlDocumentOptions options, IHtmlDocumentWriter htmlDocumentWriter)
     {
-        Elements = new List<IHtmlElement>();
         _options = options;
     }
+
+    public void AddHtmlElement(IHtmlElement element) => Elements.Add(element);
+    public void AddLink(Link link) => Links.Add(link);
 
     /// <summary>
     /// Writes the document to the provided output stream

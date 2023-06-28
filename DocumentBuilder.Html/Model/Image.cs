@@ -1,6 +1,6 @@
 ﻿using DocumentBuilder.Constants;
 using DocumentBuilder.Factories;
-using DocumentBuilder.Options;
+using DocumentBuilder.Html.Options;
 
 namespace DocumentBuilder.Html.Model;
 

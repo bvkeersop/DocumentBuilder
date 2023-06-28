@@ -11,7 +11,7 @@ public interface IHtmlDocumentWriter
     Task WriteToStreamAsync(Stream outputStream, HtmlDocument htmlDocument);
 }
 
-internal class HtmlDocumentWriter
+internal class HtmlDocumentWriter : IHtmlDocumentWriter
 {
     private readonly Func<Stream, HtmlDocumentOptions, IHtmlStreamWriter> _htmlStreamWriterFactory;
     private readonly HtmlDocumentOptions _options;
@@ -50,14 +50,6 @@ internal class HtmlDocumentWriter
         }
 
         await htmlStreamWriter.WriteLineAsync(Indicators.Body.ToHtmlEndTag(), 1).ConfigureAwait(false);
-    }
-
-    private static async Task WriteRecursively(IHtmlElement htmlElement, IHtmlStreamWriter htmlStreamWriter, int levelsDeep)
-    {
-        foreach(var htmlElements in htmlElement.Elements)
-        {
-
-        }
     }
 
     private async Task WriteHeadElementAsync(HtmlDocument htmlDocument, IHtmlStreamWriter htmlStreamWriter)

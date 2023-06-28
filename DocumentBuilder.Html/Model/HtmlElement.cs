@@ -1,54 +1,61 @@
 ﻿using DocumentBuilder.Html.Extensions;
-using DocumentBuilder.Options;
+using DocumentBuilder.Html.Options;
 using System.Text;
 
-namespace DocumentBuilder.Html.Model
+namespace DocumentBuilder.Html.Model;
+public abstract class HtmlElement : IHtmlElement
 {
-    public abstract class HtmlElement : IHtmlElement
+    public string Indicator { get; }
+    public string Value { get; }
+
+    public Attributes Attributes { get; } = new();
+
+    public HtmlElement(string indicator, string value)
     {
-        public string Indicator { get; }
-        public string Value { get; }
+        Indicator = indicator;
+        Value = value;
+    }
 
-        public Attributes Attributes { get; } = new();
-
-        public HtmlElement(string indicator, string value)
+    protected string GetHtmlStartTagWithAttributes()
+    {
+        if (Attributes.IsEmpty)
         {
-            Indicator = indicator;
-            Value = value;
+            return Indicator.ToHtmlStartTag();
         }
 
-        protected string GetHtmlStartTagWithAttributes()
-        {
-            if (Attributes.IsEmpty)
-            {
-                return Indicator.ToHtmlStartTag();
-            }
+        var sb = new StringBuilder();
+        sb.Append(Indicator)
+            .Append(' ')
+            .Append(Attributes);
+        var element = sb.ToString();
+        return element.ToHtmlStartTag();
+    }
 
-            var sb = new StringBuilder();
-            sb.Append(Indicator)
-                .Append(' ')
-                .Append(Attributes);
-            var element = sb.ToString();
-            return element.ToHtmlStartTag();
-        }
+    protected string GetHtmlEndTag() => Indicator.ToHtmlEndTag();
 
-        protected string GetHtmlEndTag() => Indicator.ToHtmlEndTag();
+    //protected static ValueTask<string> AddNewLine(string value, MarkdownDocumentOptions options)
+    //{
+    //    var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
+    //    var markdown = $"{value}{newLineProvider.GetNewLine()}";
+    //    return new ValueTask<string>(markdown);
+    //}
 
-        //protected static ValueTask<string> AddNewLine(string value, MarkdownDocumentOptions options)
-        //{
-        //    var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
-        //    var markdown = $"{value}{newLineProvider.GetNewLine()}";
-        //    return new ValueTask<string>(markdown);
-        //}
+    //protected static ValueTask<string> WrapWithIndentationAndNewLine(string value, HtmlDocumentOptions options, int indentationLevel)
+    //{
+    //    var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
+    //    var indenationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize, indentationLevel);
+    //    var html = $"{indenationProvider.GetIndentation(0)}{value}{newLineProvider.GetNewLine()}";
+    //    return new ValueTask<string>(html);
+    //}
 
-        //protected static ValueTask<string> WrapWithIndentationAndNewLine(string value, HtmlDocumentOptions options, int indentationLevel)
-        //{
-        //    var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
-        //    var indenationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize, indentationLevel);
-        //    var html = $"{indenationProvider.GetIndentation(0)}{value}{newLineProvider.GetNewLine()}";
-        //    return new ValueTask<string>(html);
-        //}
-
-        public abstract ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0);
+    public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
+    {
+        var htmlStartTag = GetHtmlStartTagWithAttributes();
+        var htmlEndTag = GetHtmlEndTag();
+        var html = new StringBuilder().Append(htmlStartTag)
+            .Append(Value)
+            .Append(htmlEndTag)
+            .ToString();
+        return new ValueTask<string>(html);
     }
 }

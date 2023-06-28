@@ -2,11 +2,11 @@
 using DocumentBuilder.Exceptions;
 using DocumentBuilder.Factories;
 using DocumentBuilder.Helpers;
-using DocumentBuilder.Options;
+using DocumentBuilder.Html.Options;
 using System.Text;
 
 namespace DocumentBuilder.Html.Model;
-public class Table<TRow>
+public class Table<TRow> : IHtmlElement
 {
     private async Task<string> CreateHtmlTableAsync(HtmlDocumentOptions options, int indentationLevel)
     {

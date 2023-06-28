@@ -1,11 +1,9 @@
-﻿using DocumentBuilder.Model.Html;
-using DocumentBuilder.Options;
+﻿using DocumentBuilder.Html.Options;
 
-namespace DocumentBuilder.Html;
+namespace DocumentBuilder.Html.Model;
 
 public interface IHtmlElement
 {
-    IList<IHtmlElement> Elements { get; }
-    DocumentBuilder.Model.Html.Attributes Attributes { get; }
+    Attributes Attributes { get; }
     ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0);
 }

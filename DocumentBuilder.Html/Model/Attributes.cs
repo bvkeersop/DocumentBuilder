@@ -5,13 +5,9 @@ namespace DocumentBuilder.Html.Model;
 
 public class Attributes
 {
-    public const string Id = "id";
-    public const string Class = "class";
-    public const string Style = "style";
-
     private readonly HashSet<string> _uniqueAttributes = new()
     {
-        Id
+        AttributeNames.Id
     };
 
     private readonly IDictionary<string, HashSet<string>> _attributes = new Dictionary<string, HashSet<string>>();

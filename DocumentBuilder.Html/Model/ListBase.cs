@@ -1,16 +1,18 @@
 ﻿using DocumentBuilder.Constants;
 using DocumentBuilder.Factories;
-using DocumentBuilder.Options;
+using DocumentBuilder.Html.Options;
 using System.Text;
 
 namespace DocumentBuilder.Html.Model
 {
-    public abstract class ListBase<TValue>
+    public abstract class ListBase<TValue> : IHtmlElement
     {
+        public string Indicator { get; }
         protected IEnumerable<TValue> Value { get; }
 
-        protected ListBase(IEnumerable<TValue> value)
+        protected ListBase(string indicator, IEnumerable<TValue> value)
         {
+            Indicator = indicator;
             Value = value;
         }
 
