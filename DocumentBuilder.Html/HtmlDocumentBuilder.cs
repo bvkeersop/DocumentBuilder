@@ -1,19 +1,9 @@
-﻿using DocumentBuilder.Factories;
-using DocumentBuilder.Interfaces;
-using DocumentBuilder.Model;
-using DocumentBuilder.Model.Generic;
-using DocumentBuilder.Validators;
-using DocumentBuilder.Model.Shared;
-using DocumentBuilder.Model.Html;
-using DocumentBuilder.Extensions;
-using DocumentBuilder.Exceptions;
-using DocumentBuilder.Html;
-using DocumentBuilder.Core.Utilities;
+﻿using DocumentBuilder.Core.Utilities;
+using DocumentBuilder.Factories;
 using DocumentBuilder.Html.Model;
 using DocumentBuilder.Html.Options;
-using DocumentFormat.OpenXml.Wordprocessing;
 
-namespace DocumentBuilder.DocumentBuilders
+namespace DocumentBuilder.Html
 {
     public class HtmlDocumentBuilder : IHtmlDocumentBuilder
     {
@@ -149,8 +139,6 @@ namespace DocumentBuilder.DocumentBuilders
         /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
         public IHtmlElementBuilder AddTable<T>(IEnumerable<T> tableRows)
         {
-            _ = tableRows ?? throw new ArgumentNullException(nameof(tableRows));
-
             if (!EnumerableRenderingStrategy.ShouldRender(tableRows))
             {
                 return new HtmlElementBuilder(null, this);
@@ -159,6 +147,18 @@ namespace DocumentBuilder.DocumentBuilders
             var htmlElement = new OrderedList<T>(tableRows);
             HtmlDocument.AddHtmlElement(htmlElement);
             return new HtmlElementBuilder(htmlElement, this);
+        }
+
+        /// <summary>
+        /// Adds a table to the document
+        /// </summary>
+        /// <typeparam name="TRow">The type of the row</typeparam>
+        /// <param name="tableRow">The values of the table row</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlElementBuilder AddTable<T>(T tableRow)
+        {
+            var tableRows = new T[] { tableRow };
+            return AddTable(tableRows);
         }
 
         /// <summary>
@@ -193,6 +193,30 @@ namespace DocumentBuilder.DocumentBuilders
         }
 
         /// <summary>
+        /// Opens a div element
+        /// </summary>
+        /// <param name="content">The content</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlElementBuilder AddDivStart()
+        {
+            var htmlElement = new DivStart();
+            HtmlDocument.AddHtmlElement(htmlElement);
+            return new HtmlElementBuilder(htmlElement, this);
+        }
+
+        /// <summary>
+        /// Closes a div element
+        /// </summary>
+        /// <param name="content">The content</param>
+        /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+        public IHtmlElementBuilder AddDivEnd()
+        {
+            var htmlElement = new DivEnd();
+            HtmlDocument.AddHtmlElement(htmlElement);
+            return new HtmlElementBuilder(htmlElement, this);
+        }
+
+        /// <summary>
         /// Adds a stylesheet by reference
         /// </summary>
         /// <param name="href">The file path of the style sheet</param>
@@ -203,5 +227,11 @@ namespace DocumentBuilder.DocumentBuilders
             HtmlDocument.AddLink(link);
             return this;
         }
+
+        /// <summary>
+        /// Builds the html document
+        /// </summary>
+        /// <returns><see cref="HtmlDocument"/></returns>
+        public HtmlDocument Build() => HtmlDocument;
     }
 }

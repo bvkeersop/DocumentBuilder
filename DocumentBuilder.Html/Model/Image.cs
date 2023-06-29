@@ -1,44 +1,36 @@
 ﻿using DocumentBuilder.Constants;
-using DocumentBuilder.Factories;
+using DocumentBuilder.Html.Extensions;
 using DocumentBuilder.Html.Options;
+using System.Text;
 
 namespace DocumentBuilder.Html.Model;
 
 public class Image : IHtmlElement
 {
+    public string Indicator { get; }
     public string Name { get; }
     public string Path { get; }
     public string? Caption { get; }
 
+    public Attributes Attributes { get; } = new Attributes();
+
     public Image(string name, string path, string? caption = null)
     {
+        Indicator = Indicators.Image;
         Name = name;
         Path = path;
         Caption = caption;
     }
 
-    public override ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options)
+    public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
     {
-        var newLine = NewLineProviderFactory.Create(options.LineEndings).GetNewLine();
+        var newLine = options.NewLineProvider.GetNewLine();
+        var indentationProvider = options.IndentationProvider;
 
-        if (Caption is null)
-        {
-            var valueWithoutCaption = $"![{Name}]({Path})";
-            return AddNewLine(valueWithoutCaption, options);
-        }
-
-        var valueWithCaption = $"![{Name}]({Path}){newLine}*{Caption}*";
-        return AddNewLine(valueWithCaption, options);
-    }
-
-    public override ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
-    {
-        var newLine = NewLineProviderFactory.Create(options.LineEndings).GetNewLine();
-        var indentationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize, indentationLevel);
         var indentation0 = indentationProvider.GetIndentation(0);
         var indentation1 = indentationProvider.GetIndentation(1);
         var imageHtml = $"<{Indicators.Image} src=\"{Path}\" alt=\"{Name}\" />";
-        var figureStartTag = GetHtmlStartTagWithAttributes(Indicators.Figure);
+        var figureStartTag = GetHtmlStartTagWithAttributes();
         var figureEndTag = Indicators.Figure.ToHtmlEndTag();
 
         if (Caption is null)
@@ -51,7 +43,7 @@ public class Image : IHtmlElement
             return new ValueTask<string>(valueWithoutCaption);
         }
 
-        var figCaptionStartTag = GetHtmlStartTagWithAttributes(Indicators.FigCaption);
+        var figCaptionStartTag = GetHtmlStartTagWithAttributes();
         var figCaptionEndTag = Indicators.FigCaption.ToHtmlEndTag();
 
         var valueWithCaption =
@@ -62,4 +54,21 @@ public class Image : IHtmlElement
 
         return new ValueTask<string>(valueWithCaption);
     }
+
+    protected string GetHtmlStartTagWithAttributes()
+    {
+        if (Attributes.IsEmpty)
+        {
+            return Indicator.ToHtmlStartTag();
+        }
+
+        var sb = new StringBuilder();
+        sb.Append(Indicator)
+            .Append(' ')
+            .Append(Attributes);
+        var element = sb.ToString();
+        return element.ToHtmlStartTag();
+    }
+
+    protected string GetHtmlEndTag() => Indicator.ToHtmlEndTag();
 }

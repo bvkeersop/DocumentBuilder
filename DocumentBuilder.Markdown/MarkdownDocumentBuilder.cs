@@ -8,6 +8,7 @@ namespace DocumentBuilder.DocumentBuilders
 {
     public class MarkdownDocumentBuilder : IMarkdownDocumentBuilder
     {
+        public MarkdownDocumentOptions Options { get; }
         private readonly MarkdownDocument _markdownDocument;
         private readonly IEnumerableRenderingStrategy _enumerableValidator;
 
@@ -15,7 +16,7 @@ namespace DocumentBuilder.DocumentBuilders
 
         public MarkdownDocumentBuilder(MarkdownDocumentOptions options)
         {
-            _ = options ?? throw new ArgumentNullException(nameof(options));
+            Options = options ?? throw new ArgumentNullException(nameof(options));
             _enumerableValidator = EnumerableValidatorFactory.Create(options.NullOrEmptyEnumerableRenderingStrategy);
             _markdownDocument = new MarkdownDocument(options);
         }
@@ -145,7 +146,7 @@ namespace DocumentBuilder.DocumentBuilders
                 return this;
             }
 
-            _markdownDocument.AddElement(new Table<T>(tableRows));
+            _markdownDocument.AddElement(new Table<T>(tableRows, Options));
             return this;
         }
 

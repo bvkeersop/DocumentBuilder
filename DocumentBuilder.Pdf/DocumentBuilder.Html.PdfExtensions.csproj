@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DocumentBuilder.Html\DocumentBuilder.Html.csproj" />
     <ProjectReference Include="..\DocumentBuilder\DocumentBuilder.Core.csproj" />
   </ItemGroup>
 

@@ -4,7 +4,7 @@ namespace DocumentBuilder.Html.Model;
 
 public class HtmlDocument
 {
-    private readonly IHtmlDocumentWriter _htmlDocumentWriterwriter;
+    private readonly IHtmlDocumentWriter _htmlDocumentWriter;
     private readonly HtmlDocumentOptions _options;
 
     public IList<Link> Links { get; } = new List<Link>();
@@ -13,6 +13,7 @@ public class HtmlDocument
     public HtmlDocument(HtmlDocumentOptions options, IHtmlDocumentWriter htmlDocumentWriter)
     {
         _options = options;
+        _htmlDocumentWriter = htmlDocumentWriter;
     }
 
     public void AddHtmlElement(IHtmlElement element) => Elements.Add(element);
@@ -23,10 +24,10 @@ public class HtmlDocument
     /// </summary>
     /// <param name="outputStream">The stream to write to</param>
     /// <returns><see cref="Task"/></returns>
-    public async Task BuildAsync(Stream outputStream)
+    public async Task SaveAsync(Stream outputStream)
     {
         _ = outputStream ?? throw new ArgumentNullException(nameof(outputStream));
-        await _htmlDocumentWriter.WriteToStreamAsync(outputStream, HtmlConvertables, Links).ConfigureAwait(false);
+        await _htmlDocumentWriter.WriteToStreamAsync(outputStream, this).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -34,7 +35,7 @@ public class HtmlDocument
     /// </summary>
     /// <param name="filePath">The path which the file should be written to</param>
     /// <returns><see cref="Task"/></returns>
-    public Task BuildAsync(string filePath)
+    public Task SaveAsync(string filePath)
     {
         if (string.IsNullOrWhiteSpace(filePath))
         {
@@ -47,7 +48,7 @@ public class HtmlDocument
     private async Task<FileStream> BuildInternalAsync(string filePath)
     {
         FileStream fileStream = File.Create(filePath);
-        await BuildAsync(fileStream).ConfigureAwait(false);
+        await SaveAsync(fileStream).ConfigureAwait(false);
         return fileStream;
     }
 }

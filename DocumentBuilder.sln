@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentBuilder.Core", "Doc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentBuilder.Test.Unit", "DocumentBuilder.Test.Unit\DocumentBuilder.Test.Unit.csproj", "{360920AE-1B85-4DD3-A9A6-FD10DF233817}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentBuilder.Pdf", "DocumentBuilder.Pdf\DocumentBuilder.Pdf.csproj", "{952CC9AA-05F5-46FB-8802-0866F478F3F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentBuilder.Html.PdfExtensions", "DocumentBuilder.Pdf\DocumentBuilder.Html.PdfExtensions.csproj", "{952CC9AA-05F5-46FB-8802-0866F478F3F1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentBuilder.ExampleApp", "DocumentBuilder.ExampleApp\DocumentBuilder.ExampleApp.csproj", "{C3E3D060-0800-4E67-B8C9-465B305B51E2}"
 EndProject

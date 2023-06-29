@@ -1,7 +1,6 @@
 ﻿using ClosedXML.Excel;
 using DocumentBuilder.Excel.Model;
 using DocumentBuilder.Excel.Options;
-using DocumentBuilder.Model.Excel;
 
 namespace DocumentBuilder.Excel
 {
@@ -26,13 +25,23 @@ namespace DocumentBuilder.Excel
         {
             foreach (var worksheet in excelDocument.Worksheets)
             {
-                var closedXmlWorksheet = _workbook.Worksheet(worksheet.Name);
+                var closedXmlWorksheet = GetOrCreateClosedXmlWorksheet(worksheet.Name);
                 foreach (var element in worksheet.ExcelElements)
                 {
                     var excelTableCells = element.ToExcel(_options);
                     WriteExcelTableCells(closedXmlWorksheet, excelTableCells);
                 }
             }
+        }
+
+        private IXLWorksheet GetOrCreateClosedXmlWorksheet(string worksheetName)
+        {
+            if (_workbook.TryGetWorksheet(worksheetName, out var worksheet))
+            {
+                return worksheet;
+            }
+
+            return _workbook.AddWorksheet(worksheetName);
         }
 
         private static void WriteExcelTableCells(IXLWorksheet worksheet, IEnumerable<TableCell> excelTableCells)

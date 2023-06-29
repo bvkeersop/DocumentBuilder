@@ -1,6 +1,4 @@
-﻿using DocumentBuilder.DocumentBuilders;
-using DocumentBuilder.Html.Model;
-using DocumentBuilder.Interfaces;
+﻿using DocumentBuilder.Html.Model;
 
 namespace DocumentBuilder.Html;
 

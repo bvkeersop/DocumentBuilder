@@ -9,6 +9,7 @@ using DocumentBuilder.Core.Model;
 using DocumentBuilder.Utilities;
 using System.Text;
 using Alignment = DocumentBuilder.Core.Enumerations.Alignment;
+using Microsoft.Extensions.Options;
 
 namespace DocumentBuilder.Markdown.Model;
 
@@ -20,16 +21,17 @@ public class Table<TRow> : IMarkdownElement
     private const char _alignmentChar = ':';
     private const int _minimumNumberOfDividerCharacters = 3;
 
-    private INewLineProvider _newLineProvider;
-    private MarkdownTableOptions _options;
-
+    public INewLineProvider NewLineProvider { get; }
+    public MarkdownTableOptions Options { get; }
     public IEnumerable<ColumnAttribute> OrderedColumnAttributes { get; }
     public Matrix<TRow> TableValues { get; }
     public IEnumerable<TableCell> TableCells { get; }
 
-    public Table(IEnumerable<TRow> tableRows)
+    public Table(IEnumerable<TRow> tableRows, MarkdownDocumentOptions options)
     {
         ValidateRows(tableRows);
+        NewLineProvider = options.NewLineProvider;
+        Options = options.MarkdownTableOptions;
         TableValues = new Matrix<TRow>(tableRows);
         OrderedColumnAttributes = ReflectionHelper<TRow>.GetOrderedColumnAttributes();
         TableCells = CreateEnumerableOfTableCells();
@@ -37,8 +39,6 @@ public class Table<TRow> : IMarkdownElement
 
     public async ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options)
     {
-        _newLineProvider = options.NewLineProvider;
-        _options = options.MarkdownTableOptions;
         return await CreateMarkdownTableAsync().ConfigureAwait(false);
     }
 
@@ -71,7 +71,7 @@ public class Table<TRow> : IMarkdownElement
         }
 
         var streamWriter = new StreamWriter(outputStream, leaveOpen: true);
-        using var markdownStreamWriter = new MarkdownStreamWriter(streamWriter, _newLineProvider);
+        using var markdownStreamWriter = new MarkdownStreamWriter(streamWriter, NewLineProvider);
         await CreateMarkdownTableHeaderAsync(markdownStreamWriter).ConfigureAwait(false);
         await CreateMarkdownTableDividerAsync(markdownStreamWriter).ConfigureAwait(false);
         await CreateMarkdownTableRowsAsync(markdownStreamWriter).ConfigureAwait(false);
@@ -85,7 +85,7 @@ public class Table<TRow> : IMarkdownElement
 
         for (var i = 0; i < numberOfColumns; i++)
         {
-            var columnName = GetColumnName(i, _options.BoldColumnNames);
+            var columnName = GetColumnName(i, Options.BoldColumnNames);
             var amountOfWhiteSpace = DetermineAmountOfWhiteSpace(columnName, i);
             await CreateMarkdownTableCellAsync(markdownStreamWriter, columnName, amountOfWhiteSpace);
         }
@@ -113,8 +113,8 @@ public class Table<TRow> : IMarkdownElement
 
     private int GetNumberOfCharactersForDividerCell(int columnIndex)
     {
-        var numberOfCharacters = GetLongestCellSizeForColumn(columnIndex, _options.BoldColumnNames);
-        if (_options.Formatting == Formatting.None || numberOfCharacters < _minimumNumberOfDividerCharacters)
+        var numberOfCharacters = GetLongestCellSizeForColumn(columnIndex, Options.BoldColumnNames);
+        if (Options.Formatting == Formatting.None || numberOfCharacters < _minimumNumberOfDividerCharacters)
         {
             return _minimumNumberOfDividerCharacters;
         }
@@ -125,7 +125,7 @@ public class Table<TRow> : IMarkdownElement
     {
         if (columnAttribute.Alignment == Alignment.Default)
         {
-            return _options.DefaultAlignment;
+            return Options.DefaultAlignment;
         }
 
         return columnAttribute.Alignment;
@@ -195,7 +195,7 @@ public class Table<TRow> : IMarkdownElement
 
     private int DetermineAmountOfWhiteSpace(string value, int currentColumnIndex)
     {
-        var formatting = _options.Formatting;
+        var formatting = Options.Formatting;
 
         if (formatting == Formatting.AlignColumns)
         {
@@ -215,17 +215,17 @@ public class Table<TRow> : IMarkdownElement
             return 0;
         }
 
-        throw new NotSupportedException($"Formatting {_options.Formatting} is not supported");
+        throw new NotSupportedException($"Formatting {Options.Formatting} is not supported");
     }
 
     private int GetLongestCellSizeForColumn(int columnIndex)
     {
-        if (!_options.BoldColumnNames)
+        if (!Options.BoldColumnNames)
         {
-            return GetLongestCellSizeForColumn(columnIndex, _options.BoldColumnNames);
+            return GetLongestCellSizeForColumn(columnIndex, Options.BoldColumnNames);
         }
 
-        var longestCellSizeForColumnValue = GetLongestCellSizeForColumn(columnIndex, _options.BoldColumnNames);
+        var longestCellSizeForColumnValue = GetLongestCellSizeForColumn(columnIndex, Options.BoldColumnNames);
         var columnName = OrderedColumnAttributes.ElementAt(columnIndex);
         var boldColumnNameSize = columnName.Name.Value.Length + 4;
         return Math.Max(longestCellSizeForColumnValue, boldColumnNameSize);
@@ -234,7 +234,7 @@ public class Table<TRow> : IMarkdownElement
     private int CorrectCellSizeBasedOnBoldOption(int cellSize, int longestCellSize)
     {
         // When bold column names is enabled, and the cellsize is shorter than the longest cellsize, we need to align it.
-        if (_options.BoldColumnNames && cellSize < longestCellSize)
+        if (Options.BoldColumnNames && cellSize < longestCellSize)
         {
             return 4;
         }

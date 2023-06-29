@@ -4,9 +4,9 @@ using DocumentBuilder.Html.Options;
 
 namespace DocumentBuilder.Html.Model;
 
-internal class DivEnd
+internal class DivEnd : IHtmlElement
 {
-    public Attributes Attributes => new();
+    public Attributes Attributes { get; } = new Attributes();
 
     public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0) => new(Indicators.Div.ToHtmlEndTag());
 }

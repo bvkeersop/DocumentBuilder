@@ -37,15 +37,13 @@ internal class HtmlDocumentWriter : IHtmlDocumentWriter
         await htmlStreamWriter.FlushAsync().ConfigureAwait(false);
     }
 
-    private static async Task WriteBodyElementAsync(HtmlDocument htmlDocument, IHtmlStreamWriter htmlStreamWriter)
+    private async Task WriteBodyElementAsync(HtmlDocument htmlDocument, IHtmlStreamWriter htmlStreamWriter)
     {
         await htmlStreamWriter.WriteLineAsync(Indicators.Body.ToHtmlStartTag(), 1).ConfigureAwait(false);
 
-        foreach(var htmlElement in HtmlDocument.)
-
-        for (var i = 0; i < htmlDocument.Elements.Count(); i++)
+        foreach (var element in htmlDocument.Elements)
         {
-            //var html = await htmlDocument.Elements.ToHtmlAsync(_options, 2);
+            var html = await element.ToHtmlAsync(_options, 2);
             await htmlStreamWriter.WriteAsync(html).ConfigureAwait(false);
         }
 

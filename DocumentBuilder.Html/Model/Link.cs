@@ -1,5 +1,4 @@
 ﻿using DocumentBuilder.Constants;
-using DocumentBuilder.Factories;
 using DocumentBuilder.Html.Options;
 
 namespace DocumentBuilder.Html.Model;
@@ -20,5 +19,6 @@ public class Link
     public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
     {
         var value = $"<{Indicators.Link} rel=\"{Rel}\" type=\"{Type}\" href=\"{Href}\" />";
+        return new ValueTask<string>(value);
     }
 }

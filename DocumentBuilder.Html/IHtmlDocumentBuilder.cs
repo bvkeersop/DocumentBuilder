@@ -1,6 +1,6 @@
-﻿using DocumentBuilder.Html;
+﻿using DocumentBuilder.Html.Model;
 
-namespace DocumentBuilder.Interfaces;
+namespace DocumentBuilder.Html;
 
 public interface IHtmlDocumentBuilder
 {
@@ -62,6 +62,14 @@ public interface IHtmlDocumentBuilder
     IHtmlElementBuilder AddTable<T>(IEnumerable<T> tableRows);
 
     /// <summary>
+    /// Adds a table to the document
+    /// </summary>
+    /// <typeparam name="TRow">The type of the row</typeparam>
+    /// <param name="tableRow">The values of the table row</param>
+    /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+    IHtmlElementBuilder AddTable<T>(T tableRow);
+
+    /// <summary>
     /// Adds an image to the document
     /// </summary>
     /// <param name="name">The name of the image</param>
@@ -83,4 +91,24 @@ public interface IHtmlDocumentBuilder
     /// <param name="href">The file path of the style sheet</param>
     /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
     public IHtmlDocumentBuilder AddStylesheetByRef(string href, string type = "text/css");
+
+    /// <summary>
+    /// Opens a div element
+    /// </summary>
+    /// <param name="content">The content</param>
+    /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+    public IHtmlElementBuilder AddDivStart();
+
+    /// <summary>
+    /// Closes a div element
+    /// </summary>
+    /// <param name="content">The content</param>
+    /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+    public IHtmlElementBuilder AddDivEnd();
+
+    /// <summary>
+    /// Builds the html document
+    /// </summary>
+    /// <returns><see cref="HtmlDocument"/></returns>
+    public HtmlDocument Build();
 }

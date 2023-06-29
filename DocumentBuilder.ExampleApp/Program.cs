@@ -4,18 +4,30 @@ using DocumentBuilder.Excel.Options;
 using DocumentBuilder.Markdown.Options;
 using DocumentBuilder.Core.Enumerations;
 using DocumentBuilder.Html.Options;
+using DocumentBuilder.Html;
 
 Console.WriteLine("DocumentBuilder - Example Program");
 Console.WriteLine("Running this program will build some example documents, displaying how this library can be used");
 
-var markdownDocumentFilePath = ".\\rick-astley-never-gonna-give-you-up.md";
+var up = "..\\..\\..";
+
+var markdownDocumentFilePath = $"\\Resources\\rick-astley-never-gonna-give-you-up.md";
+var fullMarkdownDocumentFilePath = $"{up}{markdownDocumentFilePath}";
 Console.WriteLine($"Creating an example markdown document at {markdownDocumentFilePath}");
-await CreateExampleMarkdownDocument(markdownDocumentFilePath);
+await CreateExampleMarkdownDocument(fullMarkdownDocumentFilePath);
 
-var excelDocumentFilePath = ".\\my-favorite-songs.xlsx";
+var htmlDocumentFilePath = "\\Resources\\rick-astley-never-gonna-give-you-up.html";
+var fullHtmlDocumentFilePath = $"{up}{htmlDocumentFilePath}";
+Console.WriteLine($"Creating an example html document at {htmlDocumentFilePath}");
+await CreateExampleHtmlDocument(fullHtmlDocumentFilePath);
+
+var excelDocumentFilePath = "\\Resources\\my-favorite-songs.xlsx";
+var fullExcelDocumentFilePath = $"{up}{excelDocumentFilePath}";
 Console.WriteLine($"Creating an example excel document at {excelDocumentFilePath}");
-CreateExampleExcelDocument(excelDocumentFilePath);
+CreateExampleExcelDocument(fullExcelDocumentFilePath);
 
+Console.WriteLine($"Example documents have been created at their stated path, press any key to continue...");
+Console.ReadKey();
 
 async static Task CreateExampleMarkdownDocument(string filePath)
 {
@@ -26,6 +38,9 @@ async static Task CreateExampleMarkdownDocument(string filePath)
         .WithMarkdownTableOptions(new MarkdownTableOptions())
         .Build();
 
+    // Or just use the defaults
+    options = new MarkdownDocumentOptions();
+
     // Example of how you can use a POCO to create tables
     var songDetails = new SongDetails
     {
@@ -35,10 +50,10 @@ async static Task CreateExampleMarkdownDocument(string filePath)
         Released = new DateOnly(1987, 7, 27),
     };
 
-    // Create the markdown document
+    // Create the markdown document, options are optional
     var markdownDocument = new MarkdownDocumentBuilder(options)
         .AddHeader1("Rick Astley - Never gonna give you up")
-        .AddTable(songDetails)
+        //.AddTable(songDetails)
         .AddImage("rick-astley", ".\\Resources\\rick-astley.jpg", caption: "Rick Astley performing his hit song")
         .AddHorizontalRule()
         .AddHeader2("Verse 1")
@@ -92,9 +107,12 @@ async static Task CreateExampleHtmlDocument(string filePath)
 {
     // (Optional) Create a MarkdownDocumentOptions instance for configuring specifics
     var options = new HtmlDocumentOptionsBuilder()
-        .WithIndentationProvider(IndentationType.Spaces, 2)
-        .WithNewLineProvider(LineEndings.Environment)
+        .WithIndentationProvider(IndentationType.Tabs, 1)
+        .WithNewLineProvider(LineEndings.Linux)
         .Build();
+
+    // Or just use the defaults
+    options = new HtmlDocumentOptions();
 
     // Example of how you can use a POCO to create tables
     var songDetails = new SongDetails
@@ -105,46 +123,25 @@ async static Task CreateExampleHtmlDocument(string filePath)
         Released = new DateOnly(1987, 7, 27),
     };
 
-    // Create the markdown document
-    var markdownDocument = new HtmlDocumentBuilder(options)
-        .AddHeader1("Rick Astley - Never gonna give you up").With
-        .AddTable(songDetails)
-        .AddImage("rick-astley", ".\\Resources\\rick-astley.jpg", caption: "Rick Astley performing his hit song")
-        .AddHeader2("Verse 1")
-        .AddParagraph("We're no strangers to love. You know the rules and so do I (do I). A full commitment's what I'm thinking of. You wouldn't get this from any other guy")
-        .AddParagraph("I just wanna tell you how I'm feeling. Gotta make you understand")
-        .AddHeader2("Chorus")
-        .AddParagraph("Never gonna give you up. Never gonna let you down. Never gonna run around and desert you. Never gonna make you cry. Never gonna say goodbye. Never gonna tell a lie and hurt you")
+    // Create the markdown document, options are optional
+    var htmlDocument = new HtmlDocumentBuilder(options)
+        .AddDivStart().WithId("content")
+            .AddHeader1("Rick Astley - Never gonna give you up").WithClass("title").WithClass("large")
+            //.AddTable(songDetails)
+            .AddImage("rick-astley", ".\\Resources\\rick-astley.jpg", caption: "Rick Astley performing his hit song")
+            .AddDivStart().WithClass("verse")
+                .AddHeader2("Verse 1")
+                .AddParagraph("We're no strangers to love. You know the rules and so do I (do I). A full commitment's what I'm thinking of. You wouldn't get this from any other guy")
+                .AddParagraph("I just wanna tell you how I'm feeling. Gotta make you understand")
+            .AddDivEnd()
+            .AddDivStart().WithClass("chorus")
+                .AddHeader2("chorus")
+                .AddParagraph("Never gonna give you up. Never gonna let you down. Never gonna run around and desert you. Never gonna make you cry. Never gonna say goodbye. Never gonna tell a lie and hurt you")
+            .AddDivEnd()
+        .AddDivEnd()
         .Build();
 
     // Save the markdown document (either by stream, or by providing a filepath directly)
     using var fileStream = File.Create(filePath);
-    await markdownDocument.SaveAsync(fileStream);
+    await htmlDocument.SaveAsync(fileStream);
 }
-
-//var styleSheet = "h1 {\r\n  color: blue;\r\n}\r\np {\r\n  color: red;\r\n}";
-//using var cssStream = new MemoryStream();
-//var writer = new StreamWriter(cssStream);
-//writer.Write(styleSheet);
-//writer.Flush();
-//cssStream.Seek(0, SeekOrigin.Begin);
-
-//using var pdfFileStream = File.Create("./test.pdf");
-//using var htmlFileStream = File.Create("./test.html");
-//var htmlDocumentBuilder = new HtmlDocumentBuilder()
-//    .AddHeader1("A Large header").WithClass("large").WithId("header-large-1").WithAttribute("my-custom-attribute", "a specific value");
-//    .AddParagraph("Should be red");
-
-//await htmlDocumentBuilder.BuildAsync(htmlFileStream);
-//await htmlDocumentBuilder.BuildAsPdfAsync(pdfFileStream, cssStream);
-
-//using var htmlFileStream = File.Create("./test1.html");
-
-//var htmlDocumentBuilder = new HtmlDocumentBuilder()
-//    .AddHeader1("A Large header")
-//        .WithClass("large")
-//        .WithId("header-large-1")
-//        .WithAttribute("my-custom-attribute", "a specific value")
-//        .AddStylesheetByRef("mystyle.css");
-
-//htmlDocumentBuilder.BuildAsync(htmlFileStream);

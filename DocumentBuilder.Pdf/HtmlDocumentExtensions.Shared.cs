@@ -1,5 +1,5 @@
 ﻿using DocumentBuilder.Helpers;
-using DocumentBuilder.Interfaces;
+using DocumentBuilder.Html.Model;
 using TheArtOfDev.HtmlRenderer.Core;
 using TheArtOfDev.HtmlRenderer.PdfSharp;
 
@@ -52,10 +52,10 @@ namespace DocumentBuilder.Pdf
             return PdfGenerator.ParseStyleSheet(styleSheet);
         }
 
-        private static async Task<string> GetHtml(IHtmlDocumentBuilder htmlDocumentBuilder)
+        private static async Task<string> GetHtml(HtmlDocument htmlDocument)
         {
             var htmlDocumentStream = new MemoryStream();
-            await htmlDocumentBuilder.BuildAsync(htmlDocumentStream);
+            await htmlDocument.SaveAsync(htmlDocumentStream);
             return StreamHelper.GetStreamContents(htmlDocumentStream);
         }
     }
