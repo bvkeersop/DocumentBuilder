@@ -12,10 +12,10 @@ public class OrderedList<TValue> : List<TValue>, IMarkdownElement
         Value = value;
     }
 
-    public ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions args)
+    public string ToMarkdown(MarkdownDocumentOptions options)
     {
         var sb = new StringBuilder();
-        var newLine = args.NewLineProvider.GetNewLine();
+        var newLine = options.NewLineProvider.GetNewLine();
 
         var index = 1;
         foreach (var item in Value)
@@ -28,7 +28,6 @@ public class OrderedList<TValue> : List<TValue>, IMarkdownElement
             index++;
         }
 
-        var list = sb.ToString();
-        return new ValueTask<string>(list);
+        return sb.ToString();
     }
 }

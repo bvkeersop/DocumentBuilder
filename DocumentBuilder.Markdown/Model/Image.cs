@@ -16,17 +16,16 @@ internal class Image : IMarkdownElement
         Caption = caption;
     }
 
-    public ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions args)
+    public string ToMarkdown(MarkdownDocumentOptions options)
     {
         var sb = new StringBuilder();
-        var newLine = args.NewLineProvider.GetNewLine();
 
         sb.Append("![")
             .Append(Name)
             .Append("](")
             .Append(Path)
             .Append(')')
-            .Append(newLine);
+            .Append(options.NewLineProvider.GetNewLine());
 
         if (Caption != null)
         {
@@ -35,7 +34,6 @@ internal class Image : IMarkdownElement
                 .Append('*');
         }
 
-        var markdown = sb.ToString();
-        return new ValueTask<string>(markdown);
+        return sb.ToString();
     }
 }

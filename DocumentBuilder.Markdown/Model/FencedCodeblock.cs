@@ -15,17 +15,13 @@ internal class FencedCodeblock : IMarkdownElement
         _language = language;
     }
 
-    public ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions args)
-    {
-        var sb = new StringBuilder();
-        sb.Append(Indicators.Codeblock);
-        sb.Append(_language);
-        sb.Append(args.NewLineProvider.GetNewLine());
-        sb.Append(_codeblock);
-        sb.Append(args.NewLineProvider.GetNewLine());
-        sb.Append(Indicators.Codeblock);
-        sb.Append(args.NewLineProvider.GetNewLine());
-        var markdown = sb.ToString();
-        return new ValueTask<string>(markdown);
-    }
+    public string ToMarkdown(MarkdownDocumentOptions options)
+        => new StringBuilder()
+        .Append(Indicators.Codeblock)
+        .Append(_language)
+        .Append(args.NewLineProvider.GetNewLine())
+        .Append(_codeblock)
+        .Append(args.NewLineProvider.GetNewLine())
+        .Append(Indicators.Codeblock)
+        .ToString();
 }

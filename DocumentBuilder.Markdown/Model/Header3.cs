@@ -8,5 +8,5 @@ internal class Header3 : Header, IMarkdownElement
     {
     }
 
-    public ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions args) => CreateMarkdownHeader();
+    public string ToMarkdown(MarkdownDocumentOptions options) => CreateMarkdownHeader();
 }

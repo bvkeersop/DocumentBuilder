@@ -9,7 +9,6 @@ using DocumentBuilder.Core.Model;
 using DocumentBuilder.Utilities;
 using System.Text;
 using Alignment = DocumentBuilder.Core.Enumerations.Alignment;
-using Microsoft.Extensions.Options;
 
 namespace DocumentBuilder.Markdown.Model;
 
@@ -37,65 +36,33 @@ public class Table<TRow> : IMarkdownElement
         TableCells = CreateEnumerableOfTableCells();
     }
 
-    public async ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions options)
+    public string ToMarkdown(MarkdownDocumentOptions options)
     {
-        return await CreateMarkdownTableAsync().ConfigureAwait(false);
+        var sb = new StringBuilder();
+        CreateMarkdownTableHeaderAsync(sb);
+        CreateMarkdownTableDividerAsync(sb);
+        CreateMarkdownTableRowsAsync(sb);
+        return sb.ToString();
     }
 
-    private static void ValidateRows(IEnumerable<TRow> tableRows)
+    private void CreateMarkdownTableHeaderAsync(StringBuilder sb)
     {
-        var genericType = typeof(TRow);
-        foreach (var tableRow in tableRows)
-        {
-            var tableRowType = tableRow?.GetType();
-            if (tableRowType != genericType)
-            {
-                var message = $"The type {tableRowType} does not equal the provided generic parameter {genericType}, base types are not supported";
-                throw new DocumentBuilderException(DocumentBuilderErrorCode.ProvidedGenericTypeForTableDoesNotEqualRunTimeType, message);
-            }
-        }
-    }
-
-    private async Task<string> CreateMarkdownTableAsync()
-    {
-        var outputStream = new MemoryStream();
-        await CreateMarkdownTableAsync(outputStream);
-        return StreamHelper.GetStreamContents(outputStream);
-    }
-
-    private async Task CreateMarkdownTableAsync(Stream outputStream)
-    {
-        if (!outputStream.CanWrite)
-        {
-            throw new DocumentBuilderException(DocumentBuilderErrorCode.StreamIsNotWriteable, nameof(outputStream));
-        }
-
-        var streamWriter = new StreamWriter(outputStream, leaveOpen: true);
-        using var markdownStreamWriter = new MarkdownStreamWriter(streamWriter, NewLineProvider);
-        await CreateMarkdownTableHeaderAsync(markdownStreamWriter).ConfigureAwait(false);
-        await CreateMarkdownTableDividerAsync(markdownStreamWriter).ConfigureAwait(false);
-        await CreateMarkdownTableRowsAsync(markdownStreamWriter).ConfigureAwait(false);
-        await markdownStreamWriter.FlushAsync().ConfigureAwait(false);
-    }
-
-    private async Task CreateMarkdownTableHeaderAsync(IMarkdownStreamWriter markdownStreamWriter)
-    {
-        await markdownStreamWriter.WriteAsync(_columnDivider).ConfigureAwait(false);
+        sb.Append(_columnDivider);
         var numberOfColumns = TableValues.NumberOfColumns;
 
         for (var i = 0; i < numberOfColumns; i++)
         {
             var columnName = GetColumnName(i, Options.BoldColumnNames);
             var amountOfWhiteSpace = DetermineAmountOfWhiteSpace(columnName, i);
-            await CreateMarkdownTableCellAsync(markdownStreamWriter, columnName, amountOfWhiteSpace);
+            CreateMarkdownTableCellAsync(sb, columnName, amountOfWhiteSpace);
         }
 
-        await markdownStreamWriter.WriteNewLineAsync();
+        sb.Append(NewLineProvider.GetNewLine());
     }
 
-    private async Task CreateMarkdownTableDividerAsync(IMarkdownStreamWriter markdownStreamWriter)
+    private void CreateMarkdownTableDividerAsync(StringBuilder sb)
     {
-        await markdownStreamWriter.WriteAsync(_columnDivider).ConfigureAwait(false);
+        sb.Append(_columnDivider);
         var numberOfColumns = TableValues.NumberOfColumns;
 
         for (var i = 0; i < numberOfColumns; i++)
@@ -105,10 +72,10 @@ public class Table<TRow> : IMarkdownElement
             var divider = new string(_rowDivider, numberOfDividerCellCharacters);
             var alignment = GetAlignment(columnAttribute);
             var alignedDivider = AddAlignment(divider, alignment);
-            await CreateMarkdownTableCellAsync(markdownStreamWriter, alignedDivider, 0, whiteSpaceCharacter: _rowDivider);
+            CreateMarkdownTableCellAsync(sb, alignedDivider, 0, whiteSpaceCharacter: _rowDivider);
         }
 
-        await markdownStreamWriter.WriteNewLineAsync();
+        sb.Append(NewLineProvider.GetNewLine());
     }
 
     private int GetNumberOfCharactersForDividerCell(int columnIndex)
@@ -152,46 +119,40 @@ public class Table<TRow> : IMarkdownElement
         return cellDividerValue;
     }
 
-    private async Task CreateMarkdownTableRowsAsync(IMarkdownStreamWriter markdownStreamWriter)
+    private void CreateMarkdownTableRowsAsync(StringBuilder sb)
     {
         var numberOfRows = TableValues.NumberOfRows;
 
         for (var i = 0; i < numberOfRows; i++)
         {
             var currentRow = TableValues.GetRow(i);
-            await CreateMarkdownTableRowAsync(markdownStreamWriter, currentRow);
-            await markdownStreamWriter.WriteNewLineAsync();
+            CreateMarkdownTableRowAsync(sb, currentRow);
+            sb.Append(NewLineProvider.GetNewLine());
         }
     }
 
-    private async Task CreateMarkdownTableRowAsync(IMarkdownStreamWriter markdownStreamWriter, TableCell[] tableRow)
+    private void CreateMarkdownTableRowAsync(StringBuilder sb, TableCell[] tableRow)
     {
-        await markdownStreamWriter.WriteAsync(_columnDivider).ConfigureAwait(false);
+        sb.Append(_columnDivider);
         for (var i = 0; i < tableRow.Length; i++)
         {
             var cellValue = tableRow[i].Value;
             var amountOfWhiteSpace = DetermineAmountOfWhiteSpace(cellValue, i);
-            await CreateMarkdownTableCellAsync(markdownStreamWriter, cellValue, amountOfWhiteSpace);
+            CreateMarkdownTableCellAsync(sb, cellValue, amountOfWhiteSpace);
         }
     }
 
-    private static async Task CreateMarkdownTableCellAsync(IMarkdownStreamWriter markdownStreamWriter, string cellValue, int amountOfWhiteSpace, char whiteSpaceCharacter = ' ')
+    private void CreateMarkdownTableCellAsync(StringBuilder sb, string cellValue, int amountOfWhiteSpace, char whiteSpaceCharacter = ' ')
     {
         var whiteSpace = CreateRequiredWhiteSpace(amountOfWhiteSpace, whiteSpaceCharacter);
-        var stringBuilder = new StringBuilder();
-        stringBuilder
-            .Append(_whiteSpace)
+        sb.Append(_whiteSpace)
             .Append(cellValue)
             .Append(whiteSpace)
             .Append(_whiteSpace)
             .Append(_columnDivider);
-        await markdownStreamWriter.WriteAsync(stringBuilder.ToString());
     }
 
-    private static string CreateRequiredWhiteSpace(int amountOfWhiteSpace, char whiteSpaceCharacter)
-    {
-        return new string(whiteSpaceCharacter, amountOfWhiteSpace);
-    }
+    private static string CreateRequiredWhiteSpace(int amountOfWhiteSpace, char whiteSpaceCharacter) => new(whiteSpaceCharacter, amountOfWhiteSpace);
 
     private int DetermineAmountOfWhiteSpace(string value, int currentColumnIndex)
     {
@@ -285,5 +246,19 @@ public class Table<TRow> : IMarkdownElement
         var shiftedTableCells = TableValues.TableCells.Select(t => t.ShiftRow());
 
         return columnTableCells.Concat(shiftedTableCells);
+    }
+
+    private static void ValidateRows(IEnumerable<TRow> tableRows)
+    {
+        var genericType = typeof(TRow);
+        foreach (var tableRow in tableRows)
+        {
+            var tableRowType = tableRow?.GetType();
+            if (tableRowType != genericType)
+            {
+                var message = $"The type {tableRowType} does not equal the provided generic parameter {genericType}, base types are not supported";
+                throw new DocumentBuilderException(DocumentBuilderErrorCode.ProvidedGenericTypeForTableDoesNotEqualRunTimeType, message);
+            }
+        }
     }
 }

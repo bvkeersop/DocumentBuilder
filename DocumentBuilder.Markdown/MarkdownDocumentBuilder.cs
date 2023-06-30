@@ -127,8 +127,7 @@ namespace DocumentBuilder.DocumentBuilders
         {
             _ = tableRow ?? throw new ArgumentNullException(nameof(tableRow));
             var tableRows = new T[] { tableRow };
-            AddTable(tableRows);
-            return this;
+            return AddTableInternal(tableRows);
         }
 
         /// <summary>
@@ -140,7 +139,11 @@ namespace DocumentBuilder.DocumentBuilders
         public IMarkdownDocumentBuilder AddTable<T>(IEnumerable<T> tableRows)
         {
             _ = tableRows ?? throw new ArgumentNullException(nameof(tableRows));
+            return AddTableInternal(tableRows);
+        }
 
+        private IMarkdownDocumentBuilder AddTableInternal<T>(IEnumerable<T> tableRows)
+        {
             if (!_enumerableValidator.ShouldRender(tableRows))
             {
                 return this;

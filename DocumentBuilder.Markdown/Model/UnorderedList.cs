@@ -13,10 +13,10 @@ public class UnorderedList<TValue> : IMarkdownElement
         Value = value;
     }
 
-    public ValueTask<string> ToMarkdownAsync(MarkdownDocumentOptions args)
+    public string ToMarkdown(MarkdownDocumentOptions options)
     {
         var sb = new StringBuilder();
-        var newLine = args.NewLineProvider.GetNewLine();
+        var newLine = options.NewLineProvider.GetNewLine();
 
         foreach (var item in Value)
         {
@@ -26,7 +26,6 @@ public class UnorderedList<TValue> : IMarkdownElement
                 .Append(newLine);
         }
 
-        var list = sb.ToString();
-        return new ValueTask<string>(list);
+        return sb.ToString();
     }
 }

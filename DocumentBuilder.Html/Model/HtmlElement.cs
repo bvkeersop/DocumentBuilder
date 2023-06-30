@@ -16,6 +16,17 @@ public abstract class HtmlElement : IHtmlElement
         Value = value;
     }
 
+    public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
+    {
+        var htmlStartTag = GetHtmlStartTagWithAttributes();
+        var htmlEndTag = GetHtmlEndTag();
+        var html = new StringBuilder().Append(htmlStartTag)
+            .Append(Value)
+            .Append(htmlEndTag)
+            .ToString();
+        return new ValueTask<string>(html);
+    }
+
     protected string GetHtmlStartTagWithAttributes()
     {
         if (Attributes.IsEmpty)
@@ -32,30 +43,4 @@ public abstract class HtmlElement : IHtmlElement
     }
 
     protected string GetHtmlEndTag() => Indicator.ToHtmlEndTag();
-
-    //protected static ValueTask<string> AddNewLine(string value, MarkdownDocumentOptions options)
-    //{
-    //    var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
-    //    var markdown = $"{value}{newLineProvider.GetNewLine()}";
-    //    return new ValueTask<string>(markdown);
-    //}
-
-    //protected static ValueTask<string> WrapWithIndentationAndNewLine(string value, HtmlDocumentOptions options, int indentationLevel)
-    //{
-    //    var newLineProvider = NewLineProviderFactory.Create(options.LineEndings);
-    //    var indenationProvider = IndentationProviderFactory.Create(options.IndentationType, options.IndentationSize, indentationLevel);
-    //    var html = $"{indenationProvider.GetIndentation(0)}{value}{newLineProvider.GetNewLine()}";
-    //    return new ValueTask<string>(html);
-    //}
-
-    public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
-    {
-        var htmlStartTag = GetHtmlStartTagWithAttributes();
-        var htmlEndTag = GetHtmlEndTag();
-        var html = new StringBuilder().Append(htmlStartTag)
-            .Append(Value)
-            .Append(htmlEndTag)
-            .ToString();
-        return new ValueTask<string>(html);
-    }
 }

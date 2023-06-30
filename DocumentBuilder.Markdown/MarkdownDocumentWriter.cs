@@ -24,11 +24,12 @@ internal class MarkdownDocumentWriter : IMarkdownDocumentWriter, IDisposable
     {
         for (var i = 0; i < markdownConvertables.Count(); i++)
         {
-            var markdown = await markdownConvertables.ElementAt(i).ToMarkdownAsync(options);
+            var markdown = markdownConvertables.ElementAt(i).ToMarkdown(options);
 
             if (i < markdownConvertables.Count() - 1)
             {
                 await _markdownStreamWriter.WriteLineAsync(markdown).ConfigureAwait(false);
+                await _markdownStreamWriter.WriteNewLineAsync().ConfigureAwait(false);
                 continue;
             }
 
