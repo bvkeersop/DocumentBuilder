@@ -22,37 +22,46 @@ public class Image : IHtmlElement
         Caption = caption;
     }
 
-    public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
+    private void AppendImageHtml(StringBuilder sb, string indentation, string newline) =>
+        sb.Append(indentation)
+        .Append('<')
+        .Append(Indicators.Image)
+        .Append("src=")
+        .Append('"').Append(Path).Append('"')
+        .Append('"').Append(Name).Append('"')
+        .Append("alt=").Append(Name).Append(" />")
+        .Append(newline);
+
+    private void AppendFigCaption(StringBuilder sb, string indentation, string newline) =>
+        sb.Append(indentation)
+        .Append(Indicators.FigCaption.ToHtmlStartTag())
+        .Append(Caption)
+        .Append(Indicators.FigCaption.ToHtmlEndTag())
+        .Append(newline);
+
+    public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0)
     {
         var newLine = options.NewLineProvider.GetNewLine();
         var indentationProvider = options.IndentationProvider;
+        var indentation0 = indentationProvider.GetIndentation(indentationLevel);
+        var indentation1 = indentationProvider.GetIndentation(indentationLevel + 1);
 
-        var indentation0 = indentationProvider.GetIndentation(0);
-        var indentation1 = indentationProvider.GetIndentation(1);
-        var imageHtml = $"<{Indicators.Image} src=\"{Path}\" alt=\"{Name}\" />";
-        var figureStartTag = GetHtmlStartTagWithAttributes();
-        var figureEndTag = Indicators.Figure.ToHtmlEndTag();
+        var sb = new StringBuilder();
+
+        sb.Append(indentation0)
+          .Append(Indicator.ToHtmlStartTag());
+
+        AppendImageHtml(sb, indentation1, newLine);
 
         if (Caption is null)
         {
-            var valueWithoutCaption =
-                $"{indentation0}{figureStartTag}{newLine}" +
-                    $"{indentation1}{imageHtml}{newLine}" +
-                $"{indentation0}{figureEndTag}{newLine}";
-
-            return new ValueTask<string>(valueWithoutCaption);
+            AppendFigCaption(sb, indentation1, newLine);
         }
 
-        var figCaptionStartTag = GetHtmlStartTagWithAttributes();
-        var figCaptionEndTag = Indicators.FigCaption.ToHtmlEndTag();
+        sb.Append(indentation0)
+          .Append(Indicator.ToHtmlEndTag());
 
-        var valueWithCaption =
-            $"{indentation0}{figureStartTag}{newLine}" +
-                $"{indentation1}{imageHtml}{newLine}" +
-                $"{indentation1}{figCaptionStartTag}{Caption}{figCaptionEndTag}{newLine}" +
-            $"{indentation0}{figureEndTag}{newLine}";
-
-        return new ValueTask<string>(valueWithCaption);
+        return sb.ToString();
     }
 
     protected string GetHtmlStartTagWithAttributes()

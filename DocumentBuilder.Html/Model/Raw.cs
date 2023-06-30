@@ -12,7 +12,7 @@ internal class Raw : IHtmlElement
         Value = value;
     }
 
-    public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
+    public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0)
     {
         throw new NotImplementedException();
     }

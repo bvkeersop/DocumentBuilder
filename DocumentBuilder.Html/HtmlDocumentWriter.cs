@@ -2,7 +2,6 @@
 using DocumentBuilder.Html.Extensions;
 using DocumentBuilder.Html.Model;
 using DocumentBuilder.Html.Options;
-using DocumentBuilder.Interfaces;
 
 namespace DocumentBuilder.Html;
 
@@ -39,12 +38,25 @@ internal class HtmlDocumentWriter : IHtmlDocumentWriter
 
     private async Task WriteBodyElementAsync(HtmlDocument htmlDocument, IHtmlStreamWriter htmlStreamWriter)
     {
-        await htmlStreamWriter.WriteLineAsync(Indicators.Body.ToHtmlStartTag(), 1).ConfigureAwait(false);
+        var currentIndentationLevel = 1;
+        await htmlStreamWriter.WriteLineAsync(Indicators.Body.ToHtmlStartTag(), currentIndentationLevel).ConfigureAwait(false);
 
+        currentIndentationLevel++;
         foreach (var element in htmlDocument.Elements)
         {
-            var html = await element.ToHtmlAsync(_options, 2);
+            var html = element.ToHtml(_options, 2);
+
+            if (IsDivEnd(element))
+            {
+                currentIndentationLevel--;
+            }
+
             await htmlStreamWriter.WriteAsync(html).ConfigureAwait(false);
+
+            if (IsDivStart(element))
+            {
+                currentIndentationLevel++;
+            }
         }
 
         await htmlStreamWriter.WriteLineAsync(Indicators.Body.ToHtmlEndTag(), 1).ConfigureAwait(false);
@@ -54,12 +66,19 @@ internal class HtmlDocumentWriter : IHtmlDocumentWriter
     {
         await htmlStreamWriter.WriteLineAsync(Indicators.Head.ToHtmlStartTag()).ConfigureAwait(false);
 
+        await htmlStreamWriter.WriteLineAsync(Indicators.Title.ToHtmlStartTag(), 1).ConfigureAwait(false);
+
+        await htmlStreamWriter.WriteLineAsync(Indicators.Title.ToHtmlEndTag()).ConfigureAwait(false);
+
         foreach (var link in htmlDocument.Links)
         {
-            var linkAsHtmlElement = await link.ToHtmlAsync(_options);
+            var linkAsHtmlElement = link.ToHtml(_options);
             await htmlStreamWriter.WriteLineAsync(linkAsHtmlElement).ConfigureAwait(false);
         }
 
         await htmlStreamWriter.WriteLineAsync(Indicators.Head.ToHtmlEndTag()).ConfigureAwait(false);
     }
+
+    private static bool IsDivStart(IHtmlElement htmlElement) => htmlElement is DivStart;
+    private static bool IsDivEnd(IHtmlElement htmlElement) => htmlElement is DivEnd;
 }

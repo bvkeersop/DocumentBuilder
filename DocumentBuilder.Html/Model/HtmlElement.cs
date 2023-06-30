@@ -16,16 +16,12 @@ public abstract class HtmlElement : IHtmlElement
         Value = value;
     }
 
-    public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
-    {
-        var htmlStartTag = GetHtmlStartTagWithAttributes();
-        var htmlEndTag = GetHtmlEndTag();
-        var html = new StringBuilder().Append(htmlStartTag)
+    public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0) 
+        => new StringBuilder()
+            .Append(GetHtmlStartTagWithAttributes())
             .Append(Value)
-            .Append(htmlEndTag)
+            .Append(GetHtmlEndTag())
             .ToString();
-        return new ValueTask<string>(html);
-    }
 
     protected string GetHtmlStartTagWithAttributes()
     {

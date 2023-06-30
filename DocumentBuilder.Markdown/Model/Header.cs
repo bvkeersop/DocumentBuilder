@@ -1,8 +1,9 @@
-﻿using System.Text;
+﻿using DocumentBuilder.Markdown.Options;
+using System.Text;
 
 namespace DocumentBuilder.Markdown.Model;
 
-internal abstract class Header
+internal abstract class Header : IMarkdownElement
 {
     public string Indicator { get; }
     public string Value { get; }
@@ -13,13 +14,10 @@ internal abstract class Header
         Value = value;
     }
 
-    protected ValueTask<string> CreateMarkdownHeader()
-    {
-        var sb = new StringBuilder();
-        sb.Append(Indicator);
-        sb.Append(' ');
-        sb.Append(Value);
-        var markdown = sb.ToString();
-        return new ValueTask<string>(markdown);
-    }
+    public string ToMarkdown(MarkdownDocumentOptions options)
+        => new StringBuilder()
+            .Append(Indicator)
+            .Append(' ')
+            .Append(Value)
+            .ToString();
 }

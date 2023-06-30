@@ -17,5 +17,6 @@
         MultipleWorksheetsFound,
         WorksheetNotFound,
         WorksheetNameAlreadyExists,
+        NoDivElementToClose,
     }
 }

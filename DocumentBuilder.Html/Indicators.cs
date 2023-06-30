@@ -5,6 +5,7 @@
         public const string DocType = "<!DOCTYPE html>";
         public const string Html = "html";
         public const string Head = "head";
+        public const string Title = "title";
         public const string Link = "link";
         public const string Body = "body";
         public const string Div = "div";

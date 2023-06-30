@@ -146,7 +146,7 @@ public class Table<TRow> : IHtmlElement
         await htmlStreamWriter.WriteLineAsync(stringBuilder.ToString(), indentation).ConfigureAwait(false);
     }
 
-    public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
+    public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0)
     {
         throw new NotImplementedException();
     }

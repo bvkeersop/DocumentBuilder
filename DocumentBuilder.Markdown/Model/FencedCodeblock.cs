@@ -19,9 +19,9 @@ internal class FencedCodeblock : IMarkdownElement
         => new StringBuilder()
         .Append(Indicators.Codeblock)
         .Append(_language)
-        .Append(args.NewLineProvider.GetNewLine())
+        .Append(options.NewLineProvider.GetNewLine())
         .Append(_codeblock)
-        .Append(args.NewLineProvider.GetNewLine())
+        .Append(options.NewLineProvider.GetNewLine())
         .Append(Indicators.Codeblock)
         .ToString();
 }

@@ -1,8 +1,15 @@
-﻿using DocumentBuilder.Interfaces;
-using DocumentBuilder.Utilities;
+﻿using DocumentBuilder.Utilities;
 
 namespace DocumentBuilder.Html
 {
+    public interface IHtmlStreamWriter : IDisposable
+    {
+        Task WriteLineAsync(string value, int indenationLevel = 0);
+        Task WriteAsync(string value, int indenationLevel = 0);
+        Task WriteNewLineAsync();
+        Task FlushAsync();
+    }
+
     internal class HtmlStreamWriter : IHtmlStreamWriter
     {
         private bool _disposedValue;

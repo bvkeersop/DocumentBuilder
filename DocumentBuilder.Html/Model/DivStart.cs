@@ -8,5 +8,5 @@ public class DivStart : IHtmlElement
 {
     public Attributes Attributes { get; } = new Attributes();
 
-    public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0) => new(Indicators.Div.ToHtmlStartTag());
+    public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0) => new(Indicators.Div.ToHtmlStartTag());
 }

@@ -34,7 +34,7 @@ public abstract class ListBase<TValue> : IHtmlElement
 
     protected string GetHtmlEndTag() => Indicator.ToHtmlEndTag();
 
-    public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
+    public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0)
     {
         var indentationProvider = options.IndentationProvider;
         var newLineProvider = options.NewLineProvider;
@@ -55,7 +55,6 @@ public abstract class ListBase<TValue> : IHtmlElement
             .Append(GetHtmlEndTag())
             .Append(newLineProvider.GetNewLine());
 
-        var element = sb.ToString();
-        return new ValueTask<string>(element);
+        return sb.ToString();
     }
 }

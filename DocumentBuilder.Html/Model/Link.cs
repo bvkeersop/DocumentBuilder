@@ -16,9 +16,8 @@ public class Link
         Type = type;
     }
 
-    public ValueTask<string> ToHtmlAsync(HtmlDocumentOptions options, int indentationLevel = 0)
+    public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0)
     {
-        var value = $"<{Indicators.Link} rel=\"{Rel}\" type=\"{Type}\" href=\"{Href}\" />";
-        return new ValueTask<string>(value);
+        return $"<{Indicators.Link} rel=\"{Rel}\" type=\"{Type}\" href=\"{Href}\" />";
     }
 }
