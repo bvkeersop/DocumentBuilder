@@ -29,9 +29,10 @@ public class Figure : IHtmlElement
         .Append(' ')
         .Append("src=")
         .Append('"').Append(Path).Append('"')
+        .Append(' ')
         .Append("alt=")
         .Append('"').Append(Name).Append('"')
-        .Append(" />")
+        .Append("/>")
         .Append(newline);
 
     private void AppendFigCaption(StringBuilder sb, string indentation, string newline) =>
