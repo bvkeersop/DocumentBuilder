@@ -28,7 +28,7 @@ internal class HtmlDocumentWriter : IHtmlDocumentWriter
         await htmlStreamWriter.WriteLineAsync(Indicators.DocType).ConfigureAwait(false);
         await htmlStreamWriter.WriteLineAsync(Indicators.Html.ToHtmlStartTag()).ConfigureAwait(false);
 
-        await WriteHeadElementAsync(htmlDocument, htmlStreamWriter).ConfigureAwait(false);
+        await WriteHeadElementAsync(htmlDocument.Header, htmlStreamWriter).ConfigureAwait(false);
         await WriteBodyElementAsync(htmlDocument, htmlStreamWriter).ConfigureAwait(false);
 
         await htmlStreamWriter.WriteLineAsync(Indicators.Html.ToHtmlEndTag()).ConfigureAwait(false);
@@ -61,17 +61,17 @@ internal class HtmlDocumentWriter : IHtmlDocumentWriter
         await htmlStreamWriter.WriteLineAsync(Indicators.Body.ToHtmlEndTag(), 1).ConfigureAwait(false);
     }
 
-    private async Task WriteHeadElementAsync(HtmlDocument htmlDocument, IHtmlStreamWriter htmlStreamWriter)
+    private static async Task WriteHeadElementAsync(HtmlDocumentHeader header, IHtmlStreamWriter htmlStreamWriter)
     {
         await htmlStreamWriter.WriteLineAsync(Indicators.Head.ToHtmlStartTag()).ConfigureAwait(false);
         await htmlStreamWriter.WriteAsync(Indicators.Title.ToHtmlStartTag(), 1).ConfigureAwait(false);
         await htmlStreamWriter.WriteAsync(Indicators.Title.ToHtmlEndTag()).ConfigureAwait(false);
         await htmlStreamWriter.WriteNewLineAsync().ConfigureAwait(false);
 
-        foreach (var link in htmlDocument.Links)
+        foreach (var element in header.Elements)
         {
-            var linkAsHtmlElement = link.ToHtml(_options);
-            await htmlStreamWriter.WriteLineAsync(linkAsHtmlElement).ConfigureAwait(false);
+            var html = element.ToHtml();
+            await htmlStreamWriter.WriteLineAsync(html).ConfigureAwait(false);
         }
 
         await htmlStreamWriter.WriteLineAsync(Indicators.Head.ToHtmlEndTag()).ConfigureAwait(false);

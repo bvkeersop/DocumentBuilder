@@ -36,15 +36,14 @@ public interface IHtmlElementBuilder : IHtmlDocumentBuilder
 
 public class HtmlElementBuilder : HtmlDocumentBuilder, IHtmlElementBuilder
 {
-    private readonly HtmlDocumentBuilder _htmlDocumentBuilder;
-
     // Can be null in case the rendering strategy is set to NullOrEmptyEnumerableRenderingStrategy.SkipRender
     public IHtmlElement? HtmlElement { get; }
 
-    public HtmlElementBuilder(IHtmlElement? htmlElement, HtmlDocumentBuilder htmlDocumentBuilder) : base(htmlDocumentBuilder)
+    public HtmlElementBuilder(
+        IHtmlElement? htmlElement, 
+        HtmlDocumentBuilder htmlDocumentBuilder) : base(htmlDocumentBuilder)
     {
         HtmlElement = htmlElement;
-        _htmlDocumentBuilder = htmlDocumentBuilder;
     }
 
     /// <summary>
@@ -76,7 +75,7 @@ public class HtmlElementBuilder : HtmlDocumentBuilder, IHtmlElementBuilder
     /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
     public IHtmlElementBuilder WithStyle(string style)
     {
-        HtmlElement?.Attributes.Add(AttributeNames.Style, style);
+        HtmlElement?.InlineStyles.SetValue(style);
         return this;
     }
 

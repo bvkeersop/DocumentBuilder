@@ -10,7 +10,6 @@ public class Metadata
 {
     public int NrOfDivStartElements { get; set; } = 0;
     public int NrOfDivEndElements { get; set; } = 0;
-
     public bool DoesDivEndCloseADivStartTag() => NrOfDivEndElements >= NrOfDivStartElements;
 }
 
@@ -22,6 +21,7 @@ public class HtmlDocumentBuilder : IHtmlDocumentBuilder
     public HtmlDocument HtmlDocument { get; }
     public Metadata Metadata { get; }
 
+    // This constructor enables the use of the IHtmlElementBuilder
     protected HtmlDocumentBuilder(HtmlDocumentBuilder htmlDocumentBuilder)
     {
         Options = htmlDocumentBuilder.Options;
@@ -181,13 +181,13 @@ public class HtmlDocumentBuilder : IHtmlDocumentBuilder
     }
 
     /// <summary>
-    /// Adds an image to the document
+    /// Adds a figure to the document
     /// </summary>
     /// <param name="name">The name of the image</param>
     /// <param name="path">The path to the image</param>
     /// <param name="caption">The caption of the image</param>
     /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
-    public IHtmlElementBuilder AddImage(string name, string path, string? caption = null)
+    public IHtmlElementBuilder AddFigure(string name, string path, string? caption = null)
     {
         _ = name ?? throw new ArgumentNullException(nameof(name));
         _ = path ?? throw new ArgumentNullException(nameof(path));
@@ -244,14 +244,26 @@ public class HtmlDocumentBuilder : IHtmlDocumentBuilder
     }
 
     /// <summary>
-    /// Adds a stylesheet by reference
+    /// Directly adds a stylesheet by in the header
+    /// </summary>
+    /// <param name="href">The complete stylesheet</param>
+    /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
+    public IHtmlDocumentBuilder AddStylesheet(string stylesheetAsString)
+    {
+        var style = new Style(stylesheetAsString);
+        HtmlDocument.Header.AddHtmlHeaderElement(style);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a stylesheet by reference in the header
     /// </summary>
     /// <param name="href">The file path of the style sheet</param>
     /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
     public IHtmlDocumentBuilder AddStylesheetByRef(string href, string type = "text/css")
     {
         var link = new Link(Links.Stylesheet, href, type);
-        HtmlDocument.AddLink(link);
+        HtmlDocument.Header.AddHtmlHeaderElement(link);
         return this;
     }
 

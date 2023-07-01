@@ -1,9 +1,7 @@
 ﻿using DocumentBuilder.Constants;
-using DocumentBuilder.Html.Options;
-
 namespace DocumentBuilder.Html.Model;
 
-public class Link
+public class Link : IHtmlHeaderElement
 {
     public string Rel { get; }
     public string Href { get; }
@@ -16,8 +14,5 @@ public class Link
         Type = type;
     }
 
-    public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0)
-    {
-        return $"<{Indicators.Link} rel=\"{Rel}\" type=\"{Type}\" href=\"{Href}\" />";
-    }
+    public string ToHtml() => $"<{Indicators.Link} rel=\"{Rel}\" type=\"{Type}\" href=\"{Href}\" />";
 }

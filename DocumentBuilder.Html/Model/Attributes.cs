@@ -10,6 +10,11 @@ public class Attributes
         AttributeNames.Id
     };
 
+    private readonly Dictionary<string, string> _disallowedAttributes = new()
+    {
+        {  AttributeNames.Style, "please use the AddStyle() method to add inline styles" }
+    };
+
     private readonly IDictionary<string, HashSet<string>> _attributes = new Dictionary<string, HashSet<string>>();
     public int Count => _attributes.Count;
     public bool IsEmpty => Count <= 0;
@@ -18,6 +23,14 @@ public class Attributes
     {
         var shouldBeUnique = _uniqueAttributes.Contains(key);
         var containsKey = _attributes.ContainsKey(key);
+        var isNotAllowed = _attributes.ContainsKey(key);
+
+        if (isNotAllowed)
+        {
+            var info = _disallowedAttributes[key];
+            throw new DocumentBuilderException(DocumentBuilderErrorCode.AttributeNotAllowed,
+                $"Adding this attribute is not allowed, {info}");
+        }
 
         if (shouldBeUnique && containsKey)
         {

@@ -18,5 +18,6 @@
         WorksheetNotFound,
         WorksheetNameAlreadyExists,
         NoDivElementToClose,
+        AttributeNotAllowed,
     }
 }

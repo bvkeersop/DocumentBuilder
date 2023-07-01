@@ -7,8 +7,8 @@ public abstract class HtmlElement : IHtmlElement
 {
     public string Indicator { get; }
     public string Value { get; }
-
     public Attributes Attributes { get; } = new();
+    public InlineStyles InlineStyles { get; } = new();
 
     public HtmlElement(string indicator, string value)
     {
@@ -34,6 +34,7 @@ public abstract class HtmlElement : IHtmlElement
         var sb = new StringBuilder();
         sb.Append(Indicator)
             .Append(' ')
+            .Append(InlineStyles)
             .Append(Attributes);
         var element = sb.ToString();
         return element.ToHtmlStartTag();

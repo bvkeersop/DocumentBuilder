@@ -7,7 +7,7 @@ public class HtmlDocument
     private readonly IHtmlDocumentWriter _htmlDocumentWriter;
     private readonly HtmlDocumentOptions _options;
 
-    public IList<Link> Links { get; } = new List<Link>();
+    public HtmlDocumentHeader Header { get; } = new HtmlDocumentHeader();
     public IList<IHtmlElement> Elements { get; } = new List<IHtmlElement>();
 
     public HtmlDocument(HtmlDocumentOptions options, IHtmlDocumentWriter htmlDocumentWriter)
@@ -17,7 +17,6 @@ public class HtmlDocument
     }
 
     public void AddHtmlElement(IHtmlElement element) => Elements.Add(element);
-    public void AddLink(Link link) => Links.Add(link);
 
     /// <summary>
     /// Writes the document to the provided output stream

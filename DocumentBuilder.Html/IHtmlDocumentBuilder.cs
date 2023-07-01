@@ -70,13 +70,13 @@ public interface IHtmlDocumentBuilder
     IHtmlElementBuilder AddTable<T>(T tableRow);
 
     /// <summary>
-    /// Adds an image to the document
+    /// Adds a figure to the document
     /// </summary>
     /// <param name="name">The name of the image</param>
     /// <param name="path">The path to the image</param>
     /// <param name="caption">The caption of the image</param>
     /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
-    IHtmlElementBuilder AddImage(string name, string path, string? caption = null);
+    IHtmlElementBuilder AddFigure(string name, string path, string? caption = null);
 
     /// <summary>
     /// Adds the provided content directly into the document
