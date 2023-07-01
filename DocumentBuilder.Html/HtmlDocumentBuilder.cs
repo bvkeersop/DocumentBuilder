@@ -192,7 +192,7 @@ public class HtmlDocumentBuilder : IHtmlDocumentBuilder
         _ = name ?? throw new ArgumentNullException(nameof(name));
         _ = path ?? throw new ArgumentNullException(nameof(path));
 
-        var htmlElement = new Image(name, path, caption);
+        var htmlElement = new Figure(name, path, caption);
         HtmlDocument.AddHtmlElement(htmlElement);
         return new HtmlElementBuilder(htmlElement, this);
     }

@@ -44,13 +44,12 @@ internal class HtmlDocumentWriter : IHtmlDocumentWriter
         currentIndentationLevel++;
         foreach (var element in htmlDocument.Elements)
         {
-            var html = element.ToHtml(_options, currentIndentationLevel);
-
             if (IsDivEnd(element))
             {
                 currentIndentationLevel--;
             }
 
+            var html = element.ToHtml(_options, currentIndentationLevel);
             await htmlStreamWriter.WriteLineAsync(html).ConfigureAwait(false);
 
             if (IsDivStart(element))

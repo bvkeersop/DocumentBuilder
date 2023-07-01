@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DocumentBuilder.Html.Model;
 
-public class Image : IHtmlElement
+public class Figure : IHtmlElement
 {
     public string Indicator { get; }
     public string Name { get; }
@@ -14,9 +14,9 @@ public class Image : IHtmlElement
 
     public Attributes Attributes { get; } = new Attributes();
 
-    public Image(string name, string path, string? caption = null)
+    public Figure(string name, string path, string? caption = null)
     {
-        Indicator = Indicators.Image;
+        Indicator = Indicators.Figure;
         Name = name;
         Path = path;
         Caption = caption;
@@ -26,10 +26,12 @@ public class Image : IHtmlElement
         sb.Append(indentation)
         .Append('<')
         .Append(Indicators.Image)
+        .Append(' ')
         .Append("src=")
         .Append('"').Append(Path).Append('"')
+        .Append("alt=")
         .Append('"').Append(Name).Append('"')
-        .Append("alt=").Append(Name).Append(" />")
+        .Append(" />")
         .Append(newline);
 
     private void AppendFigCaption(StringBuilder sb, string indentation, string newline) =>
@@ -49,7 +51,8 @@ public class Image : IHtmlElement
         var sb = new StringBuilder();
 
         sb.Append(indentation0)
-          .Append(Indicator.ToHtmlStartTag());
+          .Append(Indicator.ToHtmlStartTag())
+          .Append(newLine);
 
         AppendImageHtml(sb, indentation1, newLine);
 
