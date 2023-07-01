@@ -8,6 +8,7 @@ namespace DocumentBuilder.Html.Model;
 public class DivStart : IHtmlElement
 {
     public Attributes Attributes { get; } = new Attributes();
+    public InlineStyles InlineStyles { get; } = new InlineStyles();
 
     public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0)
         => new StringBuilder()

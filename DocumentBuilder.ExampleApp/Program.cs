@@ -5,6 +5,7 @@ using DocumentBuilder.Markdown.Options;
 using DocumentBuilder.Core.Enumerations;
 using DocumentBuilder.Html.Options;
 using DocumentBuilder.Html;
+using DocumentBuilder.Pdf;
 
 Console.WriteLine("DocumentBuilder - Example Program");
 Console.WriteLine("Running this program will build some example documents, displaying how this library can be used");
@@ -20,6 +21,11 @@ var htmlDocumentFilePath = "\\Resources\\rick-astley-never-gonna-give-you-up.htm
 var fullHtmlDocumentFilePath = $"{up}{htmlDocumentFilePath}";
 Console.WriteLine($"Creating an example html document at {htmlDocumentFilePath}");
 await CreateExampleHtmlDocument(fullHtmlDocumentFilePath);
+
+var pdfDocumentFilePath = "\\Resources\\rick-astley-never-gonna-give-you-up.pdf";
+var fullPdfDocumentFilePath = $"{up}{pdfDocumentFilePath}";
+Console.WriteLine($"Creating an example pdf document (using html) at {pdfDocumentFilePath}");
+await CreateExampleHtmlDocument(fullPdfDocumentFilePath, saveAsPdf: true);
 
 var excelDocumentFilePath = "\\Resources\\my-favorite-songs.xlsx";
 var fullExcelDocumentFilePath = $"{up}{excelDocumentFilePath}";
@@ -103,7 +109,7 @@ static void CreateExampleExcelDocument(string filePath)
     excelDocument.Save(filePath);
 }
 
-async static Task CreateExampleHtmlDocument(string filePath)
+async static Task CreateExampleHtmlDocument(string filePath, bool saveAsPdf = false)
 {
     // (Optional) Create a MarkdownDocumentOptions instance for configuring specifics
     var options = new HtmlDocumentOptionsBuilder()
@@ -141,7 +147,16 @@ async static Task CreateExampleHtmlDocument(string filePath)
         .AddDivEnd()
         .Build();
 
-    // Save the markdown document (either by stream, or by providing a filepath directly)
-    using var fileStream = File.Create(filePath);
-    await htmlDocument.SaveAsync(fileStream);
+    // Save the html document (either by stream, or by providing a filepath directly)
+    if (!saveAsPdf)
+    {
+        using var fileStream = File.Create(filePath);
+        await htmlDocument.SaveAsync(fileStream);
+    }
+    // Or save the html document as a pdf instead
+    else
+    {
+        using var fileStream = File.Create(filePath);
+        await htmlDocument.SaveAsPdfAsync(fileStream, string.Empty);
+    }
 }

@@ -21,6 +21,7 @@ public class Table<TRow> : IHtmlElement
     public IEnumerable<Core.Model.TableCell> TableCells { get; }
     public IIndentationProvider IdentationProvider { get; }
     public Attributes Attributes { get; } = new Attributes();
+    public InlineStyles InlineStyles { get; } = new InlineStyles();
 
     public Table(IEnumerable<TRow> tableRows, HtmlDocumentOptions options)
     {

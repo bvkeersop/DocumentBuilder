@@ -9,6 +9,7 @@ public abstract class ListBase<TValue> : IHtmlElement
 {
     public string Indicator { get; }
     public Attributes Attributes { get; } = new Attributes();
+    public InlineStyles InlineStyles { get; } = new InlineStyles();
     protected IEnumerable<TValue> Value { get; }
 
     protected ListBase(string indicator, IEnumerable<TValue> value)

@@ -23,7 +23,7 @@ public class Attributes
     {
         var shouldBeUnique = _uniqueAttributes.Contains(key);
         var containsKey = _attributes.ContainsKey(key);
-        var isNotAllowed = _attributes.ContainsKey(key);
+        var isNotAllowed = _disallowedAttributes.ContainsKey(key);
 
         if (isNotAllowed)
         {

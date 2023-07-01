@@ -6,7 +6,10 @@ namespace DocumentBuilder.Html.Model;
 internal class Raw : IHtmlElement
 {
     public string Value { get; }
-    public Attributes Attributes => throw new NotImplementedException();
+
+    // Raw means raw, does not support any calls on the element for styling as they should be present in the raw html
+    public Attributes Attributes => new();
+    public InlineStyles InlineStyles => new();
 
     public Raw(string value)
     {

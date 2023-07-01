@@ -250,7 +250,7 @@ public class HtmlDocumentBuilder : IHtmlDocumentBuilder
     /// <returns><see cref="IHtmlDocumentBuilder"/></returns>
     public IHtmlDocumentBuilder AddStylesheet(string stylesheetAsString)
     {
-        var style = new Style(stylesheetAsString);
+        var style = new Style(stylesheetAsString, Options);
         HtmlDocument.Header.AddHtmlHeaderElement(style);
         return this;
     }

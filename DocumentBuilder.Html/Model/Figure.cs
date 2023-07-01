@@ -13,6 +13,7 @@ public class Figure : IHtmlElement
     public string? Caption { get; }
 
     public Attributes Attributes { get; } = new Attributes();
+    public InlineStyles InlineStyles { get; } = new InlineStyles();
 
     public Figure(string name, string path, string? caption = null)
     {

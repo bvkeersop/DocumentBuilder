@@ -9,6 +9,8 @@ internal class DivEnd : IHtmlElement
 {
     public Attributes Attributes { get; } = new Attributes();
 
+    public InlineStyles InlineStyles { get; } = new InlineStyles();
+
     public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0) 
         => new StringBuilder()
             .Append(options.IndentationProvider.GetIndentation(indentationLevel))
