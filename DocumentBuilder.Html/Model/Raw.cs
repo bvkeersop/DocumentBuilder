@@ -1,4 +1,5 @@
 ﻿using DocumentBuilder.Html.Options;
+using System.Text;
 
 namespace DocumentBuilder.Html.Model;
 
@@ -13,7 +14,8 @@ internal class Raw : IHtmlElement
     }
 
     public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0)
-    {
-        throw new NotImplementedException();
-    }
+        => new StringBuilder()
+            .Append(options.IndentationProvider.GetIndentation(indentationLevel))
+            .Append(Value)
+            .ToString();
 }

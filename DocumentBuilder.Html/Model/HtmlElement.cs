@@ -18,6 +18,7 @@ public abstract class HtmlElement : IHtmlElement
 
     public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0) 
         => new StringBuilder()
+            .Append(options.IndentationProvider.GetIndentation(indentationLevel))
             .Append(GetHtmlStartTagWithAttributes())
             .Append(Value)
             .Append(GetHtmlEndTag())

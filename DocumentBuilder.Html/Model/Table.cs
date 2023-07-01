@@ -18,8 +18,8 @@ public class Table<TRow> : IHtmlElement
     public HtmlDocumentOptions Options { get; }
     public IEnumerable<ColumnAttribute> OrderedColumnAttributes { get; }
     public Matrix<TRow> TableValues { get; }
-    public IEnumerable<TableCell> TableCells { get; }
-
+    public IEnumerable<Core.Model.TableCell> TableCells { get; }
+    public IIndentationProvider IdentationProvider { get; }
     public Attributes Attributes { get; } = new Attributes();
 
     public Table(IEnumerable<TRow> tableRows, HtmlDocumentOptions options)
@@ -31,7 +31,82 @@ public class Table<TRow> : IHtmlElement
         TableValues = new Matrix<TRow>(tableRows);
         OrderedColumnAttributes = ReflectionHelper<TRow>.GetOrderedColumnAttributes();
         TableCells = CreateEnumerableOfTableCells();
+        IdentationProvider = options.IndentationProvider;
+        NewLineProvider = options.NewLineProvider;
     }
+
+    public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0)
+    {
+        var sb = new StringBuilder();
+
+        sb.Append(IndentationProvider.GetIndentation(indentationLevel));
+        sb.Append(Indicators.Table.ToHtmlStartTag());
+        sb.Append(NewLineProvider.GetNewLine());
+        AppendHtmlTableHeader(sb, indentationLevel + 1);
+        AppendHtmlTableRows(sb, indentationLevel + 1);
+
+        sb.Append(IndentationProvider.GetIndentation(indentationLevel));
+        sb.Append(Indicators.Table.ToHtmlEndTag());
+        var x = sb.ToString();
+        return x;
+    }
+
+    private void AppendHtmlTableHeader(StringBuilder sb, int indentationLevel)
+    {
+
+        sb.Append(IndentationProvider.GetIndentation(indentationLevel))
+            .Append(Indicators.TableRow.ToHtmlStartTag())
+            .Append(NewLineProvider.GetNewLine());
+
+        var numberOfColumns = TableValues.NumberOfColumns;
+        for (var i = 0; i < numberOfColumns; i++)
+        {
+            var columnName = OrderedColumnAttributes.ElementAt(i).Name.Value;
+            AppendHtmlTableCell(sb, columnName, Indicators.TableHeader, indentationLevel + 1);
+        }
+
+        sb.Append(IndentationProvider.GetIndentation(indentationLevel))
+            .Append(Indicators.TableRow.ToHtmlEndTag())
+            .Append(NewLineProvider.GetNewLine());
+    }
+
+    private void AppendHtmlTableRows(StringBuilder sb, int indentationLevel)
+    {
+        var numberOfRows = TableValues.NumberOfRows;
+        for (var i = 0; i < numberOfRows; i++)
+        {
+            var currentRow = TableValues.GetRow(i);
+            AppendHtmlTableRow(sb, currentRow, indentationLevel);
+        }
+    }
+
+    private void AppendHtmlTableRow(StringBuilder sb, Core.Model.TableCell[] tableRow, int indentationLevel)
+    {
+        sb.Append(IndentationProvider.GetIndentation(indentationLevel))
+            .Append(Indicators.TableRow.ToHtmlStartTag())
+            .Append(NewLineProvider.GetNewLine());
+
+        for (var i = 0; i < tableRow.Length; i++)
+        {
+            var cellValue = tableRow[i].Value;
+            AppendHtmlTableCell(sb, cellValue, Indicators.TableData, indentationLevel + 1);
+        }
+
+        sb.Append(IndentationProvider.GetIndentation(indentationLevel))
+            .Append(Indicators.TableRow.ToHtmlEndTag())
+            .Append(NewLineProvider.GetNewLine());
+    }
+
+    private void AppendHtmlTableCell(
+        StringBuilder sb,
+        string cellValue,
+        string htmlIndicator,
+        int indentationLevel)
+        => sb.Append(IndentationProvider.GetIndentation(indentationLevel))
+            .Append(htmlIndicator.ToHtmlStartTag())
+            .Append(cellValue)
+            .Append(htmlIndicator.ToHtmlEndTag())
+            .Append(NewLineProvider.GetNewLine());
 
     private static void ValidateRows(IEnumerable<TRow> tableRows)
     {
@@ -47,13 +122,13 @@ public class Table<TRow> : IHtmlElement
         }
     }
 
-    private IEnumerable<TableCell> CreateEnumerableOfTableCells()
+    private IEnumerable<Core.Model.TableCell> CreateEnumerableOfTableCells()
     {
-        var columnTableCells = Enumerable.Empty<TableCell>();
+        var columnTableCells = Enumerable.Empty<Core.Model.TableCell>();
         for (var i = 0; i < OrderedColumnAttributes.Count(); i++)
         {
             var currentOrderedColumnAttribute = OrderedColumnAttributes.ElementAt(i);
-            var tableCell = new TableCell(
+            var tableCell = new Core.Model.TableCell(
                 currentOrderedColumnAttribute.Name.Value,
                 currentOrderedColumnAttribute.Name.GetType(),
                 0,
@@ -64,90 +139,5 @@ public class Table<TRow> : IHtmlElement
         var shiftedTableCells = TableValues.TableCells.Select(t => t.ShiftRow());
 
         return columnTableCells.Concat(shiftedTableCells);
-    }
-
-    private async Task<string> CreateHtmlTableAsync(HtmlDocumentOptions options, int indentationLevel)
-    {
-        var outputStream = new MemoryStream();
-        await CreateHtmlTableAsync(outputStream, options, indentationLevel);
-        return StreamHelper.GetStreamContents(outputStream);
-    }
-
-    private async Task CreateHtmlTableAsync(Stream outputStream, HtmlDocumentOptions options, int indentationLevel)
-    {
-        if (!outputStream.CanWrite)
-        {
-            throw new DocumentBuilderException(DocumentBuilderErrorCode.StreamIsNotWriteable, nameof(outputStream));
-        }
-
-        var streamWriter = new StreamWriter(outputStream, leaveOpen: true);
-        using var htmlStreamWriter = new HtmlStreamWriter(streamWriter, NewLineProvider, IndentationProvider);
-
-        await htmlStreamWriter.WriteLineAsync(Indicators.Table.ToHtmlStartTag()).ConfigureAwait(false);
-
-        await CreateHtmlTableHeaderAsync(htmlStreamWriter).ConfigureAwait(false);
-        await CreateHtmlTableRowsAsync(htmlStreamWriter).ConfigureAwait(false);
-
-        await htmlStreamWriter.WriteLineAsync(Indicators.Table.ToHtmlEndTag()).ConfigureAwait(false);
-        await htmlStreamWriter.FlushAsync().ConfigureAwait(false);
-    }
-
-    private async Task CreateHtmlTableHeaderAsync(HtmlStreamWriter htmlStreamWriter)
-    {
-        var numberOfColumns = TableValues.NumberOfColumns;
-
-        await htmlStreamWriter.WriteLineAsync(Indicators.TableRow.ToHtmlStartTag(), 1).ConfigureAwait(false);
-
-        for (var i = 0; i < numberOfColumns; i++)
-        {
-            var columnName = OrderedColumnAttributes.ElementAt(i).Name.Value;
-            await CreateHtmlTableCellAsync(htmlStreamWriter, columnName, Indicators.TableHeader, 2).ConfigureAwait(false);
-        }
-
-        await htmlStreamWriter.WriteLineAsync(Indicators.TableRow.ToHtmlEndTag(), 1).ConfigureAwait(false);
-    }
-
-    private async Task CreateHtmlTableRowsAsync(HtmlStreamWriter htmlStreamWriter)
-    {
-        var numberOfRows = TableValues.NumberOfRows;
-
-        for (var i = 0; i < numberOfRows; i++)
-        {
-            var currentRow = TableValues.GetRow(i);
-            await CreateHtmlTableRowAsync(htmlStreamWriter, currentRow).ConfigureAwait(false);
-            await htmlStreamWriter.WriteNewLineAsync().ConfigureAwait(false);
-        }
-    }
-
-    private static async Task CreateHtmlTableRowAsync(HtmlStreamWriter htmlStreamWriter, TableCell[] tableRow)
-    {
-        await htmlStreamWriter.WriteLineAsync(Indicators.TableRow.ToHtmlStartTag(), 1).ConfigureAwait(false);
-
-        for (var i = 0; i < tableRow.Length; i++)
-        {
-            var cellValue = tableRow[i].Value;
-            await CreateHtmlTableCellAsync(htmlStreamWriter, cellValue, Indicators.TableData, 2).ConfigureAwait(false);
-        }
-
-        await htmlStreamWriter.WriteAsync(Indicators.TableRow.ToHtmlEndTag(), 1).ConfigureAwait(false);
-    }
-
-    private static async Task CreateHtmlTableCellAsync(
-        HtmlStreamWriter htmlStreamWriter,
-        string cellValue,
-        string htmlIndicator,
-        int indentation)
-    {
-        var stringBuilder = new StringBuilder();
-        stringBuilder
-            .Append(htmlIndicator.ToHtmlStartTag())
-            .Append(cellValue)
-            .Append(htmlIndicator.ToHtmlEndTag());
-        await htmlStreamWriter.WriteLineAsync(stringBuilder.ToString(), indentation).ConfigureAwait(false);
-    }
-
-    public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0)
-    {
-        throw new NotImplementedException();
     }
 }

@@ -17,12 +17,14 @@ public class Metadata
 public class HtmlDocumentBuilder : IHtmlDocumentBuilder
 {
     public IHtmlDocumentWriter HtmlDocumentWriter { get; }
+    public HtmlDocumentOptions Options { get; }
     public IEnumerableRenderingStrategy EnumerableRenderingStrategy { get; }
     public HtmlDocument HtmlDocument { get; }
     public Metadata Metadata { get; }
 
     protected HtmlDocumentBuilder(HtmlDocumentBuilder htmlDocumentBuilder)
     {
+        Options = htmlDocumentBuilder.Options;
         HtmlDocument = htmlDocumentBuilder.HtmlDocument;
         HtmlDocumentWriter = htmlDocumentBuilder.HtmlDocumentWriter;
         EnumerableRenderingStrategy = htmlDocumentBuilder.EnumerableRenderingStrategy;
@@ -33,7 +35,7 @@ public class HtmlDocumentBuilder : IHtmlDocumentBuilder
 
     public HtmlDocumentBuilder(HtmlDocumentOptions options)
     {
-        _ = options ?? throw new ArgumentNullException(nameof(options));
+        Options = options ?? throw new ArgumentNullException(nameof(options));
         EnumerableRenderingStrategy = EnumerableValidatorFactory.Create(options.NullOrEmptyEnumerableRenderingStrategy);
         HtmlDocumentWriter = new HtmlDocumentWriter(HtmlStreamWriterFactory.Create, options);
         HtmlDocument = new HtmlDocument(options, HtmlDocumentWriter);
@@ -173,7 +175,7 @@ public class HtmlDocumentBuilder : IHtmlDocumentBuilder
             return new HtmlElementBuilder(null, this);
         }
 
-        var htmlElement = new OrderedList<T>(tableRows);
+        var htmlElement = new Table<T>(tableRows, Options);
         HtmlDocument.AddHtmlElement(htmlElement);
         return new HtmlElementBuilder(htmlElement, this);
     }

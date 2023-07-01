@@ -44,14 +44,14 @@ internal class HtmlDocumentWriter : IHtmlDocumentWriter
         currentIndentationLevel++;
         foreach (var element in htmlDocument.Elements)
         {
-            var html = element.ToHtml(_options, 2);
+            var html = element.ToHtml(_options, currentIndentationLevel);
 
             if (IsDivEnd(element))
             {
                 currentIndentationLevel--;
             }
 
-            await htmlStreamWriter.WriteAsync(html).ConfigureAwait(false);
+            await htmlStreamWriter.WriteLineAsync(html).ConfigureAwait(false);
 
             if (IsDivStart(element))
             {
@@ -65,10 +65,9 @@ internal class HtmlDocumentWriter : IHtmlDocumentWriter
     private async Task WriteHeadElementAsync(HtmlDocument htmlDocument, IHtmlStreamWriter htmlStreamWriter)
     {
         await htmlStreamWriter.WriteLineAsync(Indicators.Head.ToHtmlStartTag()).ConfigureAwait(false);
-
-        await htmlStreamWriter.WriteLineAsync(Indicators.Title.ToHtmlStartTag(), 1).ConfigureAwait(false);
-
-        await htmlStreamWriter.WriteLineAsync(Indicators.Title.ToHtmlEndTag()).ConfigureAwait(false);
+        await htmlStreamWriter.WriteAsync(Indicators.Title.ToHtmlStartTag(), 1).ConfigureAwait(false);
+        await htmlStreamWriter.WriteAsync(Indicators.Title.ToHtmlEndTag()).ConfigureAwait(false);
+        await htmlStreamWriter.WriteNewLineAsync().ConfigureAwait(false);
 
         foreach (var link in htmlDocument.Links)
         {
