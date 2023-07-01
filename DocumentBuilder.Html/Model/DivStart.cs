@@ -12,6 +12,21 @@ public class DivStart : IHtmlElement
     public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0)
         => new StringBuilder()
             .Append(options.IndentationProvider.GetIndentation(indentationLevel))
-            .Append(Indicators.Div.ToHtmlStartTag())
+            .Append(GetHtmlStartTagWithAttributes())
             .ToString();
+
+    protected string GetHtmlStartTagWithAttributes()
+    {
+        if (Attributes.IsEmpty)
+        {
+            return Indicators.Div.ToHtmlStartTag();
+        }
+
+        return new StringBuilder()
+            .Append(Indicators.Div)
+            .Append(' ')
+            .Append(Attributes)
+            .ToString()
+            .ToHtmlStartTag();
+    }
 }
