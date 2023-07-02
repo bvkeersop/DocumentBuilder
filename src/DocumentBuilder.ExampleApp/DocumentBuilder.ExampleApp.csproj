@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DocumentBuilder.Excel\DocumentBuilder.Excel.csproj" />
+    <ProjectReference Include="..\DocumentBuilder.Html\DocumentBuilder.Html.csproj" />
+    <ProjectReference Include="..\DocumentBuilder.Markdown\DocumentBuilder.Markdown.csproj" />
+    <ProjectReference Include="..\DocumentBuilder.Html.PdfExtensions\DocumentBuilder.Html.PdfExtensions.csproj" />
+    <ProjectReference Include="..\DocumentBuilder.Core\DocumentBuilder.Core.csproj" />
+  </ItemGroup>
+
+</Project>
