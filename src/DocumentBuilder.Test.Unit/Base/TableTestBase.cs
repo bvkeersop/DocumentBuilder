@@ -1,21 +1,22 @@
-﻿using DocumentBuilder.Model;
+﻿using DocumentBuilder.Core.Model;
+using DocumentBuilder.Model;
 using DocumentBuilder.Test.Unit.TestHelpers;
 
-namespace DocumentBuilder.Test.Unit.Model
+namespace DocumentBuilder.Test.Unit.Base
 {
     public class TableTestBase
     {
         protected const string _longestDescription = "Very long description with most characters";
         protected IEnumerable<ProductTableRowWithColumnAttribute> _productTableRowsWithColumnAttribute;
         protected IEnumerable<ProductTableRowWithoutAttributes> _productTableRowsWithoutAttributes;
-        protected Table<ProductTableRowWithoutAttributes> _tableWithoutHeaderAttributes;
+        protected TableBase<ProductTableRowWithoutAttributes> _tableWithoutHeaderAttributes;
 
         [TestInitialize]
         public void TableTestBaseInitialize()
         {
             _productTableRowsWithColumnAttribute = ExampleProductsGenerator.CreateTableRowsWithColumnAttribute();
             _productTableRowsWithoutAttributes = ExampleProductsGenerator.CreateTableRowsWithoutAttributes();
-            _tableWithoutHeaderAttributes = new Table<ProductTableRowWithoutAttributes>(_productTableRowsWithoutAttributes);
+            _tableWithoutHeaderAttributes = new TableBase<ProductTableRowWithoutAttributes>(_productTableRowsWithoutAttributes);
         }
     }
 }

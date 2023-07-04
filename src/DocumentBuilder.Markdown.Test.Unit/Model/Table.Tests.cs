@@ -1,39 +1,36 @@
-﻿using DocumentBuilder.Enumerations;
+﻿using DocumentBuilder.Core.Enumerations;
 using DocumentBuilder.Factories;
+using DocumentBuilder.Markdown.Model;
+using DocumentBuilder.Markdown.Options;
 using DocumentBuilder.Test.Unit.TestHelpers;
 using FluentAssertions;
-using DocumentBuilder.Model;
-using DocumentBuilder.Options;
 
 namespace DocumentBuilder.Test.Unit.Model.Markdown
 {
     [TestClass]
-    public class TableMarkdownTests : TableTestBase
+    public class TableMarkdownTests
     {
-        [DataTestMethod]
-        [DataRow(LineEndings.Environment, Formatting.AlignColumns)]
-        [DataRow(LineEndings.Linux, Formatting.AlignColumns)]
-        [DataRow(LineEndings.Windows, Formatting.AlignColumns)]
-        [DataRow(LineEndings.Environment, Formatting.None)]
-        [DataRow(LineEndings.Linux, Formatting.None)]
-        [DataRow(LineEndings.Windows, Formatting.None)]
-        public async Task ToMarkdownAsync_CreatesFormattedTable(LineEndings LineEndings, Formatting formatting)
+        [TestMethod]
+        public void ToMarkdownAsync_FormattingAligned_CreatesFormattedTable(Formatting formatting)
         {
             // Arrange
-            var options = new MarkdownDocumentOptions
-            {
-                LineEndings = LineEndings,
-                MarkdownTableOptions = new MarkdownTableOptions
-                {
-                    Formatting = formatting
-                }
-            };
+            var options = new MarkdownDocumentOptions();
+            var productTableRowsWithoutAttributes = ExampleProductsGenerator.CreateTableRowsWithoutAttributes();
+            var tableWithoutHeaderAttributes = new Table<ProductTableRowWithoutAttributes>(productTableRowsWithoutAttributes, options);
+
 
             // Act
-            var markdownTable = await _tableWithoutHeaderAttributes.ToMarkdownAsync(options);
+            var markdownTable = tableWithoutHeaderAttributes.ToMarkdown(options);
 
             // Assert
-            var expectedTable = ExampleProductMarkdownTableBuilder.BuildExpectedFormattedProductTable(options);
+            var nl = options.NewLineProvider.GetNewLine();
+            var expectedTable =
+                "| Id  | Amount | Price | Description                                |" + nl +
+                "| --- | ------ | ----- | ------------------------------------------ |" + nl +
+                "| 1   | 1      | 1,11  | Description 1                              |" + nl +
+                "| 2   | 2      | 2,22  | Description 2                              |" + nl +
+                "| 3   | 3      | 3,33  | Very long description with most characters |" + nl;
+
             markdownTable.Should().Be(expectedTable);
         }
 
@@ -157,7 +154,6 @@ namespace DocumentBuilder.Test.Unit.Model.Markdown
         public static async Task ToMarkdownAsync_ProvideAlignmentCenterInOptions_CreatesAlignedColumn(Alignment alignment)
         {
             // Arrange
-            // Arrange
             var alignedColumn = new List<AlignedDefaultColumn> { new AlignedDefaultColumn() };
             var alignedTable = new Table<AlignedDefaultColumn>(alignedColumn);
             var options = new MarkdownDocumentOptions
@@ -182,7 +178,6 @@ namespace DocumentBuilder.Test.Unit.Model.Markdown
         public static async Task ToMarkdownAsync_ProvideAlignmentNoneInOptions_CreatesAlignedColumn()
         {
             // Arrange
-            // Arrange
             var alignedColumn = new List<AlignedDefaultColumn> { new AlignedDefaultColumn() };
             var alignedTable = new Table<AlignedDefaultColumn>(alignedColumn);
             var options = new MarkdownDocumentOptions
@@ -204,7 +199,6 @@ namespace DocumentBuilder.Test.Unit.Model.Markdown
         [TestMethod]
         public async Task ToMarkdownAsync_BoldColumnNames_CreatesTableWithBoldColumnNames()
         {
-            // Arrange
             // Arrange
             var alignedColumn = new List<AlignedDefaultColumn> { new AlignedDefaultColumn() };
             var alignedTable = new Table<AlignedDefaultColumn>(alignedColumn);

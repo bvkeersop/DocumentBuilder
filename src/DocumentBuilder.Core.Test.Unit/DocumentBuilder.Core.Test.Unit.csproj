@@ -3,8 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -20,6 +18,11 @@
     <Folder Include="Extensions\" />
     <Folder Include="Factories\" />
     <Folder Include="Model\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DocumentBuilder.Core\DocumentBuilder.Core.csproj" />
+    <ProjectReference Include="..\DocumentBuilder.Test.Unit\DocumentBuilder.Test.Shared.csproj" />
   </ItemGroup>
 
 </Project>

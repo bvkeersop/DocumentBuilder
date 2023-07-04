@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="DocumentBuilder.Markdown.Test.Unit" />
+  </ItemGroup>
+	
+  <ItemGroup>
     <ProjectReference Include="..\DocumentBuilder.Core\DocumentBuilder.Core.csproj" />
   </ItemGroup>
 

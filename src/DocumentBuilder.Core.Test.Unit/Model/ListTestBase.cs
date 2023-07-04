@@ -1,6 +1,7 @@
 ﻿using DocumentBuilder.Factories;
 using DocumentBuilder.Model.Generic;
 using DocumentBuilder.Options;
+using DocumentBuilder.Test.Unit.Base;
 using DocumentBuilder.Test.Unit.TestHelpers;
 using DocumentBuilder.Utilities;
 using FluentAssertions;

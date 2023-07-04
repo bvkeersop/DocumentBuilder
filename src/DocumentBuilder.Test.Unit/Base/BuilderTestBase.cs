@@ -1,7 +1,8 @@
-﻿using DocumentBuilder.Test.Unit.Model;
+﻿using DocumentBuilder.Factories;
+using DocumentBuilder.Test.Unit.Model;
 using DocumentBuilder.Test.Unit.TestHelpers;
 
-namespace DocumentBuilder.Test.Unit.Builders
+namespace DocumentBuilder.Test.Unit.Base
 {
     [TestClass]
     public abstract class BuilderTestBase : TestBase

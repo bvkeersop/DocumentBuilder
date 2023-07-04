@@ -1,6 +1,6 @@
 ﻿using DocumentBuilder.Enumerations;
+using DocumentBuilder.Html.Test.Unit.TestHelpers;
 using DocumentBuilder.Options;
-using DocumentBuilder.Test.Unit.TestHelpers;
 using FluentAssertions;
 
 namespace DocumentBuilder.Test.Unit.Model.Html

@@ -23,7 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DocumentBuilder.Core\DocumentBuilder.Core.csproj" />
     <ProjectReference Include="..\DocumentBuilder\DocumentBuilder.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Builders\" />
   </ItemGroup>
 
 </Project>
