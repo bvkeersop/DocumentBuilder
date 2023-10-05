@@ -1,3 +1,7 @@
+# DEPRECATED
+
+I don't maintain this project anymore. I originally made this project because I wanted a way to create markdowndocuments in C#. I decided on the fly to also add different kinds of documents, that I have no need for. I think the project does too much and I'm not happy with some of the design choices I made. I'll be creating a seperate project just for markdowndocument creation.
+
 # DocumentBuilder
 
 ![Workflows: dotnet](https://github.com/bvkeersop/DocumentBuilder/actions/workflows/pipeline.yml/badge.svg)
