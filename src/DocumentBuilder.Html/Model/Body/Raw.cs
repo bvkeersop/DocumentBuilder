@@ -1,7 +1,7 @@
 ﻿using DocumentBuilder.Html.Options;
 using System.Text;
 
-namespace DocumentBuilder.Html.Model;
+namespace DocumentBuilder.Html.Model.Body;
 
 internal class Raw : IHtmlElement
 {

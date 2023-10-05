@@ -5,7 +5,7 @@ using DocumentBuilder.Html.Options;
 using DocumentBuilder.Utilities;
 using System.Text;
 
-namespace DocumentBuilder.Html.Model;
+namespace DocumentBuilder.Html.Model.Body;
 public class Table<TRow> : TableBase<TRow>, IHtmlElement
 {
     public HtmlDocumentOptions Options { get; }
@@ -67,7 +67,7 @@ public class Table<TRow> : TableBase<TRow>, IHtmlElement
         }
     }
 
-    private void AppendHtmlTableRow(StringBuilder sb, Core.Model.TableCell[] tableRow, int indentationLevel)
+    private void AppendHtmlTableRow(StringBuilder sb, TableCell[] tableRow, int indentationLevel)
     {
         sb.Append(IndentationProvider.GetIndentation(indentationLevel))
             .Append(Indicators.TableRow.ToHtmlStartTag())

@@ -1,10 +1,12 @@
-﻿using DocumentBuilder.DocumentBuilders;
+﻿using DocumentBuilder.Core.Enumerations;
 using DocumentBuilder.ExampleApp;
+using DocumentBuilder.Excel.Document;
 using DocumentBuilder.Excel.Options;
-using DocumentBuilder.Markdown.Options;
-using DocumentBuilder.Core.Enumerations;
+using DocumentBuilder.Html.Document;
+using DocumentBuilder.Html.Model;
 using DocumentBuilder.Html.Options;
-using DocumentBuilder.Html;
+using DocumentBuilder.Markdown.Document;
+using DocumentBuilder.Markdown.Options;
 using DocumentBuilder.Pdf;
 
 Console.WriteLine("DocumentBuilder - Example Program");
@@ -148,6 +150,23 @@ async Task CreateExampleHtmlDocument(string filePath, string stylesheetPath, boo
             .AddDivEnd()
         .AddDivEnd()
         .Build();
+
+    // Test
+    using var fileStream = File.Create(filePath);
+    await htmlDocument.SaveAsync(fileStream);
+
+    var htmlDoc = HtmlDocument.Build(builder =>
+    {
+        builder.Head(head =>
+        {
+            head.AddStylesheet("stylesheet");
+        });
+
+        builder.AddParagraph("a");
+    });
+
+    await htmlDoc.SaveAsync(fileStream);
+
 
     // Save the html document (either by stream, or by providing a filepath directly)
     if (!saveAsPdf)

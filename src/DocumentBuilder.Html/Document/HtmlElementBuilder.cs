@@ -1,5 +1,5 @@
 ﻿using DocumentBuilder.Html.Constants;
-using DocumentBuilder.Html.Model;
+using DocumentBuilder.Html.Model.Body;
 
 namespace DocumentBuilder.Html.Document;
 

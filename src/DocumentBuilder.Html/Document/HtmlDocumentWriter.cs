@@ -1,6 +1,7 @@
 ﻿using DocumentBuilder.Html.Constants;
 using DocumentBuilder.Html.Extensions;
 using DocumentBuilder.Html.Model;
+using DocumentBuilder.Html.Model.Body;
 using DocumentBuilder.Html.Options;
 using DocumentBuilder.Html.Streams;
 

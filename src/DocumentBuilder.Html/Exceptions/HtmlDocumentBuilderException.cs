@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace DocumentBuilder.Exceptions;
+namespace DocumentBuilder.Html.Exceptions;
 
 [Serializable]
 public sealed class HtmlDocumentBuilderException : Exception

@@ -1,10 +1,9 @@
 ﻿using DocumentBuilder.Core.Model;
-using DocumentBuilder.Model;
 using DocumentBuilder.Test.Unit.TestHelpers;
 
 namespace DocumentBuilder.Test.Unit.Base
 {
-    public class TableTestBase
+    public class TableTestBase<TTable>
     {
         protected const string _longestDescription = "Very long description with most characters";
         protected IEnumerable<ProductTableRowWithColumnAttribute> _productTableRowsWithColumnAttribute;

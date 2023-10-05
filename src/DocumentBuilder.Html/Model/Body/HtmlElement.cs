@@ -2,7 +2,7 @@
 using DocumentBuilder.Html.Options;
 using System.Text;
 
-namespace DocumentBuilder.Html.Model;
+namespace DocumentBuilder.Html.Model.Body;
 public abstract class HtmlElement : IHtmlElement
 {
     public string Indicator { get; }
@@ -16,7 +16,7 @@ public abstract class HtmlElement : IHtmlElement
         Value = value;
     }
 
-    public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0) 
+    public string ToHtml(HtmlDocumentOptions options, int indentationLevel = 0)
         => new StringBuilder()
             .Append(options.IndentationProvider.GetIndentation(indentationLevel))
             .Append(GetHtmlStartTagWithAttributes())

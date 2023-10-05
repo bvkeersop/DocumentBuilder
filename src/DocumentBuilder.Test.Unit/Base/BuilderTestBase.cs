@@ -1,5 +1,4 @@
 ﻿using DocumentBuilder.Factories;
-using DocumentBuilder.Test.Unit.Model;
 using DocumentBuilder.Test.Unit.TestHelpers;
 
 namespace DocumentBuilder.Test.Unit.Base

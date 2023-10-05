@@ -3,7 +3,7 @@ using DocumentBuilder.Html.Extensions;
 using DocumentBuilder.Html.Options;
 using System.Text;
 
-namespace DocumentBuilder.Html.Model;
+namespace DocumentBuilder.Html.Model.Body;
 
 public class Figure : IHtmlElement
 {

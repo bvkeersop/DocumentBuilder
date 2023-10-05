@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Html.Model;
+﻿namespace DocumentBuilder.Html.Model.Head;
 
 public interface IHtmlHeaderElement
 {

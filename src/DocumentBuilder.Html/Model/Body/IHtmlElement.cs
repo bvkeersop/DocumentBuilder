@@ -1,6 +1,6 @@
 ﻿using DocumentBuilder.Html.Options;
 
-namespace DocumentBuilder.Html.Model;
+namespace DocumentBuilder.Html.Model.Body;
 
 public interface IHtmlElement
 {

@@ -1,4 +1,4 @@
-﻿namespace DocumentBuilder.Exceptions;
+﻿namespace DocumentBuilder.Html.Exceptions;
 
 public enum HtmlDocumentBuilderErrorCode
 {

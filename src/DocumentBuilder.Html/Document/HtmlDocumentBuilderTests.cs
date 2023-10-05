@@ -4,7 +4,7 @@ using FluentAssertions;
 using DocumentBuilder.DocumentBuilders;
 using DocumentBuilder.Options;
 
-namespace DocumentBuilder.Test.Unit.Builders
+namespace DocumentBuilder.Html.Document
 {
     [TestClass]
     public class HtmlDocumentBuilderTests : BuilderTestBase

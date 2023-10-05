@@ -1,5 +1,6 @@
 ﻿using DocumentBuilder.Exceptions;
 using DocumentBuilder.Html.Constants;
+using DocumentBuilder.Html.Exceptions;
 using System.Text;
 
 namespace DocumentBuilder.Html.Model;

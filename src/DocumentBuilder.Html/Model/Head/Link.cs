@@ -1,6 +1,6 @@
 ﻿using DocumentBuilder.Html.Constants;
 
-namespace DocumentBuilder.Html.Model;
+namespace DocumentBuilder.Html.Model.Head;
 
 public class Link : IHtmlHeaderElement
 {

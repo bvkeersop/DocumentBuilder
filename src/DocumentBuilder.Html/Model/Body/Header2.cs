@@ -1,6 +1,6 @@
 ﻿using DocumentBuilder.Html.Constants;
 
-namespace DocumentBuilder.Html.Model;
+namespace DocumentBuilder.Html.Model.Body;
 
 public class Header2 : Header
 {
